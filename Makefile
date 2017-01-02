@@ -41,7 +41,7 @@
 
 
 # MCU name
-MCU = m16
+MCU = atmega16a
 
 
 # Processor frequency.
@@ -62,7 +62,7 @@ MCU = m16
 #         F_CPU = 16000000
 #         F_CPU = 18432000
 #         F_CPU = 20000000
-F_CPU = 8000000
+F_CPU = 1000000
 
 
 # Output format. (can be srec, ihex, binary)
@@ -70,7 +70,7 @@ FORMAT = ihex
 
 
 # Target file name (without extension).
-TARGET = blink
+TARGET = Atmega_16_LCD
 
 
 # Object files directory
@@ -80,7 +80,7 @@ OBJDIR = .
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c
+SRC = $(TARGET).c lcd16.c 
 
 
 # List C++ source files here. (C dependencies are automatically generated.)
