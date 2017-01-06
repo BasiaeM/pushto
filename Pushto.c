@@ -3,6 +3,7 @@
 
 #define F_CPU 1000000UL
 #include <util/delay.h>
+#include <avr/interrupt.h>
 #include "lcd.h"
 #include "encoder.h"
 #include "keypad.h"
@@ -24,7 +25,27 @@ void system_init (void)
 	//ADCSRA=0X00;		// CODE for ADC demo (optional)
 	//ADMUX = 0x40;
 	//ADCSRA = 0x87;
+	
+	//############# Timer1 16bit config ####################
+	TCCR1A |= 0;   // not required since WGM11:0, both are zero (0)
+ 	TCCR1B |= (1 << WGM12)|(1 << CS11)|(1 << CS10);   // Mode = CTC, Prescaler = 64
+	OCR1A = 31250/4;   // timer compare value 1Hz - 31250 
+	TIMSK|=(1<<OCIE1A); //enable compare reg A interrupt
+
+	//dioda
+	DDRC = 0xFF;
+	PORTC = 0xFF;
+	
+    	sei(); // enable global interrupts
+
 }
+
+ISR(TIMER1_COMPA_vect)
+{
+    // toggle led here
+    PORTC ^= (1 << 0);
+}
+
 
 int main(void)
 {
