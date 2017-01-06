@@ -1,546 +1,807 @@
    1               		.file	"lcd.c"
-   2               	__SREG__ = 0x3f
-   3               	__SP_H__ = 0x3e
-   4               	__SP_L__ = 0x3d
-   5               	__CCP__  = 0x34
-   6               	__tmp_reg__ = 0
-   7               	__zero_reg__ = 1
-  15               	.Ltext0:
-  16               	.global	lcdcmd
-  18               	lcdcmd:
-  19               	.LFB6:
-  20               	.LM1:
-  21               	.LVL0:
-  22               	/* prologue: function */
-  23               	/* frame size = 0 */
-  24               	.LM2:
-  25 0000 9098      		cbi 50-32,0
-  26               	.LM3:
-  27 0002 9298      		cbi 50-32,2
-  28               	.LM4:
-  29 0004 9198      		cbi 50-32,1
-  30               	.LM5:
-  31 0006 92B3      		in r25,50-32
-  32 0008 9F70      		andi r25,lo8(15)
-  33 000a 92BB      		out 50-32,r25
-  34               	.LM6:
-  35 000c 22B3      		in r18,50-32
-  36 000e 982F      		mov r25,r24
-  37 0010 907F      		andi r25,lo8(-16)
-  38 0012 922B      		or r25,r18
-  39 0014 92BB      		out 50-32,r25
-  40               	.LM7:
-  41 0016 9198      		cbi 50-32,1
-  42               	.LM8:
-  43 0018 929A      		sbi 50-32,2
-  44               	.LBB84:
-  45               	.LBB85:
-  46               	.LBB86:
-  47               	.LBB87:
-  48               	.LM9:
-  49 001a 24EF      		ldi r18,lo8(500)
-  50 001c 31E0      		ldi r19,hi8(500)
-  51 001e F901      		movw r30,r18
-  52               	.LVL1:
-  53               	/* #APP */
-  54               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
-  55 0020 3197      		1: sbiw r30,1
-  56 0022 01F4      		brne 1b
-  57               	 ;  0 "" 2
-  58               	/* #NOAPP */
-  59               	.LBE87:
-  60               	.LBE86:
-  61               	.LBE85:
-  62               	.LBE84:
-  63               	.LM10:
-  64 0024 9298      		cbi 50-32,2
-  65               	.LM11:
-  66 0026 92B3      		in r25,50-32
-  67 0028 9F70      		andi r25,lo8(15)
-  68 002a 92BB      		out 50-32,r25
-  69               	.LM12:
-  70 002c 92B3      		in r25,50-32
-  71 002e 8295      		swap r24
-  72               	.LVL2:
-  73 0030 807F      		andi r24,lo8(-16)
-  74 0032 982B      		or r25,r24
-  75 0034 92BB      		out 50-32,r25
-  76               	.LM13:
-  77 0036 929A      		sbi 50-32,2
-  78               	.LBB88:
-  79               	.LBB89:
-  80               	.LBB90:
-  81               	.LBB91:
-  82               	.LM14:
-  83 0038 C901      		movw r24,r18
-  84               	.LVL3:
-  85               	/* #APP */
-  86               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
-  87 003a 0197      		1: sbiw r24,1
-  88 003c 01F4      		brne 1b
-  89               	 ;  0 "" 2
-  90               	/* #NOAPP */
-  91               	.LBE91:
-  92               	.LBE90:
-  93               	.LBE89:
-  94               	.LBE88:
-  95               	.LM15:
-  96 003e 9298      		cbi 50-32,2
-  97               	/* epilogue start */
-  98               	.LM16:
-  99 0040 0895      		ret
- 100               	.LFE6:
- 102               	.global	lcdData
- 104               	lcdData:
- 105               	.LFB7:
- 106               	.LM17:
- 107               	.LVL4:
- 108               	/* prologue: function */
- 109               	/* frame size = 0 */
- 110               	.LM18:
- 111 0042 909A      		sbi 50-32,0
- 112               	.LM19:
- 113 0044 9198      		cbi 50-32,1
- 114               	.LM20:
- 115 0046 9298      		cbi 50-32,2
- 116               	.LM21:
- 117 0048 92B3      		in r25,50-32
- 118 004a 9F70      		andi r25,lo8(15)
- 119 004c 92BB      		out 50-32,r25
- 120               	.LM22:
- 121 004e 22B3      		in r18,50-32
- 122 0050 982F      		mov r25,r24
- 123 0052 907F      		andi r25,lo8(-16)
- 124 0054 922B      		or r25,r18
- 125 0056 92BB      		out 50-32,r25
- 126               	.LM23:
- 127 0058 9198      		cbi 50-32,1
- 128               	.LM24:
- 129 005a 929A      		sbi 50-32,2
- 130               	.LBB92:
- 131               	.LBB93:
- 132               	.LBB94:
- 133               	.LBB95:
- 134               	.LM25:
- 135 005c 24EF      		ldi r18,lo8(500)
- 136 005e 31E0      		ldi r19,hi8(500)
- 137 0060 F901      		movw r30,r18
- 138               	.LVL5:
- 139               	/* #APP */
- 140               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 141 0062 3197      		1: sbiw r30,1
- 142 0064 01F4      		brne 1b
- 143               	 ;  0 "" 2
- 144               	/* #NOAPP */
- 145               	.LBE95:
- 146               	.LBE94:
- 147               	.LBE93:
- 148               	.LBE92:
- 149               	.LM26:
- 150 0066 9298      		cbi 50-32,2
- 151               	.LM27:
- 152 0068 92B3      		in r25,50-32
- 153 006a 9F70      		andi r25,lo8(15)
- 154 006c 92BB      		out 50-32,r25
- 155               	.LM28:
- 156 006e 92B3      		in r25,50-32
- 157 0070 8295      		swap r24
- 158               	.LVL6:
- 159 0072 807F      		andi r24,lo8(-16)
- 160 0074 982B      		or r25,r24
- 161 0076 92BB      		out 50-32,r25
- 162               	.LM29:
- 163 0078 929A      		sbi 50-32,2
- 164               	.LBB96:
- 165               	.LBB97:
- 166               	.LBB98:
- 167               	.LBB99:
- 168               	.LM30:
- 169 007a C901      		movw r24,r18
- 170               	.LVL7:
- 171               	/* #APP */
- 172               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 173 007c 0197      		1: sbiw r24,1
- 174 007e 01F4      		brne 1b
- 175               	 ;  0 "" 2
- 176               	/* #NOAPP */
- 177               	.LBE99:
- 178               	.LBE98:
- 179               	.LBE97:
- 180               	.LBE96:
- 181               	.LM31:
- 182 0080 9298      		cbi 50-32,2
- 183               	/* epilogue start */
- 184               	.LM32:
- 185 0082 0895      		ret
- 186               	.LFE7:
- 188               	.global	lcdInit
- 190               	lcdInit:
- 191               	.LFB8:
- 192               	.LM33:
- 193 0084 0F93      		push r16
- 194 0086 1F93      		push r17
- 195               	/* prologue: function */
- 196               	/* frame size = 0 */
- 197               	.LM34:
- 198 0088 9098      		cbi 50-32,0
- 199               	.LM35:
- 200 008a 9298      		cbi 50-32,2
- 201               	.LM36:
- 202 008c 9198      		cbi 50-32,1
- 203               	.LM37:
- 204 008e 82B3      		in r24,50-32
- 205 0090 8063      		ori r24,lo8(48)
- 206 0092 82BB      		out 50-32,r24
- 207               	.LBB100:
- 208               	.LBB101:
- 209               	.LBB102:
- 210               	.LBB103:
- 211               	.LM38:
- 212 0094 80E1      		ldi r24,lo8(10000)
- 213 0096 97E2      		ldi r25,hi8(10000)
- 214               	.LVL8:
- 215               	/* #APP */
- 216               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 217 0098 0197      		1: sbiw r24,1
- 218 009a 01F4      		brne 1b
- 219               	 ;  0 "" 2
- 220               	/* #NOAPP */
- 221               	.LBE103:
- 222               	.LBE102:
- 223               	.LBE101:
- 224               	.LBE100:
- 225               	.LM39:
- 226 009c 929A      		sbi 50-32,2
- 227               	.LM40:
- 228 009e 9298      		cbi 50-32,2
- 229               	.LBB104:
- 230               	.LBB105:
- 231               	.LBB106:
- 232               	.LBB107:
- 233               	.LM41:
- 234 00a0 82EE      		ldi r24,lo8(1250)
- 235 00a2 94E0      		ldi r25,hi8(1250)
- 236               	.LVL9:
- 237 00a4 FC01      		movw r30,r24
- 238               	.LVL10:
- 239               	/* #APP */
- 240               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 241 00a6 3197      		1: sbiw r30,1
- 242 00a8 01F4      		brne 1b
- 243               	 ;  0 "" 2
- 244               	/* #NOAPP */
- 245               	.LBE107:
- 246               	.LBE106:
- 247               	.LBE105:
- 248               	.LBE104:
- 249               	.LM42:
- 250 00aa 929A      		sbi 50-32,2
- 251               	.LM43:
- 252 00ac 9298      		cbi 50-32,2
- 253               	.LBB108:
- 254               	.LBB109:
- 255               	.LBB110:
- 256               	.LBB111:
- 257               	.LM44:
- 258               	/* #APP */
- 259               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 260 00ae 0197      		1: sbiw r24,1
- 261 00b0 01F4      		brne 1b
- 262               	 ;  0 "" 2
- 263               	.LVL11:
- 264               	/* #NOAPP */
- 265               	.LBE111:
- 266               	.LBE110:
- 267               	.LBE109:
- 268               	.LBE108:
- 269               	.LM45:
- 270 00b2 929A      		sbi 50-32,2
- 271               	.LM46:
- 272 00b4 9298      		cbi 50-32,2
- 273               	.LBB112:
- 274               	.LBB113:
- 275               	.LBB114:
- 276               	.LBB115:
- 277               	.LM47:
- 278 00b6 84EF      		ldi r24,lo8(500)
- 279 00b8 91E0      		ldi r25,hi8(500)
- 280               	.LVL12:
- 281               	/* #APP */
- 282               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 283 00ba 0197      		1: sbiw r24,1
- 284 00bc 01F4      		brne 1b
- 285               	 ;  0 "" 2
- 286               	/* #NOAPP */
- 287               	.LBE115:
- 288               	.LBE114:
- 289               	.LBE113:
- 290               	.LBE112:
- 291               	.LM48:
- 292 00be 82B3      		in r24,50-32
- 293               	.LVL13:
- 294 00c0 8072      		andi r24,lo8(32)
- 295 00c2 82BB      		out 50-32,r24
- 296               	.LM49:
- 297 00c4 929A      		sbi 50-32,2
- 298               	.LM50:
- 299 00c6 9298      		cbi 50-32,2
- 300               	.LM51:
- 301 00c8 88E2      		ldi r24,lo8(40)
- 302 00ca 0E94 0000 		call lcdcmd
- 303               	.LVL14:
- 304               	.LBB116:
- 305               	.LBB117:
- 306               	.LBB118:
- 307               	.LBB119:
- 308               	.LM52:
- 309 00ce 04ED      		ldi r16,lo8(12500)
- 310 00d0 10E3      		ldi r17,hi8(12500)
- 311 00d2 C801      		movw r24,r16
- 312               	.LVL15:
- 313               	/* #APP */
- 314               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 315 00d4 0197      		1: sbiw r24,1
- 316 00d6 01F4      		brne 1b
- 317               	 ;  0 "" 2
- 318               	/* #NOAPP */
- 319               	.LBE119:
- 320               	.LBE118:
- 321               	.LBE117:
- 322               	.LBE116:
- 323               	.LM53:
- 324 00d8 8EE0      		ldi r24,lo8(14)
- 325               	.LVL16:
- 326 00da 0E94 0000 		call lcdcmd
- 327               	.LBB120:
- 328               	.LBB121:
- 329               	.LBB122:
- 330               	.LBB123:
- 331               	.LM54:
- 332 00de C801      		movw r24,r16
- 333               	.LVL17:
- 334               	/* #APP */
- 335               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 336 00e0 0197      		1: sbiw r24,1
- 337 00e2 01F4      		brne 1b
- 338               	 ;  0 "" 2
- 339               	/* #NOAPP */
- 340               	.LBE123:
- 341               	.LBE122:
- 342               	.LBE121:
- 343               	.LBE120:
- 344               	.LM55:
- 345 00e4 81E0      		ldi r24,lo8(1)
- 346               	.LVL18:
- 347 00e6 0E94 0000 		call lcdcmd
- 348               	.LBB124:
- 349               	.LBB125:
- 350               	.LBB126:
- 351               	.LBB127:
- 352               	.LM56:
- 353 00ea C801      		movw r24,r16
- 354               	.LVL19:
- 355               	/* #APP */
- 356               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 357 00ec 0197      		1: sbiw r24,1
- 358 00ee 01F4      		brne 1b
- 359               	 ;  0 "" 2
- 360               	/* #NOAPP */
- 361               	.LBE127:
- 362               	.LBE126:
- 363               	.LBE125:
- 364               	.LBE124:
- 365               	.LM57:
- 366 00f0 86E0      		ldi r24,lo8(6)
- 367               	.LVL20:
- 368 00f2 0E94 0000 		call lcdcmd
- 369               	.LBB128:
- 370               	.LBB129:
- 371               	.LBB130:
- 372               	.LBB131:
- 373               	.LM58:
- 374 00f6 C801      		movw r24,r16
- 375               	.LVL21:
- 376               	/* #APP */
- 377               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 378 00f8 0197      		1: sbiw r24,1
- 379 00fa 01F4      		brne 1b
- 380               	 ;  0 "" 2
- 381               	/* #NOAPP */
- 382               	.LBE131:
- 383               	.LBE130:
- 384               	.LBE129:
- 385               	.LBE128:
- 386               	.LM59:
- 387 00fc 80E8      		ldi r24,lo8(-128)
- 388               	.LVL22:
- 389 00fe 0E94 0000 		call lcdcmd
- 390               	.LBB132:
- 391               	.LBB133:
- 392               	.LBB134:
- 393               	.LBB135:
- 394               	.LM60:
- 395 0102 C801      		movw r24,r16
- 396               	.LVL23:
- 397               	/* #APP */
- 398               	 ;  105 "c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h" 1
- 399 0104 0197      		1: sbiw r24,1
- 400 0106 01F4      		brne 1b
- 401               	 ;  0 "" 2
- 402               	/* epilogue start */
- 403               	/* #NOAPP */
- 404               	.LBE135:
- 405               	.LBE134:
- 406               	.LBE133:
- 407               	.LBE132:
- 408               	.LM61:
- 409 0108 1F91      		pop r17
- 410 010a 0F91      		pop r16
- 411 010c 0895      		ret
- 412               	.LFE8:
- 414               	.global	prints
- 416               	prints:
- 417               	.LFB9:
- 418               	.LM62:
- 419               	.LVL24:
- 420 010e CF93      		push r28
- 421 0110 DF93      		push r29
- 422               	/* prologue: function */
- 423               	/* frame size = 0 */
- 424 0112 EC01      		movw r28,r24
- 425 0114 00C0      		rjmp .L8
- 426               	.LVL25:
- 427               	.L9:
- 428               	.LM63:
- 429 0116 0E94 0000 		call lcdData
- 430               	.LM64:
- 431 011a 2196      		adiw r28,1
- 432               	.LVL26:
- 433               	.L8:
- 434               	.LM65:
- 435 011c 8881      		ld r24,Y
- 436 011e 8823      		tst r24
- 437 0120 01F4      		brne .L9
- 438               	/* epilogue start */
- 439               	.LM66:
- 440 0122 DF91      		pop r29
- 441 0124 CF91      		pop r28
- 442               	.LVL27:
- 443 0126 0895      		ret
- 444               	.LFE9:
- 446               	.global	gotoXy
- 448               	gotoXy:
- 449               	.LFB10:
- 450               	.LM67:
- 451               	.LVL28:
- 452               	/* prologue: function */
- 453               	/* frame size = 0 */
- 454               	.LM68:
- 455 0128 8832      		cpi r24,lo8(40)
- 456 012a 00F4      		brsh .L14
- 457               	.LM69:
- 458 012c 6111      		cpse r22,__zero_reg__
- 459 012e 8064      		ori r24,lo8(64)
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	lcdcmd
+  12               	lcdcmd:
+  13               	.LFB6:
+  14               		.file 1 "lcd.c"
+   1:lcd.c         **** 
+   2:lcd.c         **** #include "lcd.h"
+   3:lcd.c         **** #include <util/delay.h>
+   4:lcd.c         **** 
+   5:lcd.c         **** void lcdcmd(unsigned char Data)
+   6:lcd.c         **** {
+  15               		.loc 1 6 0
+  16               		.cfi_startproc
+  17               	.LVL0:
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20               	/* stack size = 0 */
+  21               	.L__stack_usage = 0
+   7:lcd.c         **** 
+   8:lcd.c         **** PORTD &= ~RS; //because sending command
+  22               		.loc 1 8 0
+  23 0000 9098      		cbi 0x12,0
+   9:lcd.c         **** PORTD  &=~EN;
+  24               		.loc 1 9 0
+  25 0002 9298      		cbi 0x12,2
+  10:lcd.c         **** PORTD &=~RW;
+  26               		.loc 1 10 0
+  27 0004 9198      		cbi 0x12,1
+  11:lcd.c         **** PORTD &= 0x0f;
+  28               		.loc 1 11 0
+  29 0006 92B3      		in r25,0x12
+  30 0008 9F70      		andi r25,lo8(15)
+  31 000a 92BB      		out 0x12,r25
+  12:lcd.c         **** 
+  13:lcd.c         **** PORTD |= ((Data ) & 0xf0);
+  32               		.loc 1 13 0
+  33 000c 92B3      		in r25,0x12
+  34 000e 282F      		mov r18,r24
+  35 0010 207F      		andi r18,lo8(-16)
+  36 0012 922B      		or r25,r18
+  37 0014 92BB      		out 0x12,r25
+  14:lcd.c         **** PORTD &=~RW;
+  38               		.loc 1 14 0
+  39 0016 9198      		cbi 0x12,1
+  15:lcd.c         **** PORTD  |=EN;
+  40               		.loc 1 15 0
+  41 0018 929A      		sbi 0x12,2
+  42               	.LVL1:
+  43               	.LBB28:
+  44               	.LBB29:
+  45               		.file 2 "/usr/lib/avr/include/util/delay.h"
+   1:/usr/lib/avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
+   2:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
+   3:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
+   4:/usr/lib/avr/include/util/delay.h ****    All rights reserved.
+   5:/usr/lib/avr/include/util/delay.h **** 
+   6:/usr/lib/avr/include/util/delay.h ****    Redistribution and use in source and binary forms, with or without
+   7:/usr/lib/avr/include/util/delay.h ****    modification, are permitted provided that the following conditions are met:
+   8:/usr/lib/avr/include/util/delay.h **** 
+   9:/usr/lib/avr/include/util/delay.h ****    * Redistributions of source code must retain the above copyright
+  10:/usr/lib/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer.
+  11:/usr/lib/avr/include/util/delay.h **** 
+  12:/usr/lib/avr/include/util/delay.h ****    * Redistributions in binary form must reproduce the above copyright
+  13:/usr/lib/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer in
+  14:/usr/lib/avr/include/util/delay.h ****      the documentation and/or other materials provided with the
+  15:/usr/lib/avr/include/util/delay.h ****      distribution.
+  16:/usr/lib/avr/include/util/delay.h **** 
+  17:/usr/lib/avr/include/util/delay.h ****    * Neither the name of the copyright holders nor the names of
+  18:/usr/lib/avr/include/util/delay.h ****      contributors may be used to endorse or promote products derived
+  19:/usr/lib/avr/include/util/delay.h ****      from this software without specific prior written permission.
+  20:/usr/lib/avr/include/util/delay.h **** 
+  21:/usr/lib/avr/include/util/delay.h ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:/usr/lib/avr/include/util/delay.h ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:/usr/lib/avr/include/util/delay.h ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:/usr/lib/avr/include/util/delay.h ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  25:/usr/lib/avr/include/util/delay.h ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:/usr/lib/avr/include/util/delay.h ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:/usr/lib/avr/include/util/delay.h ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:/usr/lib/avr/include/util/delay.h ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:/usr/lib/avr/include/util/delay.h ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:/usr/lib/avr/include/util/delay.h ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:/usr/lib/avr/include/util/delay.h ****   POSSIBILITY OF SUCH DAMAGE. */
+  32:/usr/lib/avr/include/util/delay.h **** 
+  33:/usr/lib/avr/include/util/delay.h **** /* $Id$ */
+  34:/usr/lib/avr/include/util/delay.h **** 
+  35:/usr/lib/avr/include/util/delay.h **** #ifndef _UTIL_DELAY_H_
+  36:/usr/lib/avr/include/util/delay.h **** #define _UTIL_DELAY_H_ 1
+  37:/usr/lib/avr/include/util/delay.h **** 
+  38:/usr/lib/avr/include/util/delay.h **** #ifndef __HAS_DELAY_CYCLES
+  39:/usr/lib/avr/include/util/delay.h **** #define __HAS_DELAY_CYCLES 1
+  40:/usr/lib/avr/include/util/delay.h **** #endif
+  41:/usr/lib/avr/include/util/delay.h **** 
+  42:/usr/lib/avr/include/util/delay.h **** #include <inttypes.h>
+  43:/usr/lib/avr/include/util/delay.h **** #include <util/delay_basic.h>
+  44:/usr/lib/avr/include/util/delay.h **** #include <math.h>
+  45:/usr/lib/avr/include/util/delay.h **** 
+  46:/usr/lib/avr/include/util/delay.h **** /** \file */
+  47:/usr/lib/avr/include/util/delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
+  48:/usr/lib/avr/include/util/delay.h ****     \code
+  49:/usr/lib/avr/include/util/delay.h ****     #define F_CPU 1000000UL  // 1 MHz
+  50:/usr/lib/avr/include/util/delay.h ****     //#define F_CPU 14.7456E6
+  51:/usr/lib/avr/include/util/delay.h ****     #include <util/delay.h>
+  52:/usr/lib/avr/include/util/delay.h ****     \endcode
+  53:/usr/lib/avr/include/util/delay.h **** 
+  54:/usr/lib/avr/include/util/delay.h ****     \note As an alternative method, it is possible to pass the
+  55:/usr/lib/avr/include/util/delay.h ****     F_CPU macro down to the compiler from the Makefile.
+  56:/usr/lib/avr/include/util/delay.h ****     Obviously, in that case, no \c \#define statement should be
+  57:/usr/lib/avr/include/util/delay.h ****     used.
+  58:/usr/lib/avr/include/util/delay.h **** 
+  59:/usr/lib/avr/include/util/delay.h ****     The functions in this header file are wrappers around the basic
+  60:/usr/lib/avr/include/util/delay.h ****     busy-wait functions from <util/delay_basic.h>.  They are meant as
+  61:/usr/lib/avr/include/util/delay.h ****     convenience functions where actual time values can be specified
+  62:/usr/lib/avr/include/util/delay.h ****     rather than a number of cycles to wait for.  The idea behind is
+  63:/usr/lib/avr/include/util/delay.h ****     that compile-time constant expressions will be eliminated by
+  64:/usr/lib/avr/include/util/delay.h ****     compiler optimization so floating-point expressions can be used
+  65:/usr/lib/avr/include/util/delay.h ****     to calculate the number of delay cycles needed based on the CPU
+  66:/usr/lib/avr/include/util/delay.h ****     frequency passed by the macro F_CPU.
+  67:/usr/lib/avr/include/util/delay.h **** 
+  68:/usr/lib/avr/include/util/delay.h ****     \note In order for these functions to work as intended, compiler
+  69:/usr/lib/avr/include/util/delay.h ****     optimizations <em>must</em> be enabled, and the delay time
+  70:/usr/lib/avr/include/util/delay.h ****     <em>must</em> be an expression that is a known constant at
+  71:/usr/lib/avr/include/util/delay.h ****     compile-time.  If these requirements are not met, the resulting
+  72:/usr/lib/avr/include/util/delay.h ****     delay will be much longer (and basically unpredictable), and
+  73:/usr/lib/avr/include/util/delay.h ****     applications that otherwise do not use floating-point calculations
+  74:/usr/lib/avr/include/util/delay.h ****     will experience severe code bloat by the floating-point library
+  75:/usr/lib/avr/include/util/delay.h ****     routines linked into the application.
+  76:/usr/lib/avr/include/util/delay.h **** 
+  77:/usr/lib/avr/include/util/delay.h ****     The functions available allow the specification of microsecond, and
+  78:/usr/lib/avr/include/util/delay.h ****     millisecond delays directly, using the application-supplied macro
+  79:/usr/lib/avr/include/util/delay.h ****     F_CPU as the CPU clock frequency (in Hertz).
+  80:/usr/lib/avr/include/util/delay.h **** 
+  81:/usr/lib/avr/include/util/delay.h **** */
+  82:/usr/lib/avr/include/util/delay.h **** 
+  83:/usr/lib/avr/include/util/delay.h **** #if !defined(__DOXYGEN__)
+  84:/usr/lib/avr/include/util/delay.h **** static inline void _delay_us(double __us) __attribute__((always_inline));
+  85:/usr/lib/avr/include/util/delay.h **** static inline void _delay_ms(double __ms) __attribute__((always_inline));
+  86:/usr/lib/avr/include/util/delay.h **** #endif
+  87:/usr/lib/avr/include/util/delay.h **** 
+  88:/usr/lib/avr/include/util/delay.h **** #ifndef F_CPU
+  89:/usr/lib/avr/include/util/delay.h **** /* prevent compiler error by supplying a default */
+  90:/usr/lib/avr/include/util/delay.h **** # warning "F_CPU not defined for <util/delay.h>"
+  91:/usr/lib/avr/include/util/delay.h **** # define F_CPU 1000000UL
+  92:/usr/lib/avr/include/util/delay.h **** #endif
+  93:/usr/lib/avr/include/util/delay.h **** 
+  94:/usr/lib/avr/include/util/delay.h **** #ifndef __OPTIMIZE__
+  95:/usr/lib/avr/include/util/delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+  96:/usr/lib/avr/include/util/delay.h **** #endif
+  97:/usr/lib/avr/include/util/delay.h **** 
+  98:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+  99:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 100:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 101:/usr/lib/avr/include/util/delay.h **** #  include <math.h>
+ 102:/usr/lib/avr/include/util/delay.h **** #endif
+ 103:/usr/lib/avr/include/util/delay.h **** 
+ 104:/usr/lib/avr/include/util/delay.h **** /**
+ 105:/usr/lib/avr/include/util/delay.h ****    \ingroup util_delay
+ 106:/usr/lib/avr/include/util/delay.h **** 
+ 107:/usr/lib/avr/include/util/delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
+ 108:/usr/lib/avr/include/util/delay.h **** 
+ 109:/usr/lib/avr/include/util/delay.h ****    The macro F_CPU is supposed to be defined to a
+ 110:/usr/lib/avr/include/util/delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 111:/usr/lib/avr/include/util/delay.h **** 
+ 112:/usr/lib/avr/include/util/delay.h ****    The maximal possible delay is 262.14 ms / F_CPU in MHz.
+ 113:/usr/lib/avr/include/util/delay.h **** 
+ 114:/usr/lib/avr/include/util/delay.h ****    When the user request delay which exceed the maximum possible one,
+ 115:/usr/lib/avr/include/util/delay.h ****    _delay_ms() provides a decreased resolution functionality. In this
+ 116:/usr/lib/avr/include/util/delay.h ****    mode _delay_ms() will work with a resolution of 1/10 ms, providing
+ 117:/usr/lib/avr/include/util/delay.h ****    delays up to 6.5535 seconds (independent from CPU frequency).  The
+ 118:/usr/lib/avr/include/util/delay.h ****    user will not be informed about decreased resolution.
+ 119:/usr/lib/avr/include/util/delay.h **** 
+ 120:/usr/lib/avr/include/util/delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles(unsigned long)
+ 121:/usr/lib/avr/include/util/delay.h ****    support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+ 122:/usr/lib/avr/include/util/delay.h ****    values greater than the maximal possible delay, overflows results in
+ 123:/usr/lib/avr/include/util/delay.h ****    no delay i.e., 0ms.
+ 124:/usr/lib/avr/include/util/delay.h **** 
+ 125:/usr/lib/avr/include/util/delay.h ****    Conversion of __us into clock cycles may not always result in integer.
+ 126:/usr/lib/avr/include/util/delay.h ****    By default, the clock cycles rounded up to next integer. This ensures that
+ 127:/usr/lib/avr/include/util/delay.h ****    the user gets atleast __us microseconds of delay.
+ 128:/usr/lib/avr/include/util/delay.h **** 
+ 129:/usr/lib/avr/include/util/delay.h ****    Alternatively, user can define __DELAY_ROUND_DOWN__ and __DELAY_ROUND_CLOSEST__
+ 130:/usr/lib/avr/include/util/delay.h ****    to round down and round to closest integer.
+ 131:/usr/lib/avr/include/util/delay.h **** 
+ 132:/usr/lib/avr/include/util/delay.h ****    Note: The new implementation of _delay_ms(double __ms) with 
+ 133:/usr/lib/avr/include/util/delay.h ****     __builtin_avr_delay_cycles(unsigned long) support is not backward compatible. 
+ 134:/usr/lib/avr/include/util/delay.h ****    User can define __DELAY_BACKWARD_COMPATIBLE__ to get a backward compatible delay.
+ 135:/usr/lib/avr/include/util/delay.h ****    Also, the backward compatible
+ 136:/usr/lib/avr/include/util/delay.h ****    algorithm will be chosen if the code is compiled in a <em>freestanding
+ 137:/usr/lib/avr/include/util/delay.h ****    environment</em> (GCC option \c -ffreestanding), as the math functions
+ 138:/usr/lib/avr/include/util/delay.h ****    required for rounding are not available to the compiler then.
+ 139:/usr/lib/avr/include/util/delay.h **** 
+ 140:/usr/lib/avr/include/util/delay.h ****  */
+ 141:/usr/lib/avr/include/util/delay.h **** void
+ 142:/usr/lib/avr/include/util/delay.h **** _delay_ms(double __ms)
+ 143:/usr/lib/avr/include/util/delay.h **** {
+ 144:/usr/lib/avr/include/util/delay.h **** 	double __tmp ; 
+ 145:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 146:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 147:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 148:/usr/lib/avr/include/util/delay.h **** 	uint32_t __ticks_dc;
+ 149:/usr/lib/avr/include/util/delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 150:/usr/lib/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+ 151:/usr/lib/avr/include/util/delay.h **** 
+ 152:/usr/lib/avr/include/util/delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 153:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 154:/usr/lib/avr/include/util/delay.h **** 
+ 155:/usr/lib/avr/include/util/delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 156:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 157:/usr/lib/avr/include/util/delay.h **** 
+ 158:/usr/lib/avr/include/util/delay.h **** 	#else
+ 159:/usr/lib/avr/include/util/delay.h **** 		//round up by default
+ 160:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 161:/usr/lib/avr/include/util/delay.h **** 	#endif
+ 162:/usr/lib/avr/include/util/delay.h **** 
+ 163:/usr/lib/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+  46               		.loc 2 163 0
+  47 001a E3EF      		ldi r30,lo8(499)
+  48 001c F1E0      		ldi r31,hi8(499)
+  49 001e 3197      	1:	sbiw r30,1
+  50 0020 01F4      		brne 1b
+  51 0022 00C0      		rjmp .
+  52 0024 0000      		nop
+  53               	.LBE29:
+  54               	.LBE28:
+  16:lcd.c         **** _delay_ms(2);
+  17:lcd.c         **** PORTD  &=~EN;
+  55               		.loc 1 17 0
+  56 0026 9298      		cbi 0x12,2
+  18:lcd.c         **** 
+  19:lcd.c         **** PORTD &= 0x0f;
+  57               		.loc 1 19 0
+  58 0028 92B3      		in r25,0x12
+  59 002a 9F70      		andi r25,lo8(15)
+  60 002c 92BB      		out 0x12,r25
+  20:lcd.c         **** 
+  21:lcd.c         **** PORTD  |= ((Data<<4) &  0xf0);
+  61               		.loc 1 21 0
+  62 002e 22B3      		in r18,0x12
+  63 0030 F0E1      		ldi r31,lo8(16)
+  64 0032 8F9F      		mul r24,r31
+  65 0034 C001      		movw r24,r0
+  66 0036 1124      		clr __zero_reg__
+  67               	.LVL2:
+  68 0038 822B      		or r24,r18
+  69 003a 82BB      		out 0x12,r24
+  22:lcd.c         **** PORTD  |=EN;
+  70               		.loc 1 22 0
+  71 003c 929A      		sbi 0x12,2
+  72               	.LVL3:
+  73               	.LBB30:
+  74               	.LBB31:
+  75               		.loc 2 163 0
+  76 003e 83EF      		ldi r24,lo8(499)
+  77 0040 91E0      		ldi r25,hi8(499)
+  78 0042 0197      	1:	sbiw r24,1
+  79 0044 01F4      		brne 1b
+  80 0046 00C0      		rjmp .
+  81 0048 0000      		nop
+  82               	.LBE31:
+  83               	.LBE30:
+  23:lcd.c         **** _delay_ms(2);
+  24:lcd.c         **** PORTD  &=~EN;
+  84               		.loc 1 24 0
+  85 004a 9298      		cbi 0x12,2
+  86 004c 0895      		ret
+  87               		.cfi_endproc
+  88               	.LFE6:
+  90               	.global	lcdData
+  92               	lcdData:
+  93               	.LFB7:
+  25:lcd.c         **** 
+  26:lcd.c         **** 
+  27:lcd.c         **** }
+  28:lcd.c         **** void lcdData(unsigned char l)
+  29:lcd.c         **** {
+  94               		.loc 1 29 0
+  95               		.cfi_startproc
+  96               	.LVL4:
+  97               	/* prologue: function */
+  98               	/* frame size = 0 */
+  99               	/* stack size = 0 */
+ 100               	.L__stack_usage = 0
+  30:lcd.c         **** PORTD |=RS;  //because sending data
+ 101               		.loc 1 30 0
+ 102 004e 909A      		sbi 0x12,0
+  31:lcd.c         **** PORTD &=~RW;
+ 103               		.loc 1 31 0
+ 104 0050 9198      		cbi 0x12,1
+  32:lcd.c         **** PORTD  &=~EN;
+ 105               		.loc 1 32 0
+ 106 0052 9298      		cbi 0x12,2
+  33:lcd.c         **** PORTD &= 0x0f;
+ 107               		.loc 1 33 0
+ 108 0054 92B3      		in r25,0x12
+ 109 0056 9F70      		andi r25,lo8(15)
+ 110 0058 92BB      		out 0x12,r25
+  34:lcd.c         **** PORTD |=((l ) & 0xf0);
+ 111               		.loc 1 34 0
+ 112 005a 92B3      		in r25,0x12
+ 113 005c 282F      		mov r18,r24
+ 114 005e 207F      		andi r18,lo8(-16)
+ 115 0060 922B      		or r25,r18
+ 116 0062 92BB      		out 0x12,r25
+  35:lcd.c         **** PORTD &=~RW;
+ 117               		.loc 1 35 0
+ 118 0064 9198      		cbi 0x12,1
+  36:lcd.c         **** PORTD  |=EN;
+ 119               		.loc 1 36 0
+ 120 0066 929A      		sbi 0x12,2
+ 121               	.LVL5:
+ 122               	.LBB32:
+ 123               	.LBB33:
+ 124               		.loc 2 163 0
+ 125 0068 E3EF      		ldi r30,lo8(499)
+ 126 006a F1E0      		ldi r31,hi8(499)
+ 127 006c 3197      	1:	sbiw r30,1
+ 128 006e 01F4      		brne 1b
+ 129 0070 00C0      		rjmp .
+ 130 0072 0000      		nop
+ 131               	.LBE33:
+ 132               	.LBE32:
+  37:lcd.c         **** _delay_ms(2);
+  38:lcd.c         **** PORTD  &=~EN;
+ 133               		.loc 1 38 0
+ 134 0074 9298      		cbi 0x12,2
+  39:lcd.c         **** PORTD &= 0x0f;
+ 135               		.loc 1 39 0
+ 136 0076 92B3      		in r25,0x12
+ 137 0078 9F70      		andi r25,lo8(15)
+ 138 007a 92BB      		out 0x12,r25
+  40:lcd.c         **** PORTD  |= ((l<<4) &  0xf0);
+ 139               		.loc 1 40 0
+ 140 007c 22B3      		in r18,0x12
+ 141 007e F0E1      		ldi r31,lo8(16)
+ 142 0080 8F9F      		mul r24,r31
+ 143 0082 C001      		movw r24,r0
+ 144 0084 1124      		clr __zero_reg__
+ 145               	.LVL6:
+ 146 0086 822B      		or r24,r18
+ 147 0088 82BB      		out 0x12,r24
+  41:lcd.c         **** PORTD  |=EN;
+ 148               		.loc 1 41 0
+ 149 008a 929A      		sbi 0x12,2
+ 150               	.LVL7:
+ 151               	.LBB34:
+ 152               	.LBB35:
+ 153               		.loc 2 163 0
+ 154 008c 83EF      		ldi r24,lo8(499)
+ 155 008e 91E0      		ldi r25,hi8(499)
+ 156 0090 0197      	1:	sbiw r24,1
+ 157 0092 01F4      		brne 1b
+ 158 0094 00C0      		rjmp .
+ 159 0096 0000      		nop
+ 160               	.LBE35:
+ 161               	.LBE34:
+  42:lcd.c         **** _delay_ms(2);
+  43:lcd.c         **** PORTD  &=~EN;
+ 162               		.loc 1 43 0
+ 163 0098 9298      		cbi 0x12,2
+ 164 009a 0895      		ret
+ 165               		.cfi_endproc
+ 166               	.LFE7:
+ 168               	.global	lcdInit
+ 170               	lcdInit:
+ 171               	.LFB8:
+  44:lcd.c         **** 
+  45:lcd.c         **** 
+  46:lcd.c         **** 
+  47:lcd.c         **** }
+  48:lcd.c         **** 
+  49:lcd.c         **** void lcdInit(void)
+  50:lcd.c         **** {
+ 172               		.loc 1 50 0
+ 173               		.cfi_startproc
+ 174               	/* prologue: function */
+ 175               	/* frame size = 0 */
+ 176               	/* stack size = 0 */
+ 177               	.L__stack_usage = 0
+  51:lcd.c         **** PORTD &=~RS;
+ 178               		.loc 1 51 0
+ 179 009c 9098      		cbi 0x12,0
+  52:lcd.c         **** PORTD  &=~EN;
+ 180               		.loc 1 52 0
+ 181 009e 9298      		cbi 0x12,2
+  53:lcd.c         **** PORTD &=~RW;
+ 182               		.loc 1 53 0
+ 183 00a0 9198      		cbi 0x12,1
+  54:lcd.c         **** PORTD |= 0x30;
+ 184               		.loc 1 54 0
+ 185 00a2 82B3      		in r24,0x12
+ 186 00a4 8063      		ori r24,lo8(48)
+ 187 00a6 82BB      		out 0x12,r24
+ 188               	.LVL8:
+ 189               	.LBB36:
+ 190               	.LBB37:
+ 191               		.loc 2 163 0
+ 192 00a8 8FE0      		ldi r24,lo8(9999)
+ 193 00aa 97E2      		ldi r25,hi8(9999)
+ 194 00ac 0197      	1:	sbiw r24,1
+ 195 00ae 01F4      		brne 1b
+ 196 00b0 00C0      		rjmp .
+ 197 00b2 0000      		nop
+ 198               	.LBE37:
+ 199               	.LBE36:
+  55:lcd.c         **** _delay_ms(40);
+  56:lcd.c         **** PORTD  |=EN;
+ 200               		.loc 1 56 0
+ 201 00b4 929A      		sbi 0x12,2
+  57:lcd.c         **** PORTD  &=~EN;
+ 202               		.loc 1 57 0
+ 203 00b6 9298      		cbi 0x12,2
+ 204               	.LVL9:
+ 205               	.LBB38:
+ 206               	.LBB39:
+ 207               		.loc 2 163 0
+ 208 00b8 81EE      		ldi r24,lo8(1249)
+ 209 00ba 94E0      		ldi r25,hi8(1249)
+ 210 00bc 0197      	1:	sbiw r24,1
+ 211 00be 01F4      		brne 1b
+ 212 00c0 00C0      		rjmp .
+ 213 00c2 0000      		nop
+ 214               	.LBE39:
+ 215               	.LBE38:
+  58:lcd.c         **** _delay_ms(5);
+  59:lcd.c         **** PORTD  |=EN;
+ 216               		.loc 1 59 0
+ 217 00c4 929A      		sbi 0x12,2
+  60:lcd.c         **** PORTD  &=~EN;
+ 218               		.loc 1 60 0
+ 219 00c6 9298      		cbi 0x12,2
+ 220               	.LVL10:
+ 221               	.LBB40:
+ 222               	.LBB41:
+ 223               		.loc 2 163 0
+ 224 00c8 81EE      		ldi r24,lo8(1249)
+ 225 00ca 94E0      		ldi r25,hi8(1249)
+ 226 00cc 0197      	1:	sbiw r24,1
+ 227 00ce 01F4      		brne 1b
+ 228 00d0 00C0      		rjmp .
+ 229 00d2 0000      		nop
+ 230               	.LBE41:
+ 231               	.LBE40:
+  61:lcd.c         **** _delay_ms(5);
+  62:lcd.c         **** PORTD  |=EN;
+ 232               		.loc 1 62 0
+ 233 00d4 929A      		sbi 0x12,2
+  63:lcd.c         **** PORTD  &=~EN;
+ 234               		.loc 1 63 0
+ 235 00d6 9298      		cbi 0x12,2
+ 236               	.LVL11:
+ 237               	.LBB42:
+ 238               	.LBB43:
+ 239               		.loc 2 163 0
+ 240 00d8 83EF      		ldi r24,lo8(499)
+ 241 00da 91E0      		ldi r25,hi8(499)
+ 242 00dc 0197      	1:	sbiw r24,1
+ 243 00de 01F4      		brne 1b
+ 244 00e0 00C0      		rjmp .
+ 245 00e2 0000      		nop
+ 246               	.LBE43:
+ 247               	.LBE42:
+  64:lcd.c         **** _delay_ms(2);
+  65:lcd.c         **** 
+  66:lcd.c         **** PORTD &= 0x20;
+ 248               		.loc 1 66 0
+ 249 00e4 82B3      		in r24,0x12
+ 250 00e6 8072      		andi r24,lo8(32)
+ 251 00e8 82BB      		out 0x12,r24
+  67:lcd.c         **** PORTD  |=EN;
+ 252               		.loc 1 67 0
+ 253 00ea 929A      		sbi 0x12,2
+  68:lcd.c         **** PORTD  &=~EN;
+ 254               		.loc 1 68 0
+ 255 00ec 9298      		cbi 0x12,2
+  69:lcd.c         **** lcdcmd(0x28);   //set data length 4 bit 2 line
+ 256               		.loc 1 69 0
+ 257 00ee 88E2      		ldi r24,lo8(40)
+ 258 00f0 0E94 0000 		call lcdcmd
+ 259               	.LVL12:
+ 260               	.LBB44:
+ 261               	.LBB45:
+ 262               		.loc 2 163 0
+ 263 00f4 83ED      		ldi r24,lo8(12499)
+ 264 00f6 90E3      		ldi r25,hi8(12499)
+ 265 00f8 0197      	1:	sbiw r24,1
+ 266 00fa 01F4      		brne 1b
+ 267 00fc 00C0      		rjmp .
+ 268 00fe 0000      		nop
+ 269               	.LBE45:
+ 270               	.LBE44:
+  70:lcd.c         **** _delay_ms(50);
+  71:lcd.c         **** lcdcmd(0x0E);   // set display on cursor on blink on
+ 271               		.loc 1 71 0
+ 272 0100 8EE0      		ldi r24,lo8(14)
+ 273 0102 0E94 0000 		call lcdcmd
+ 274               	.LVL13:
+ 275               	.LBB46:
+ 276               	.LBB47:
+ 277               		.loc 2 163 0
+ 278 0106 83ED      		ldi r24,lo8(12499)
+ 279 0108 90E3      		ldi r25,hi8(12499)
+ 280 010a 0197      	1:	sbiw r24,1
+ 281 010c 01F4      		brne 1b
+ 282 010e 00C0      		rjmp .
+ 283 0110 0000      		nop
+ 284               	.LBE47:
+ 285               	.LBE46:
+  72:lcd.c         **** _delay_ms(50);
+  73:lcd.c         **** lcdcmd(0x01); // clear lcd
+ 286               		.loc 1 73 0
+ 287 0112 81E0      		ldi r24,lo8(1)
+ 288 0114 0E94 0000 		call lcdcmd
+ 289               	.LVL14:
+ 290               	.LBB48:
+ 291               	.LBB49:
+ 292               		.loc 2 163 0
+ 293 0118 83ED      		ldi r24,lo8(12499)
+ 294 011a 90E3      		ldi r25,hi8(12499)
+ 295 011c 0197      	1:	sbiw r24,1
+ 296 011e 01F4      		brne 1b
+ 297 0120 00C0      		rjmp .
+ 298 0122 0000      		nop
+ 299               	.LBE49:
+ 300               	.LBE48:
+  74:lcd.c         **** _delay_ms(50);
+  75:lcd.c         **** lcdcmd(0x06);  // cursor shift direction
+ 301               		.loc 1 75 0
+ 302 0124 86E0      		ldi r24,lo8(6)
+ 303 0126 0E94 0000 		call lcdcmd
+ 304               	.LVL15:
+ 305               	.LBB50:
+ 306               	.LBB51:
+ 307               		.loc 2 163 0
+ 308 012a 83ED      		ldi r24,lo8(12499)
+ 309 012c 90E3      		ldi r25,hi8(12499)
+ 310 012e 0197      	1:	sbiw r24,1
+ 311 0130 01F4      		brne 1b
+ 312 0132 00C0      		rjmp .
+ 313 0134 0000      		nop
+ 314               	.LBE51:
+ 315               	.LBE50:
+  76:lcd.c         **** _delay_ms(50);
+  77:lcd.c         **** lcdcmd(0x80);  //set ram address
+ 316               		.loc 1 77 0
+ 317 0136 80E8      		ldi r24,lo8(-128)
+ 318 0138 0E94 0000 		call lcdcmd
+ 319               	.LVL16:
+ 320               	.LBB52:
+ 321               	.LBB53:
+ 322               		.loc 2 163 0
+ 323 013c 83ED      		ldi r24,lo8(12499)
+ 324 013e 90E3      		ldi r25,hi8(12499)
+ 325 0140 0197      	1:	sbiw r24,1
+ 326 0142 01F4      		brne 1b
+ 327 0144 00C0      		rjmp .
+ 328 0146 0000      		nop
+ 329 0148 0895      		ret
+ 330               	.LBE53:
+ 331               	.LBE52:
+ 332               		.cfi_endproc
+ 333               	.LFE8:
+ 335               	.global	prints
+ 337               	prints:
+ 338               	.LFB9:
+  78:lcd.c         **** _delay_ms(50);
+  79:lcd.c         **** }
+  80:lcd.c         **** 
+  81:lcd.c         **** 
+  82:lcd.c         **** 
+  83:lcd.c         **** void prints(const char *s)
+  84:lcd.c         ****   {
+ 339               		.loc 1 84 0
+ 340               		.cfi_startproc
+ 341               	.LVL17:
+ 342 014a CF93      		push r28
+ 343               	.LCFI0:
+ 344               		.cfi_def_cfa_offset 3
+ 345               		.cfi_offset 28, -2
+ 346 014c DF93      		push r29
+ 347               	.LCFI1:
+ 348               		.cfi_def_cfa_offset 4
+ 349               		.cfi_offset 29, -3
+ 350               	/* prologue: function */
+ 351               	/* frame size = 0 */
+ 352               	/* stack size = 2 */
+ 353               	.L__stack_usage = 2
+ 354 014e EC01      		movw r28,r24
+ 355               	.LVL18:
+ 356               	.L5:
+  85:lcd.c         **** 
+  86:lcd.c         ****     while (*s)
+ 357               		.loc 1 86 0
+ 358 0150 8991      		ld r24,Y+
+ 359               	.LVL19:
+ 360 0152 8823      		tst r24
+ 361 0154 01F0      		breq .L8
+  87:lcd.c         ****       {
+  88:lcd.c         **** 	 lcdData(*s);
+ 362               		.loc 1 88 0
+ 363 0156 0E94 0000 		call lcdData
+ 364               	.LVL20:
+ 365 015a 00C0      		rjmp .L5
+ 366               	.LVL21:
+ 367               	.L8:
+ 368               	/* epilogue start */
+  89:lcd.c         **** 	 s++;
+  90:lcd.c         ****       }
+  91:lcd.c         ****   }
+ 369               		.loc 1 91 0
+ 370 015c DF91      		pop r29
+ 371 015e CF91      		pop r28
+ 372               	.LVL22:
+ 373 0160 0895      		ret
+ 374               		.cfi_endproc
+ 375               	.LFE9:
+ 377               	.global	gotoXy
+ 379               	gotoXy:
+ 380               	.LFB10:
+  92:lcd.c         **** 
+  93:lcd.c         **** void gotoXy(unsigned char  x,unsigned char y)
+  94:lcd.c         **** {
+ 381               		.loc 1 94 0
+ 382               		.cfi_startproc
+ 383               	.LVL23:
+ 384               	/* prologue: function */
+ 385               	/* frame size = 0 */
+ 386               	/* stack size = 0 */
+ 387               	.L__stack_usage = 0
+  95:lcd.c         ****  if(x<40)
+ 388               		.loc 1 95 0
+ 389 0162 8832      		cpi r24,lo8(40)
+ 390 0164 00F4      		brsh .L9
+  96:lcd.c         ****  {
+  97:lcd.c         ****   if(y) x |= 0x40;
+ 391               		.loc 1 97 0
+ 392 0166 6111      		cpse r22,__zero_reg__
+ 393               		.loc 1 97 0 is_stmt 0 discriminator 1
+ 394 0168 8064      		ori r24,lo8(64)
+ 395               	.LVL24:
+ 396               	.L11:
+  98:lcd.c         ****   x |=0x80;
+  99:lcd.c         ****   lcdcmd(x);
+ 397               		.loc 1 99 0 is_stmt 1
+ 398 016a 8068      		ori r24,lo8(-128)
+ 399               	.LVL25:
+ 400 016c 0C94 0000 		jmp lcdcmd
+ 401               	.LVL26:
+ 402               	.L9:
+ 403 0170 0895      		ret
+ 404               		.cfi_endproc
+ 405               	.LFE10:
+ 407               	.global	integerToLcd
+ 409               	integerToLcd:
+ 410               	.LFB11:
+ 100:lcd.c         ****   }
+ 101:lcd.c         **** 
+ 102:lcd.c         **** }
+ 103:lcd.c         **** void integerToLcd(int integer )
+ 104:lcd.c         **** {
+ 411               		.loc 1 104 0
+ 412               		.cfi_startproc
+ 413               	.LVL27:
+ 414 0172 EF92      		push r14
+ 415               	.LCFI2:
+ 416               		.cfi_def_cfa_offset 3
+ 417               		.cfi_offset 14, -2
+ 418 0174 FF92      		push r15
+ 419               	.LCFI3:
+ 420               		.cfi_def_cfa_offset 4
+ 421               		.cfi_offset 15, -3
+ 422 0176 0F93      		push r16
+ 423               	.LCFI4:
+ 424               		.cfi_def_cfa_offset 5
+ 425               		.cfi_offset 16, -4
+ 426 0178 1F93      		push r17
+ 427               	.LCFI5:
+ 428               		.cfi_def_cfa_offset 6
+ 429               		.cfi_offset 17, -5
+ 430 017a CF93      		push r28
+ 431               	.LCFI6:
+ 432               		.cfi_def_cfa_offset 7
+ 433               		.cfi_offset 28, -6
+ 434 017c DF93      		push r29
+ 435               	.LCFI7:
+ 436               		.cfi_def_cfa_offset 8
+ 437               		.cfi_offset 29, -7
+ 438 017e 1F92      		push __zero_reg__
+ 439               	.LCFI8:
+ 440               		.cfi_def_cfa_offset 9
+ 441 0180 CDB7      		in r28,__SP_L__
+ 442 0182 DEB7      		in r29,__SP_H__
+ 443               	.LCFI9:
+ 444               		.cfi_def_cfa_register 28
+ 445               	/* prologue: function */
+ 446               	/* frame size = 1 */
+ 447               	/* stack size = 7 */
+ 448               	.L__stack_usage = 7
+ 449 0184 7C01      		movw r14,r24
+ 105:lcd.c         **** 
+ 106:lcd.c         **** unsigned char thousands,hundreds,tens,ones;
+ 107:lcd.c         **** thousands = integer / 1000;
+ 450               		.loc 1 107 0
+ 451 0186 68EE      		ldi r22,lo8(-24)
+ 452 0188 73E0      		ldi r23,lo8(3)
+ 453 018a 0E94 0000 		call __divmodhi4
+ 454               	.LVL28:
+ 108:lcd.c         **** 
+ 109:lcd.c         ****     lcdData(thousands + 0x30);
+ 455               		.loc 1 109 0
+ 456 018e 80E3      		ldi r24,lo8(48)
+ 457 0190 860F      		add r24,r22
+ 458 0192 6983      		std Y+1,r22
+ 459 0194 0E94 0000 		call lcdData
  460               	.LVL29:
- 461               	.L13:
- 462               	.LM70:
- 463 0130 8068      		ori r24,lo8(-128)
- 464               	.LVL30:
- 465 0132 0E94 0000 		call lcdcmd
- 466               	.LVL31:
- 467               	.L14:
- 468 0136 0895      		ret
- 469               	.LFE10:
- 471               	.global	integerToLcd
- 473               	integerToLcd:
- 474               	.LFB11:
- 475               	.LM71:
- 476               	.LVL32:
- 477 0138 EF92      		push r14
- 478 013a FF92      		push r15
- 479 013c 0F93      		push r16
- 480 013e 1F93      		push r17
- 481               	/* prologue: function */
- 482               	/* frame size = 0 */
- 483 0140 7C01      		movw r14,r24
- 484               	.LM72:
- 485 0142 68EE      		ldi r22,lo8(1000)
- 486 0144 73E0      		ldi r23,hi8(1000)
- 487 0146 0E94 0000 		call __divmodhi4
- 488               	.LVL33:
- 489 014a 062F      		mov r16,r22
- 490               	.LM73:
- 491 014c 862F      		mov r24,r22
- 492 014e 805D      		subi r24,lo8(-(48))
- 493 0150 0E94 0000 		call lcdData
- 494               	.LM74:
- 495 0154 C701      		movw r24,r14
- 496 0156 0197      		sbiw r24,1
- 497 0158 10E0      		ldi r17,lo8(0)
- 498               	.LVL34:
- 499 015a 28E1      		ldi r18,lo8(-1000)
- 500 015c 3CEF      		ldi r19,hi8(-1000)
- 501 015e A901      		movw r20,r18
- 502 0160 049F      		mul r16,r20
- 503 0162 9001      		movw r18,r0
- 504 0164 059F      		mul r16,r21
- 505 0166 300D      		add r19,r0
- 506 0168 149F      		mul r17,r20
- 507 016a 300D      		add r19,r0
- 508 016c 1124      		clr r1
- 509               	.LVL35:
- 510 016e 820F      		add r24,r18
- 511 0170 931F      		adc r25,r19
- 512 0172 64E6      		ldi r22,lo8(100)
- 513 0174 70E0      		ldi r23,hi8(100)
- 514 0176 0E94 0000 		call __divmodhi4
- 515 017a 862F      		mov r24,r22
- 516 017c 805D      		subi r24,lo8(-(48))
- 517 017e 0E94 0000 		call lcdData
- 518               	.LM75:
- 519 0182 C701      		movw r24,r14
- 520 0184 64E6      		ldi r22,lo8(100)
- 521 0186 70E0      		ldi r23,hi8(100)
- 522 0188 0E94 0000 		call __divmodhi4
- 523 018c 6AE0      		ldi r22,lo8(10)
- 524 018e 70E0      		ldi r23,hi8(10)
- 525 0190 0E94 0000 		call __divmodhi4
- 526 0194 862F      		mov r24,r22
- 527 0196 805D      		subi r24,lo8(-(48))
- 528 0198 0E94 0000 		call lcdData
- 529               	.LM76:
- 530 019c C701      		movw r24,r14
- 531 019e 6AE0      		ldi r22,lo8(10)
- 532 01a0 70E0      		ldi r23,hi8(10)
- 533 01a2 0E94 0000 		call __divmodhi4
- 534 01a6 805D      		subi r24,lo8(-(48))
- 535 01a8 0E94 0000 		call lcdData
- 536               	/* epilogue start */
- 537               	.LM77:
- 538 01ac 1F91      		pop r17
- 539               	.LVL36:
- 540 01ae 0F91      		pop r16
- 541               	.LVL37:
- 542 01b0 FF90      		pop r15
- 543 01b2 EF90      		pop r14
- 544               	.LVL38:
- 545 01b4 0895      		ret
- 546               	.LFE11:
- 612               	.Letext0:
+ 110:lcd.c         **** 
+ 111:lcd.c         **** 	 hundreds = ((integer - thousands*1000)-1) / 100;
+ 461               		.loc 1 111 0
+ 462 0198 88E1      		ldi r24,lo8(24)
+ 463 019a 9CEF      		ldi r25,lo8(-4)
+ 464 019c 6981      		ldd r22,Y+1
+ 465 019e 689F      		mul r22,r24
+ 466 01a0 9001      		movw r18,r0
+ 467 01a2 699F      		mul r22,r25
+ 468 01a4 300D      		add r19,r0
+ 469 01a6 1124      		clr __zero_reg__
+ 470 01a8 2E0D      		add r18,r14
+ 471 01aa 3F1D      		adc r19,r15
+ 472 01ac C901      		movw r24,r18
+ 473 01ae 0197      		sbiw r24,1
+ 474 01b0 04E6      		ldi r16,lo8(100)
+ 475 01b2 10E0      		ldi r17,0
+ 476 01b4 B801      		movw r22,r16
+ 477 01b6 0E94 0000 		call __divmodhi4
+ 112:lcd.c         **** 
+ 113:lcd.c         **** 	lcdData( hundreds + 0x30);
+ 478               		.loc 1 113 0
+ 479 01ba 80E3      		ldi r24,lo8(48)
+ 480 01bc 860F      		add r24,r22
+ 481 01be 0E94 0000 		call lcdData
+ 482               	.LVL30:
+ 114:lcd.c         **** tens=(integer%100)/10;
+ 483               		.loc 1 114 0
+ 484 01c2 C701      		movw r24,r14
+ 485 01c4 B801      		movw r22,r16
+ 486 01c6 0E94 0000 		call __divmodhi4
+ 487 01ca 0AE0      		ldi r16,lo8(10)
+ 488 01cc 10E0      		ldi r17,0
+ 489 01ce B801      		movw r22,r16
+ 490 01d0 0E94 0000 		call __divmodhi4
+ 115:lcd.c         **** 
+ 116:lcd.c         **** 	lcdData( tens + 0x30);
+ 491               		.loc 1 116 0
+ 492 01d4 80E3      		ldi r24,lo8(48)
+ 493 01d6 860F      		add r24,r22
+ 494 01d8 0E94 0000 		call lcdData
+ 495               	.LVL31:
+ 117:lcd.c         **** 	ones=integer%10;
+ 496               		.loc 1 117 0
+ 497 01dc C701      		movw r24,r14
+ 498 01de B801      		movw r22,r16
+ 499 01e0 0E94 0000 		call __divmodhi4
+ 118:lcd.c         **** 
+ 119:lcd.c         **** 	lcdData( ones + 0x30);
+ 500               		.loc 1 119 0
+ 501 01e4 805D      		subi r24,lo8(-(48))
+ 502               	/* epilogue start */
+ 120:lcd.c         **** }
+ 503               		.loc 1 120 0
+ 504 01e6 0F90      		pop __tmp_reg__
+ 505 01e8 DF91      		pop r29
+ 506 01ea CF91      		pop r28
+ 507 01ec 1F91      		pop r17
+ 508 01ee 0F91      		pop r16
+ 509 01f0 FF90      		pop r15
+ 510 01f2 EF90      		pop r14
+ 511               	.LVL32:
+ 119:lcd.c         **** }
+ 512               		.loc 1 119 0
+ 513 01f4 0C94 0000 		jmp lcdData
+ 514               	.LVL33:
+ 515               		.cfi_endproc
+ 516               	.LFE11:
+ 518               	.Letext0:
+ 519               		.file 3 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
-                            *ABS*:00000000 lcd.c
-C:\users\basiam\Temp/ccYYiLZh.s:2      *ABS*:0000003f __SREG__
-C:\users\basiam\Temp/ccYYiLZh.s:3      *ABS*:0000003e __SP_H__
-C:\users\basiam\Temp/ccYYiLZh.s:4      *ABS*:0000003d __SP_L__
-C:\users\basiam\Temp/ccYYiLZh.s:5      *ABS*:00000034 __CCP__
-C:\users\basiam\Temp/ccYYiLZh.s:6      *ABS*:00000000 __tmp_reg__
-C:\users\basiam\Temp/ccYYiLZh.s:7      *ABS*:00000001 __zero_reg__
-C:\users\basiam\Temp/ccYYiLZh.s:18     .text:00000000 lcdcmd
-C:\users\basiam\Temp/ccYYiLZh.s:104    .text:00000042 lcdData
-C:\users\basiam\Temp/ccYYiLZh.s:190    .text:00000084 lcdInit
-C:\users\basiam\Temp/ccYYiLZh.s:416    .text:0000010e prints
-C:\users\basiam\Temp/ccYYiLZh.s:448    .text:00000128 gotoXy
-C:\users\basiam\Temp/ccYYiLZh.s:473    .text:00000138 integerToLcd
+                            *ABS*:0000000000000000 lcd.c
+     /tmp/ccrfVY3X.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccrfVY3X.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccrfVY3X.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccrfVY3X.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccrfVY3X.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccrfVY3X.s:12     .text:0000000000000000 lcdcmd
+     /tmp/ccrfVY3X.s:92     .text:000000000000004e lcdData
+     /tmp/ccrfVY3X.s:170    .text:000000000000009c lcdInit
+     /tmp/ccrfVY3X.s:337    .text:000000000000014a prints
+     /tmp/ccrfVY3X.s:379    .text:0000000000000162 gotoXy
+     /tmp/ccrfVY3X.s:409    .text:0000000000000172 integerToLcd
 
 UNDEFINED SYMBOLS
 __divmodhi4

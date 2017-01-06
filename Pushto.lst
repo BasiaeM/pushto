@@ -31,88 +31,114 @@
   19               	/* stack size = 0 */
   20               	.L__stack_usage = 0
   14:Pushto.c      **** 	//DDRA = 0xFE;		//set the PORTA Direction Set every pin of PORTA as out except AN0 
-  15:Pushto.c      **** 	DDRD = 0xFF;		//set the PORTD Direction Set every pin of PORTD as out as our lcd on this
-  21               		.loc 1 15 0
+  15:Pushto.c      **** 
+  16:Pushto.c      **** 	LCD_DIR = 0xFF;		//Ustawienie pinow dla wyswietlacza LCD
+  21               		.loc 1 16 0
   22 0000 8FEF      		ldi r24,lo8(-1)
   23 0002 81BB      		out 0x11,r24
-  16:Pushto.c      **** 	EN_DIR = 0b00000000; //enkodery
-  24               		.loc 1 16 0
+  17:Pushto.c      **** 	EN_DIR = 0b00000000; //Ustawienie pinow dla encoderow
+  24               		.loc 1 17 0
   25 0004 17BA      		out 0x17,__zero_reg__
-  17:Pushto.c      **** 	EN_PORT = 0b00000011;
-  26               		.loc 1 17 0
+  18:Pushto.c      **** 	EN_PORT = 0b00000011; //pullupy dla encoderow
+  26               		.loc 1 18 0
   27 0006 83E0      		ldi r24,lo8(3)
   28 0008 88BB      		out 0x18,r24
-  29 000a 0895      		ret
-  30               		.cfi_endproc
-  31               	.LFE7:
-  33               		.section	.rodata.str1.1,"aMS",@progbits,1
-  34               	.LC0:
-  35 0000 6B65 7970 		.string	"keypad"
-  35      6164 00
-  36               		.section	.text.startup,"ax",@progbits
-  37               	.global	main
-  39               	main:
-  40               	.LFB8:
-  18:Pushto.c      **** 	//ADCSRA=0X00;		// CODE for ADC demo (optional)
-  19:Pushto.c      **** 	//ADMUX = 0x40;
-  20:Pushto.c      **** 	//ADCSRA = 0x87;
-  21:Pushto.c      **** }
-  22:Pushto.c      **** 
-  23:Pushto.c      **** int main(void)
-  24:Pushto.c      **** {
-  41               		.loc 1 24 0
-  42               		.cfi_startproc
-  43               	/* prologue: function */
-  44               	/* frame size = 0 */
-  45               	/* stack size = 0 */
-  46               	.L__stack_usage = 0
-  25:Pushto.c      **** 	//unsigned int temp;
-  26:Pushto.c      **** 
-  27:Pushto.c      **** 	
-  28:Pushto.c      **** 	system_init();
-  47               		.loc 1 28 0
-  48 0000 0E94 0000 		call system_init
-  49               	.LVL0:
-  29:Pushto.c      **** 	lcdInit();
-  50               		.loc 1 29 0
-  51 0004 0E94 0000 		call lcdInit
-  52               	.LVL1:
+  19:Pushto.c      **** 	encoder1.maskB=0b00000010;
+  29               		.loc 1 19 0
+  30 000a E0E0      		ldi r30,lo8(encoder1)
+  31 000c F0E0      		ldi r31,hi8(encoder1)
+  32 000e 82E0      		ldi r24,lo8(2)
+  33 0010 8083      		st Z,r24
+  20:Pushto.c      **** 	encoder1.count=0;
+  34               		.loc 1 20 0
+  35 0012 1282      		std Z+2,__zero_reg__
+  36 0014 1182      		std Z+1,__zero_reg__
+  21:Pushto.c      **** 	encoder2.maskB=0b00001000;
+  37               		.loc 1 21 0
+  38 0016 E0E0      		ldi r30,lo8(encoder2)
+  39 0018 F0E0      		ldi r31,hi8(encoder2)
+  40 001a 88E0      		ldi r24,lo8(8)
+  41 001c 8083      		st Z,r24
+  22:Pushto.c      **** 	encoder2.count=0;
+  42               		.loc 1 22 0
+  43 001e 1282      		std Z+2,__zero_reg__
+  44 0020 1182      		std Z+1,__zero_reg__
+  45 0022 0895      		ret
+  46               		.cfi_endproc
+  47               	.LFE7:
+  49               		.section	.rodata.str1.1,"aMS",@progbits,1
+  50               	.LC0:
+  51 0000 5055 5348 		.string	"PUSHTO"
+  51      544F 00
+  52               		.section	.text.startup,"ax",@progbits
+  53               	.global	main
+  55               	main:
+  56               	.LFB8:
+  23:Pushto.c      **** 	//ADCSRA=0X00;		// CODE for ADC demo (optional)
+  24:Pushto.c      **** 	//ADMUX = 0x40;
+  25:Pushto.c      **** 	//ADCSRA = 0x87;
+  26:Pushto.c      **** }
+  27:Pushto.c      **** 
+  28:Pushto.c      **** int main(void)
+  29:Pushto.c      **** {
+  57               		.loc 1 29 0
+  58               		.cfi_startproc
+  59               	/* prologue: function */
+  60               	/* frame size = 0 */
+  61               	/* stack size = 0 */
+  62               	.L__stack_usage = 0
   30:Pushto.c      **** 
-  31:Pushto.c      **** 	prints("keypad");
-  53               		.loc 1 31 0
-  54 0008 80E0      		ldi r24,lo8(.LC0)
-  55 000a 90E0      		ldi r25,hi8(.LC0)
-  56 000c 0E94 0000 		call prints
-  57               	.LVL2:
-  58               	.L3:
-  32:Pushto.c      **** 	while(1)
-  33:Pushto.c      **** 	{
-  34:Pushto.c      **** 	encoder();
-  59               		.loc 1 34 0 discriminator 1
-  60 0010 0E94 0000 		call encoder
-  61               	.LVL3:
-  35:Pushto.c      **** 	}
-  62               		.loc 1 35 0 discriminator 1
-  63 0014 00C0      		rjmp .L3
-  64               		.cfi_endproc
-  65               	.LFE8:
-  67               		.text
-  68               	.Letext0:
-  69               		.file 2 "lcd.h"
-  70               		.file 3 "encoder.h"
-  71               		.file 4 "/usr/lib/avr/include/stdint.h"
+  31:Pushto.c      **** 	//unsigned int temp;
+  32:Pushto.c      **** 	system_init();
+  63               		.loc 1 32 0
+  64 0000 0E94 0000 		call system_init
+  65               	.LVL0:
+  33:Pushto.c      **** 	lcdInit();
+  66               		.loc 1 33 0
+  67 0004 0E94 0000 		call lcdInit
+  68               	.LVL1:
+  34:Pushto.c      **** 	prints("PUSHTO");
+  69               		.loc 1 34 0
+  70 0008 80E0      		ldi r24,lo8(.LC0)
+  71 000a 90E0      		ldi r25,hi8(.LC0)
+  72 000c 0E94 0000 		call prints
+  73               	.LVL2:
+  74               	.L3:
+  35:Pushto.c      **** 	while(1)
+  36:Pushto.c      **** 	{
+  37:Pushto.c      **** 	direction(&encoder1);
+  75               		.loc 1 37 0 discriminator 1
+  76 0010 80E0      		ldi r24,lo8(encoder1)
+  77 0012 90E0      		ldi r25,hi8(encoder1)
+  78 0014 0E94 0000 		call direction
+  79               	.LVL3:
+  38:Pushto.c      **** 	}
+  80               		.loc 1 38 0 discriminator 1
+  81 0018 00C0      		rjmp .L3
+  82               		.cfi_endproc
+  83               	.LFE8:
+  85               		.comm	encoder2,3,1
+  86               		.comm	encoder1,3,1
+  87               		.text
+  88               	.Letext0:
+  89               		.file 2 "encoder.h"
+  90               		.file 3 "lcd.h"
+  91               		.file 4 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Pushto.c
-     /tmp/cc1w8nsq.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/cc1w8nsq.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/cc1w8nsq.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/cc1w8nsq.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/cc1w8nsq.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/cc1w8nsq.s:12     .text:0000000000000000 system_init
-     /tmp/cc1w8nsq.s:39     .text.startup:0000000000000000 main
+     /tmp/ccl12VMN.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccl12VMN.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccl12VMN.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccl12VMN.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccl12VMN.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccl12VMN.s:12     .text:0000000000000000 system_init
+                            *COM*:0000000000000003 encoder1
+                            *COM*:0000000000000003 encoder2
+     /tmp/ccl12VMN.s:55     .text.startup:0000000000000000 main
 
 UNDEFINED SYMBOLS
 lcdInit
 prints
-encoder
+direction
 __do_copy_data
+__do_clear_bss

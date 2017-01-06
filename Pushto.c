@@ -12,9 +12,14 @@
 void system_init (void)
 {
 	//DDRA = 0xFE;		//set the PORTA Direction Set every pin of PORTA as out except AN0 
-	DDRD = 0xFF;		//set the PORTD Direction Set every pin of PORTD as out as our lcd on this
-	EN_DIR = 0b00000000; //enkodery
-	EN_PORT = 0b00000011;
+
+	LCD_DIR = 0xFF;		//Ustawienie pinow dla wyswietlacza LCD
+	EN_DIR = 0b00000000; //Ustawienie pinow dla encoderow
+	EN_PORT = 0b00000011; //pullupy dla encoderow
+	encoder1.maskB=0b00000010;
+	encoder1.count=0;
+	encoder2.maskB=0b00001000;
+	encoder2.count=0;
 	//ADCSRA=0X00;		// CODE for ADC demo (optional)
 	//ADMUX = 0x40;
 	//ADCSRA = 0x87;
@@ -22,16 +27,14 @@ void system_init (void)
 
 int main(void)
 {
-	//unsigned int temp;
 
-	
+	//unsigned int temp;
 	system_init();
 	lcdInit();
-
-	prints("keypad");
+	prints("PUSHTO");
 	while(1)
 	{
-	encoder();
+	direction(&encoder1);
 	}
 		/*while(1)
 		{	
