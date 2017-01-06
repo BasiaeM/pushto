@@ -1,0 +1,118 @@
+   1               		.file	"Pushto.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	system_init
+  12               	system_init:
+  13               	.LFB7:
+  14               		.file 1 "Pushto.c"
+   1:Pushto.c      **** #include <avr/io.h>
+   2:Pushto.c      **** #include <stdio.h>
+   3:Pushto.c      **** 
+   4:Pushto.c      **** #define F_CPU 1000000UL
+   5:Pushto.c      **** #include <util/delay.h>
+   6:Pushto.c      **** #include "lcd.h"
+   7:Pushto.c      **** #include "encoder.h"
+   8:Pushto.c      **** #include "keypad.h"
+   9:Pushto.c      ****     
+  10:Pushto.c      **** 
+  11:Pushto.c      **** 
+  12:Pushto.c      **** void system_init (void)
+  13:Pushto.c      **** {
+  15               		.loc 1 13 0
+  16               		.cfi_startproc
+  17               	/* prologue: function */
+  18               	/* frame size = 0 */
+  19               	/* stack size = 0 */
+  20               	.L__stack_usage = 0
+  14:Pushto.c      **** 	//DDRA = 0xFE;		//set the PORTA Direction Set every pin of PORTA as out except AN0 
+  15:Pushto.c      **** 	DDRD = 0xFF;		//set the PORTD Direction Set every pin of PORTD as out as our lcd on this
+  21               		.loc 1 15 0
+  22 0000 8FEF      		ldi r24,lo8(-1)
+  23 0002 81BB      		out 0x11,r24
+  16:Pushto.c      **** 	EN_DIR = 0b00000000; //enkodery
+  24               		.loc 1 16 0
+  25 0004 17BA      		out 0x17,__zero_reg__
+  17:Pushto.c      **** 	EN_PORT = 0b00000011;
+  26               		.loc 1 17 0
+  27 0006 83E0      		ldi r24,lo8(3)
+  28 0008 88BB      		out 0x18,r24
+  29 000a 0895      		ret
+  30               		.cfi_endproc
+  31               	.LFE7:
+  33               		.section	.rodata.str1.1,"aMS",@progbits,1
+  34               	.LC0:
+  35 0000 6B65 7970 		.string	"keypad"
+  35      6164 00
+  36               		.section	.text.startup,"ax",@progbits
+  37               	.global	main
+  39               	main:
+  40               	.LFB8:
+  18:Pushto.c      **** 	//ADCSRA=0X00;		// CODE for ADC demo (optional)
+  19:Pushto.c      **** 	//ADMUX = 0x40;
+  20:Pushto.c      **** 	//ADCSRA = 0x87;
+  21:Pushto.c      **** }
+  22:Pushto.c      **** 
+  23:Pushto.c      **** int main(void)
+  24:Pushto.c      **** {
+  41               		.loc 1 24 0
+  42               		.cfi_startproc
+  43               	/* prologue: function */
+  44               	/* frame size = 0 */
+  45               	/* stack size = 0 */
+  46               	.L__stack_usage = 0
+  25:Pushto.c      **** 	//unsigned int temp;
+  26:Pushto.c      **** 
+  27:Pushto.c      **** 	
+  28:Pushto.c      **** 	system_init();
+  47               		.loc 1 28 0
+  48 0000 0E94 0000 		call system_init
+  49               	.LVL0:
+  29:Pushto.c      **** 	lcdInit();
+  50               		.loc 1 29 0
+  51 0004 0E94 0000 		call lcdInit
+  52               	.LVL1:
+  30:Pushto.c      **** 
+  31:Pushto.c      **** 	prints("keypad");
+  53               		.loc 1 31 0
+  54 0008 80E0      		ldi r24,lo8(.LC0)
+  55 000a 90E0      		ldi r25,hi8(.LC0)
+  56 000c 0E94 0000 		call prints
+  57               	.LVL2:
+  58               	.L3:
+  32:Pushto.c      **** 	while(1)
+  33:Pushto.c      **** 	{
+  34:Pushto.c      **** 	encoder();
+  59               		.loc 1 34 0 discriminator 1
+  60 0010 0E94 0000 		call encoder
+  61               	.LVL3:
+  35:Pushto.c      **** 	}
+  62               		.loc 1 35 0 discriminator 1
+  63 0014 00C0      		rjmp .L3
+  64               		.cfi_endproc
+  65               	.LFE8:
+  67               		.text
+  68               	.Letext0:
+  69               		.file 2 "lcd.h"
+  70               		.file 3 "encoder.h"
+  71               		.file 4 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Pushto.c
+     /tmp/cc1w8nsq.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc1w8nsq.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc1w8nsq.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc1w8nsq.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc1w8nsq.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc1w8nsq.s:12     .text:0000000000000000 system_init
+     /tmp/cc1w8nsq.s:39     .text.startup:0000000000000000 main
+
+UNDEFINED SYMBOLS
+lcdInit
+prints
+encoder
+__do_copy_data

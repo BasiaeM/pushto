@@ -1,5 +1,5 @@
-#ifndef __lcd16_h_
-#define __lcd16_h_
+#ifndef __lcd_h_
+#define __lcd_h_
 
 
 #include <avr/io.h>

@@ -1,0 +1,114 @@
+   1               		.file	"encoder.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               		.section	.rodata.str1.1,"aMS",@progbits,1
+  11               	.LC0:
+  12 0000 413D 00   		.string	"A="
+  13               	.LC1:
+  14 0003 2042 3D00 		.string	" B="
+  15               		.text
+  16               	.global	encoder
+  18               	encoder:
+  19               	.LFB0:
+  20               		.file 1 "encoder.c"
+   1:encoder.c     **** #include "encoder.h"
+   2:encoder.c     **** 
+   3:encoder.c     **** void encoder()
+   4:encoder.c     **** {
+  21               		.loc 1 4 0
+  22               		.cfi_startproc
+  23               	/* prologue: function */
+  24               	/* frame size = 0 */
+  25               	/* stack size = 0 */
+  26               	.L__stack_usage = 0
+   5:encoder.c     **** 		//DDRB = 0b00000000; //piny b7 i b6 to wyjscia
+   6:encoder.c     **** 	//PORTB = 0b11000000;
+   7:encoder.c     **** 	
+   8:encoder.c     **** 	gotoXy(0,1 );			//set the cursor to 1 column of 1st row
+  27               		.loc 1 8 0
+  28 0000 61E0      		ldi r22,lo8(1)
+  29 0002 70E0      		ldi r23,0
+  30 0004 80E0      		ldi r24,0
+  31 0006 90E0      		ldi r25,0
+  32 0008 0E94 0000 		call gotoXy
+  33               	.LVL0:
+   9:encoder.c     **** 	prints("A=");
+  34               		.loc 1 9 0
+  35 000c 80E0      		ldi r24,lo8(.LC0)
+  36 000e 90E0      		ldi r25,hi8(.LC0)
+  37 0010 0E94 0000 		call prints
+  38               	.LVL1:
+  10:encoder.c     **** 	if(EN_PIN & 0b00000001)	
+  39               		.loc 1 10 0
+  40 0014 B09B      		sbis 0x16,0
+  41 0016 00C0      		rjmp .L2
+  42               	.LBB2:
+  11:encoder.c     **** 		integerToLcd(1);		// print adc value to the lcd
+  43               		.loc 1 11 0
+  44 0018 81E0      		ldi r24,lo8(1)
+  45 001a 90E0      		ldi r25,0
+  46 001c 00C0      		rjmp .L5
+  47               	.L2:
+  48               	.LBE2:
+  49               	.LBB3:
+  12:encoder.c     **** 		else
+  13:encoder.c     **** 		integerToLcd(0);
+  50               		.loc 1 13 0
+  51 001e 80E0      		ldi r24,0
+  52 0020 90E0      		ldi r25,0
+  53               	.L5:
+  54 0022 0E94 0000 		call integerToLcd
+  55               	.LVL2:
+  56               	.LBE3:
+  14:encoder.c     **** 	prints(" B=");
+  57               		.loc 1 14 0
+  58 0026 80E0      		ldi r24,lo8(.LC1)
+  59 0028 90E0      		ldi r25,hi8(.LC1)
+  60 002a 0E94 0000 		call prints
+  61               	.LVL3:
+  15:encoder.c     **** 	if(EN_PIN & 0b00000010)	
+  62               		.loc 1 15 0
+  63 002e B19B      		sbis 0x16,1
+  64 0030 00C0      		rjmp .L4
+  65               	.LBB4:
+  16:encoder.c     **** 		integerToLcd(1);		// print adc value to the lcd
+  66               		.loc 1 16 0
+  67 0032 81E0      		ldi r24,lo8(1)
+  68 0034 90E0      		ldi r25,0
+  69 0036 00C0      		rjmp .L6
+  70               	.L4:
+  71               	.LBE4:
+  72               	.LBB5:
+  17:encoder.c     **** 		else
+  18:encoder.c     **** 		integerToLcd(0);
+  73               		.loc 1 18 0
+  74 0038 80E0      		ldi r24,0
+  75 003a 90E0      		ldi r25,0
+  76               	.L6:
+  77 003c 0C94 0000 		jmp integerToLcd
+  78               	.LVL4:
+  79               	.LBE5:
+  80               		.cfi_endproc
+  81               	.LFE0:
+  83               	.Letext0:
+  84               		.file 2 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 encoder.c
+     /tmp/ccNiYXix.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccNiYXix.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccNiYXix.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccNiYXix.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccNiYXix.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccNiYXix.s:18     .text:0000000000000000 encoder
+
+UNDEFINED SYMBOLS
+gotoXy
+prints
+integerToLcd
+__do_copy_data

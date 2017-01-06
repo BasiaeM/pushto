@@ -1,6 +1,7 @@
 
-#include "lcd16.h"
- #include <util/delay.h>
+#include "lcd.h"
+#include <util/delay.h>
+
 void lcdcmd(unsigned char Data)
 {
 

@@ -70,7 +70,7 @@ FORMAT = ihex
 
 
 # Target file name (without extension).
-TARGET = Atmega_16_LCD
+TARGET = Pushto
 
 
 # Object files directory
@@ -80,7 +80,7 @@ OBJDIR = .
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c lcd16.c 
+SRC = $(TARGET).c lcd.c keypad.c encoder.c
 
 
 # List C++ source files here. (C dependencies are automatically generated.)
