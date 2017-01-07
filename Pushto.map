@@ -14,9 +14,8 @@ Archive member included to satisfy reference by file (symbol)
 Allocating common symbols
 Common symbol       size              file
 
+keypad_A            0x14              Pushto.o
 encoder1            0x4               Pushto.o
-i                   0x1               keypad.o
-result              0x1               keypad.o
 encoder2            0x4               Pushto.o
 
 Memory Configuration
@@ -38,6 +37,7 @@ LOAD Pushto.o
 LOAD lcd.o
 LOAD keypad.o
 LOAD encoder.o
+LOAD pushto_lib.o
 LOAD /usr/lib/gcc/avr/4.9.2/../../../avr/lib/avr5/libm.a
 START GROUP
 LOAD /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a
@@ -136,7 +136,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000      0x51e
+.text           0x0000000000000000      0x5dc
  *(.vectors)
  .vectors       0x0000000000000000       0x54 /usr/lib/gcc/avr/4.9.2/../../../avr/lib/avr5/crtatmega16a.o
                 0x0000000000000000                __vectors
@@ -211,104 +211,106 @@ END GROUP
                 0x000000000000008e                __vector_16
                 0x000000000000008e                __vector_18
                 0x000000000000008e                __vector_20
- .text          0x0000000000000092       0xfe Pushto.o
+ .text          0x0000000000000092      0x10c Pushto.o
                 0x0000000000000092                system_init
-                0x00000000000000e4                __vector_6
-                0x00000000000000f8                __vector_1
-                0x0000000000000144                __vector_2
- .text          0x0000000000000190      0x1f8 lcd.o
-                0x0000000000000190                lcdcmd
-                0x00000000000001de                lcdData
-                0x000000000000022c                lcdInit
-                0x00000000000002da                prints
-                0x00000000000002f2                gotoXy
-                0x0000000000000302                integerToLcd
- .text          0x0000000000000388       0xd2 keypad.o
-                0x0000000000000388                keypad
- .text          0x000000000000045a       0x2e encoder.o
-                0x000000000000045a                direction
- .text          0x0000000000000488        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
- .text          0x0000000000000488        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
- .text          0x0000000000000488        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
- .text          0x0000000000000488        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
- .text          0x0000000000000488        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
-                0x0000000000000488                . = ALIGN (0x2)
+                0x00000000000000f2                __vector_6
+                0x0000000000000106                __vector_1
+                0x0000000000000152                __vector_2
+ .text          0x000000000000019e      0x1f8 lcd.o
+                0x000000000000019e                lcdcmd
+                0x00000000000001ec                lcdData
+                0x000000000000023a                lcdInit
+                0x00000000000002e8                prints
+                0x0000000000000300                gotoXy
+                0x0000000000000310                integerToLcd
+ .text          0x0000000000000396      0x16c keypad.o
+                0x0000000000000396                keypad
+                0x00000000000003cc                keypad_proc
+ .text          0x0000000000000502       0x2e encoder.o
+                0x0000000000000502                direction
+ .text          0x0000000000000530        0x0 pushto_lib.o
+ .text          0x0000000000000530        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
+ .text          0x0000000000000530        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+ .text          0x0000000000000530        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
+ .text          0x0000000000000530        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
+ .text          0x0000000000000530        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
+                0x0000000000000530                . = ALIGN (0x2)
  *(.text.*)
- .text.startup  0x0000000000000488       0x42 Pushto.o
-                0x0000000000000488                main
+ .text.startup  0x0000000000000530       0x58 Pushto.o
+                0x0000000000000530                main
  .text.libgcc.mul
-                0x00000000000004ca        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
+                0x0000000000000588        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
  .text.libgcc.div
-                0x00000000000004ca       0x28 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
-                0x00000000000004ca                __divmodhi4
-                0x00000000000004ca                _div
- .text.libgcc   0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
+                0x0000000000000588       0x28 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
+                0x0000000000000588                __divmodhi4
+                0x0000000000000588                _div
+ .text.libgcc   0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
  .text.libgcc.prologue
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
  .text.libgcc.builtins
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
  .text.libgcc.fmul
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
  .text.libgcc.fixed
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
  .text.libgcc.mul
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.div
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
- .text.libgcc   0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+ .text.libgcc   0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.prologue
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.builtins
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.fmul
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.fixed
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.mul
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.div
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
- .text.libgcc   0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc   0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.prologue
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.builtins
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.fmul
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.fixed
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.mul
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.div
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
- .text.libgcc   0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.prologue
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.builtins
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.fmul
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.fixed
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.mul
-                0x00000000000004f2        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
+                0x00000000000005b0        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.div
-                0x00000000000004f2       0x28 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
-                0x00000000000004f2                __udivmodhi4
- .text.libgcc   0x000000000000051a        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
+                0x00000000000005b0       0x28 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
+                0x00000000000005b0                __udivmodhi4
+ .text.libgcc   0x00000000000005d8        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.prologue
-                0x000000000000051a        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
+                0x00000000000005d8        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.builtins
-                0x000000000000051a        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
+                0x00000000000005d8        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.fmul
-                0x000000000000051a        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
+                0x00000000000005d8        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.fixed
-                0x000000000000051a        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
-                0x000000000000051a                . = ALIGN (0x2)
+                0x00000000000005d8        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
+                0x00000000000005d8                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000000000000051a        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
-                0x000000000000051a                exit
-                0x000000000000051a                _exit
+ .fini9         0x00000000000005d8        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+                0x00000000000005d8                exit
+                0x00000000000005d8                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -327,11 +329,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000000000000051a        0x4 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
+ .fini0         0x00000000000005d8        0x4 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
  *(.fini0)
-                0x000000000000051e                _etext = .
+                0x00000000000005dc                _etext = .
 
-.data           0x0000000000800060       0x10 load address 0x000000000000051e
+.data           0x0000000000800060       0x10 load address 0x00000000000005dc
                 0x0000000000800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x0000000000800060        0x0 /usr/lib/gcc/avr/4.9.2/../../../avr/lib/avr5/crtatmega16a.o
@@ -339,6 +341,7 @@ END GROUP
  .data          0x0000000000800060        0x0 lcd.o
  .data          0x0000000000800060        0x0 keypad.o
  .data          0x0000000000800060        0x0 encoder.o
+ .data          0x0000000000800060        0x0 pushto_lib.o
  .data          0x0000000000800060        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
  .data          0x0000000000800060        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
  .data          0x0000000000800060        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
@@ -354,7 +357,7 @@ END GROUP
                 0x0000000000800070                _edata = .
                 0x0000000000800070                PROVIDE (__data_end, .)
 
-.bss            0x0000000000800070        0xa
+.bss            0x0000000000800070       0x1c
                 0x0000000000800070                PROVIDE (__bss_start, .)
  *(.bss)
  .bss           0x0000000000800070        0x0 /usr/lib/gcc/avr/4.9.2/../../../avr/lib/avr5/crtatmega16a.o
@@ -362,6 +365,7 @@ END GROUP
  .bss           0x0000000000800070        0x0 lcd.o
  .bss           0x0000000000800070        0x0 keypad.o
  .bss           0x0000000000800070        0x0 encoder.o
+ .bss           0x0000000000800070        0x0 pushto_lib.o
  .bss           0x0000000000800070        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
  .bss           0x0000000000800070        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_exit.o)
  .bss           0x0000000000800070        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_copy_data.o)
@@ -369,22 +373,20 @@ END GROUP
  .bss           0x0000000000800070        0x0 /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_udivmodhi4.o)
  *(.bss*)
  *(COMMON)
- COMMON         0x0000000000800070        0x8 Pushto.o
-                0x0000000000800070                encoder1
-                0x0000000000800074                encoder2
- COMMON         0x0000000000800078        0x2 keypad.o
-                0x0000000000800078                i
-                0x0000000000800079                result
-                0x000000000080007a                PROVIDE (__bss_end, .)
-                0x000000000000051e                __data_load_start = LOADADDR (.data)
-                0x000000000000052e                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0000000000800070       0x1c Pushto.o
+                0x0000000000800070                keypad_A
+                0x0000000000800084                encoder1
+                0x0000000000800088                encoder2
+                0x000000000080008c                PROVIDE (__bss_end, .)
+                0x00000000000005dc                __data_load_start = LOADADDR (.data)
+                0x00000000000005ec                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x000000000080007a        0x0
-                0x000000000080007a                PROVIDE (__noinit_start, .)
+.noinit         0x000000000080008c        0x0
+                0x000000000080008c                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x000000000080007a                PROVIDE (__noinit_end, .)
-                0x000000000080007a                _end = .
-                0x000000000080007a                PROVIDE (__heap_start, .)
+                0x000000000080008c                PROVIDE (__noinit_end, .)
+                0x000000000080008c                _end = .
+                0x000000000080008c                PROVIDE (__heap_start, .)
 
 .eeprom         0x0000000000810000        0x0
  *(.eeprom*)
@@ -430,6 +432,7 @@ END GROUP
  .comment       0x0000000000000011       0x12 lcd.o
  .comment       0x0000000000000011       0x12 keypad.o
  .comment       0x0000000000000011       0x12 encoder.o
+ .comment       0x0000000000000011       0x12 pushto_lib.o
 
 .note.gnu.avr.deviceinfo
                 0x0000000000000000       0x3c
@@ -451,7 +454,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x0000000000000000       0x88
+.debug_aranges  0x0000000000000000       0xa0
  *(.debug_aranges)
  .debug_aranges
                 0x0000000000000000       0x28 Pushto.o
@@ -461,54 +464,62 @@ END GROUP
                 0x0000000000000048       0x20 keypad.o
  .debug_aranges
                 0x0000000000000068       0x20 encoder.o
+ .debug_aranges
+                0x0000000000000088       0x18 pushto_lib.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000      0xa49
+.debug_info     0x0000000000000000      0xc7d
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x0000000000000000      0x287 Pushto.o
- .debug_info    0x0000000000000287      0x560 lcd.o
- .debug_info    0x00000000000007e7      0x16e keypad.o
- .debug_info    0x0000000000000955       0xf4 encoder.o
+ .debug_info    0x0000000000000000      0x352 Pushto.o
+ .debug_info    0x0000000000000352      0x560 lcd.o
+ .debug_info    0x00000000000008b2      0x20e keypad.o
+ .debug_info    0x0000000000000ac0       0xf4 encoder.o
+ .debug_info    0x0000000000000bb4       0xc9 pushto_lib.o
 
-.debug_abbrev   0x0000000000000000      0x453
+.debug_abbrev   0x0000000000000000      0x55d
  *(.debug_abbrev)
- .debug_abbrev  0x0000000000000000      0x149 Pushto.o
- .debug_abbrev  0x0000000000000149      0x17d lcd.o
- .debug_abbrev  0x00000000000002c6       0xf5 keypad.o
- .debug_abbrev  0x00000000000003bb       0x98 encoder.o
+ .debug_abbrev  0x0000000000000000      0x16e Pushto.o
+ .debug_abbrev  0x000000000000016e      0x17d lcd.o
+ .debug_abbrev  0x00000000000002eb      0x164 keypad.o
+ .debug_abbrev  0x000000000000044f       0x98 encoder.o
+ .debug_abbrev  0x00000000000004e7       0x76 pushto_lib.o
 
-.debug_line     0x0000000000000000      0x323
+.debug_line     0x0000000000000000      0x37c
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x0000000000000000       0xb4 Pushto.o
- .debug_line    0x00000000000000b4      0x14b lcd.o
- .debug_line    0x00000000000001ff       0xbd keypad.o
- .debug_line    0x00000000000002bc       0x67 encoder.o
+ .debug_line    0x0000000000000000       0xd1 Pushto.o
+ .debug_line    0x00000000000000d1      0x14b lcd.o
+ .debug_line    0x000000000000021c       0xd3 keypad.o
+ .debug_line    0x00000000000002ef       0x67 encoder.o
+ .debug_line    0x0000000000000356       0x26 pushto_lib.o
 
-.debug_frame    0x0000000000000000      0x20c
+.debug_frame    0x0000000000000000      0x21c
  *(.debug_frame)
  .debug_frame   0x0000000000000000      0x118 Pushto.o
  .debug_frame   0x0000000000000118       0xac lcd.o
- .debug_frame   0x00000000000001c4       0x24 keypad.o
- .debug_frame   0x00000000000001e8       0x24 encoder.o
+ .debug_frame   0x00000000000001c4       0x34 keypad.o
+ .debug_frame   0x00000000000001f8       0x24 encoder.o
 
-.debug_str      0x0000000000000000      0x221
+.debug_str      0x0000000000000000      0x257
  *(.debug_str)
- .debug_str     0x0000000000000000      0x16f Pushto.o
-                                        0x1a8 (size before relaxing)
- .debug_str     0x000000000000016f       0x85 lcd.o
+ .debug_str     0x0000000000000000      0x195 Pushto.o
+                                        0x1ce (size before relaxing)
+ .debug_str     0x0000000000000195       0x85 lcd.o
                                         0x1c0 (size before relaxing)
- .debug_str     0x00000000000001f4       0x17 keypad.o
-                                        0x175 (size before relaxing)
- .debug_str     0x000000000000020b       0x16 encoder.o
+ .debug_str     0x000000000000021a       0x1a keypad.o
+                                        0x19e (size before relaxing)
+ .debug_str     0x0000000000000234       0x16 encoder.o
                                         0x152 (size before relaxing)
+ .debug_str     0x000000000000024a        0xd pushto_lib.o
+                                        0x137 (size before relaxing)
 
-.debug_loc      0x0000000000000000      0x43e
+.debug_loc      0x0000000000000000      0x4a7
  *(.debug_loc)
  .debug_loc     0x0000000000000000      0x1c5 Pushto.o
  .debug_loc     0x00000000000001c5      0x251 lcd.o
- .debug_loc     0x0000000000000416       0x28 encoder.o
+ .debug_loc     0x0000000000000416       0x69 keypad.o
+ .debug_loc     0x000000000000047f       0x28 encoder.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -549,6 +560,7 @@ __data_start                                      /usr/lib/gcc/avr/4.9.2/avr5/li
 __divmodhi4                                       /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_divmodhi4.o)
                                                   lcd.o
 __do_clear_bss                                    /usr/lib/gcc/avr/4.9.2/avr5/libgcc.a(_clear_bss.o)
+                                                  pushto_lib.o
                                                   encoder.o
                                                   keypad.o
                                                   Pushto.o
@@ -596,10 +608,14 @@ exit                                              /usr/lib/gcc/avr/4.9.2/avr5/li
                                                   /usr/lib/gcc/avr/4.9.2/../../../avr/lib/avr5/crtatmega16a.o
 gotoXy                                            lcd.o
                                                   Pushto.o
-i                                                 keypad.o
 integerToLcd                                      lcd.o
                                                   Pushto.o
 keypad                                            keypad.o
+                                                  Pushto.o
+keypad_A                                          pushto_lib.o
+                                                  keypad.o
+                                                  Pushto.o
+keypad_proc                                       keypad.o
 lcdData                                           lcd.o
 lcdInit                                           lcd.o
                                                   Pushto.o
@@ -608,5 +624,4 @@ main                                              Pushto.o
                                                   /usr/lib/gcc/avr/4.9.2/../../../avr/lib/avr5/crtatmega16a.o
 prints                                            lcd.o
                                                   Pushto.o
-result                                            keypad.o
 system_init                                       Pushto.o
