@@ -8,7 +8,8 @@
 #define RS  0x01
 #define EN  0x04
 #define RW  0x02
-#define LCD_DIR DDRD
+#define LCD_DIR DDRA
+#define LCD_PORT PORTA
 
 void gotoXy(unsigned char  ,unsigned char );
 void lcdInit(void);

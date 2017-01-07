@@ -5,42 +5,42 @@
 void lcdcmd(unsigned char Data)
 {
 
-PORTD &= ~RS; //because sending command
-PORTD  &=~EN;
-PORTD &=~RW;
-PORTD &= 0x0f;
+LCD_PORT &= ~RS; //because sending command
+LCD_PORT  &=~EN;
+LCD_PORT &=~RW;
+LCD_PORT &= 0x0f;
 
-PORTD |= ((Data ) & 0xf0);
-PORTD &=~RW;
-PORTD  |=EN;
+LCD_PORT |= ((Data ) & 0xf0);
+LCD_PORT &=~RW;
+LCD_PORT  |=EN;
 _delay_ms(2);
-PORTD  &=~EN;
+LCD_PORT  &=~EN;
 
-PORTD &= 0x0f;
+LCD_PORT &= 0x0f;
 
-PORTD  |= ((Data<<4) &  0xf0);
-PORTD  |=EN;
+LCD_PORT  |= ((Data<<4) &  0xf0);
+LCD_PORT  |=EN;
 _delay_ms(2);
-PORTD  &=~EN;
+LCD_PORT  &=~EN;
 
 
 }
 void lcdData(unsigned char l)
 {
-PORTD |=RS;  //because sending data
-PORTD &=~RW;
-PORTD  &=~EN;
-PORTD &= 0x0f;
-PORTD |=((l ) & 0xf0);
-PORTD &=~RW;
-PORTD  |=EN;
+LCD_PORT |=RS;  //because sending data
+LCD_PORT &=~RW;
+LCD_PORT  &=~EN;
+LCD_PORT &= 0x0f;
+LCD_PORT |=((l ) & 0xf0);
+LCD_PORT &=~RW;
+LCD_PORT  |=EN;
 _delay_ms(2);
-PORTD  &=~EN;
-PORTD &= 0x0f;
-PORTD  |= ((l<<4) &  0xf0);
-PORTD  |=EN;
+LCD_PORT  &=~EN;
+LCD_PORT &= 0x0f;
+LCD_PORT  |= ((l<<4) &  0xf0);
+LCD_PORT  |=EN;
 _delay_ms(2);
-PORTD  &=~EN;
+LCD_PORT  &=~EN;
 
 
 
@@ -48,24 +48,24 @@ PORTD  &=~EN;
 
 void lcdInit(void)
 {
-PORTD &=~RS;
-PORTD  &=~EN;
-PORTD &=~RW;
-PORTD |= 0x30;
+LCD_PORT &=~RS;
+LCD_PORT  &=~EN;
+LCD_PORT &=~RW;
+LCD_PORT |= 0x30;
 _delay_ms(40);
-PORTD  |=EN;
-PORTD  &=~EN;
+LCD_PORT  |=EN;
+LCD_PORT  &=~EN;
 _delay_ms(5);
-PORTD  |=EN;
-PORTD  &=~EN;
+LCD_PORT  |=EN;
+LCD_PORT  &=~EN;
 _delay_ms(5);
-PORTD  |=EN;
-PORTD  &=~EN;
+LCD_PORT  |=EN;
+LCD_PORT  &=~EN;
 _delay_ms(2);
 
-PORTD &= 0x20;
-PORTD  |=EN;
-PORTD  &=~EN;
+LCD_PORT &= 0x20;
+LCD_PORT  |=EN;
+LCD_PORT  &=~EN;
 lcdcmd(0x28);   //set data length 4 bit 2 line
 _delay_ms(50);
 lcdcmd(0x0E);   // set display on cursor on blink on

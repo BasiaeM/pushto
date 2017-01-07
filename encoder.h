@@ -3,12 +3,13 @@
 
 #include <avr/io.h>
 
-#define EN_PORT		PORTB
-#define EN_DIR		DDRB
-#define EN_PIN 		PINB
+#define EN_PORT		PORTD
+#define EN_DIR		DDRD
+#define EN_PIN 		PIND
 
 struct Enc 
 {
+	unsigned char maskA;
 	unsigned char maskB; //maska do sprawdzania, czy na danej nozce jest stan wysoki - jedynka na danej nodze
 	int count;			//licznik obrotow enkodera
 } encoder1, encoder2;

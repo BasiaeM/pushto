@@ -25,34 +25,34 @@
   20               	/* stack size = 0 */
   21               	.L__stack_usage = 0
    7:lcd.c         **** 
-   8:lcd.c         **** PORTD &= ~RS; //because sending command
+   8:lcd.c         **** LCD_PORT &= ~RS; //because sending command
   22               		.loc 1 8 0
-  23 0000 9098      		cbi 0x12,0
-   9:lcd.c         **** PORTD  &=~EN;
+  23 0000 D898      		cbi 0x1b,0
+   9:lcd.c         **** LCD_PORT  &=~EN;
   24               		.loc 1 9 0
-  25 0002 9298      		cbi 0x12,2
-  10:lcd.c         **** PORTD &=~RW;
+  25 0002 DA98      		cbi 0x1b,2
+  10:lcd.c         **** LCD_PORT &=~RW;
   26               		.loc 1 10 0
-  27 0004 9198      		cbi 0x12,1
-  11:lcd.c         **** PORTD &= 0x0f;
+  27 0004 D998      		cbi 0x1b,1
+  11:lcd.c         **** LCD_PORT &= 0x0f;
   28               		.loc 1 11 0
-  29 0006 92B3      		in r25,0x12
+  29 0006 9BB3      		in r25,0x1b
   30 0008 9F70      		andi r25,lo8(15)
-  31 000a 92BB      		out 0x12,r25
+  31 000a 9BBB      		out 0x1b,r25
   12:lcd.c         **** 
-  13:lcd.c         **** PORTD |= ((Data ) & 0xf0);
+  13:lcd.c         **** LCD_PORT |= ((Data ) & 0xf0);
   32               		.loc 1 13 0
-  33 000c 92B3      		in r25,0x12
+  33 000c 9BB3      		in r25,0x1b
   34 000e 282F      		mov r18,r24
   35 0010 207F      		andi r18,lo8(-16)
   36 0012 922B      		or r25,r18
-  37 0014 92BB      		out 0x12,r25
-  14:lcd.c         **** PORTD &=~RW;
+  37 0014 9BBB      		out 0x1b,r25
+  14:lcd.c         **** LCD_PORT &=~RW;
   38               		.loc 1 14 0
-  39 0016 9198      		cbi 0x12,1
-  15:lcd.c         **** PORTD  |=EN;
+  39 0016 D998      		cbi 0x1b,1
+  15:lcd.c         **** LCD_PORT  |=EN;
   40               		.loc 1 15 0
-  41 0018 929A      		sbi 0x12,2
+  41 0018 DA9A      		sbi 0x1b,2
   42               	.LVL1:
   43               	.LBB28:
   44               	.LBB29:
@@ -230,29 +230,29 @@
   53               	.LBE29:
   54               	.LBE28:
   16:lcd.c         **** _delay_ms(2);
-  17:lcd.c         **** PORTD  &=~EN;
+  17:lcd.c         **** LCD_PORT  &=~EN;
   55               		.loc 1 17 0
-  56 0026 9298      		cbi 0x12,2
+  56 0026 DA98      		cbi 0x1b,2
   18:lcd.c         **** 
-  19:lcd.c         **** PORTD &= 0x0f;
+  19:lcd.c         **** LCD_PORT &= 0x0f;
   57               		.loc 1 19 0
-  58 0028 92B3      		in r25,0x12
+  58 0028 9BB3      		in r25,0x1b
   59 002a 9F70      		andi r25,lo8(15)
-  60 002c 92BB      		out 0x12,r25
+  60 002c 9BBB      		out 0x1b,r25
   20:lcd.c         **** 
-  21:lcd.c         **** PORTD  |= ((Data<<4) &  0xf0);
+  21:lcd.c         **** LCD_PORT  |= ((Data<<4) &  0xf0);
   61               		.loc 1 21 0
-  62 002e 22B3      		in r18,0x12
+  62 002e 2BB3      		in r18,0x1b
   63 0030 F0E1      		ldi r31,lo8(16)
   64 0032 8F9F      		mul r24,r31
   65 0034 C001      		movw r24,r0
   66 0036 1124      		clr __zero_reg__
   67               	.LVL2:
   68 0038 822B      		or r24,r18
-  69 003a 82BB      		out 0x12,r24
-  22:lcd.c         **** PORTD  |=EN;
+  69 003a 8BBB      		out 0x1b,r24
+  22:lcd.c         **** LCD_PORT  |=EN;
   70               		.loc 1 22 0
-  71 003c 929A      		sbi 0x12,2
+  71 003c DA9A      		sbi 0x1b,2
   72               	.LVL3:
   73               	.LBB30:
   74               	.LBB31:
@@ -266,9 +266,9 @@
   82               	.LBE31:
   83               	.LBE30:
   23:lcd.c         **** _delay_ms(2);
-  24:lcd.c         **** PORTD  &=~EN;
+  24:lcd.c         **** LCD_PORT  &=~EN;
   84               		.loc 1 24 0
-  85 004a 9298      		cbi 0x12,2
+  85 004a DA98      		cbi 0x1b,2
   86 004c 0895      		ret
   87               		.cfi_endproc
   88               	.LFE6:
@@ -287,33 +287,33 @@
   98               	/* frame size = 0 */
   99               	/* stack size = 0 */
  100               	.L__stack_usage = 0
-  30:lcd.c         **** PORTD |=RS;  //because sending data
+  30:lcd.c         **** LCD_PORT |=RS;  //because sending data
  101               		.loc 1 30 0
- 102 004e 909A      		sbi 0x12,0
-  31:lcd.c         **** PORTD &=~RW;
+ 102 004e D89A      		sbi 0x1b,0
+  31:lcd.c         **** LCD_PORT &=~RW;
  103               		.loc 1 31 0
- 104 0050 9198      		cbi 0x12,1
-  32:lcd.c         **** PORTD  &=~EN;
+ 104 0050 D998      		cbi 0x1b,1
+  32:lcd.c         **** LCD_PORT  &=~EN;
  105               		.loc 1 32 0
- 106 0052 9298      		cbi 0x12,2
-  33:lcd.c         **** PORTD &= 0x0f;
+ 106 0052 DA98      		cbi 0x1b,2
+  33:lcd.c         **** LCD_PORT &= 0x0f;
  107               		.loc 1 33 0
- 108 0054 92B3      		in r25,0x12
+ 108 0054 9BB3      		in r25,0x1b
  109 0056 9F70      		andi r25,lo8(15)
- 110 0058 92BB      		out 0x12,r25
-  34:lcd.c         **** PORTD |=((l ) & 0xf0);
+ 110 0058 9BBB      		out 0x1b,r25
+  34:lcd.c         **** LCD_PORT |=((l ) & 0xf0);
  111               		.loc 1 34 0
- 112 005a 92B3      		in r25,0x12
+ 112 005a 9BB3      		in r25,0x1b
  113 005c 282F      		mov r18,r24
  114 005e 207F      		andi r18,lo8(-16)
  115 0060 922B      		or r25,r18
- 116 0062 92BB      		out 0x12,r25
-  35:lcd.c         **** PORTD &=~RW;
+ 116 0062 9BBB      		out 0x1b,r25
+  35:lcd.c         **** LCD_PORT &=~RW;
  117               		.loc 1 35 0
- 118 0064 9198      		cbi 0x12,1
-  36:lcd.c         **** PORTD  |=EN;
+ 118 0064 D998      		cbi 0x1b,1
+  36:lcd.c         **** LCD_PORT  |=EN;
  119               		.loc 1 36 0
- 120 0066 929A      		sbi 0x12,2
+ 120 0066 DA9A      		sbi 0x1b,2
  121               	.LVL5:
  122               	.LBB32:
  123               	.LBB33:
@@ -327,27 +327,27 @@
  131               	.LBE33:
  132               	.LBE32:
   37:lcd.c         **** _delay_ms(2);
-  38:lcd.c         **** PORTD  &=~EN;
+  38:lcd.c         **** LCD_PORT  &=~EN;
  133               		.loc 1 38 0
- 134 0074 9298      		cbi 0x12,2
-  39:lcd.c         **** PORTD &= 0x0f;
+ 134 0074 DA98      		cbi 0x1b,2
+  39:lcd.c         **** LCD_PORT &= 0x0f;
  135               		.loc 1 39 0
- 136 0076 92B3      		in r25,0x12
+ 136 0076 9BB3      		in r25,0x1b
  137 0078 9F70      		andi r25,lo8(15)
- 138 007a 92BB      		out 0x12,r25
-  40:lcd.c         **** PORTD  |= ((l<<4) &  0xf0);
+ 138 007a 9BBB      		out 0x1b,r25
+  40:lcd.c         **** LCD_PORT  |= ((l<<4) &  0xf0);
  139               		.loc 1 40 0
- 140 007c 22B3      		in r18,0x12
+ 140 007c 2BB3      		in r18,0x1b
  141 007e F0E1      		ldi r31,lo8(16)
  142 0080 8F9F      		mul r24,r31
  143 0082 C001      		movw r24,r0
  144 0084 1124      		clr __zero_reg__
  145               	.LVL6:
  146 0086 822B      		or r24,r18
- 147 0088 82BB      		out 0x12,r24
-  41:lcd.c         **** PORTD  |=EN;
+ 147 0088 8BBB      		out 0x1b,r24
+  41:lcd.c         **** LCD_PORT  |=EN;
  148               		.loc 1 41 0
- 149 008a 929A      		sbi 0x12,2
+ 149 008a DA9A      		sbi 0x1b,2
  150               	.LVL7:
  151               	.LBB34:
  152               	.LBB35:
@@ -361,9 +361,9 @@
  160               	.LBE35:
  161               	.LBE34:
   42:lcd.c         **** _delay_ms(2);
-  43:lcd.c         **** PORTD  &=~EN;
+  43:lcd.c         **** LCD_PORT  &=~EN;
  162               		.loc 1 43 0
- 163 0098 9298      		cbi 0x12,2
+ 163 0098 DA98      		cbi 0x1b,2
  164 009a 0895      		ret
  165               		.cfi_endproc
  166               	.LFE7:
@@ -383,20 +383,20 @@
  175               	/* frame size = 0 */
  176               	/* stack size = 0 */
  177               	.L__stack_usage = 0
-  51:lcd.c         **** PORTD &=~RS;
+  51:lcd.c         **** LCD_PORT &=~RS;
  178               		.loc 1 51 0
- 179 009c 9098      		cbi 0x12,0
-  52:lcd.c         **** PORTD  &=~EN;
+ 179 009c D898      		cbi 0x1b,0
+  52:lcd.c         **** LCD_PORT  &=~EN;
  180               		.loc 1 52 0
- 181 009e 9298      		cbi 0x12,2
-  53:lcd.c         **** PORTD &=~RW;
+ 181 009e DA98      		cbi 0x1b,2
+  53:lcd.c         **** LCD_PORT &=~RW;
  182               		.loc 1 53 0
- 183 00a0 9198      		cbi 0x12,1
-  54:lcd.c         **** PORTD |= 0x30;
+ 183 00a0 D998      		cbi 0x1b,1
+  54:lcd.c         **** LCD_PORT |= 0x30;
  184               		.loc 1 54 0
- 185 00a2 82B3      		in r24,0x12
+ 185 00a2 8BB3      		in r24,0x1b
  186 00a4 8063      		ori r24,lo8(48)
- 187 00a6 82BB      		out 0x12,r24
+ 187 00a6 8BBB      		out 0x1b,r24
  188               	.LVL8:
  189               	.LBB36:
  190               	.LBB37:
@@ -410,12 +410,12 @@
  198               	.LBE37:
  199               	.LBE36:
   55:lcd.c         **** _delay_ms(40);
-  56:lcd.c         **** PORTD  |=EN;
+  56:lcd.c         **** LCD_PORT  |=EN;
  200               		.loc 1 56 0
- 201 00b4 929A      		sbi 0x12,2
-  57:lcd.c         **** PORTD  &=~EN;
+ 201 00b4 DA9A      		sbi 0x1b,2
+  57:lcd.c         **** LCD_PORT  &=~EN;
  202               		.loc 1 57 0
- 203 00b6 9298      		cbi 0x12,2
+ 203 00b6 DA98      		cbi 0x1b,2
  204               	.LVL9:
  205               	.LBB38:
  206               	.LBB39:
@@ -429,12 +429,12 @@
  214               	.LBE39:
  215               	.LBE38:
   58:lcd.c         **** _delay_ms(5);
-  59:lcd.c         **** PORTD  |=EN;
+  59:lcd.c         **** LCD_PORT  |=EN;
  216               		.loc 1 59 0
- 217 00c4 929A      		sbi 0x12,2
-  60:lcd.c         **** PORTD  &=~EN;
+ 217 00c4 DA9A      		sbi 0x1b,2
+  60:lcd.c         **** LCD_PORT  &=~EN;
  218               		.loc 1 60 0
- 219 00c6 9298      		cbi 0x12,2
+ 219 00c6 DA98      		cbi 0x1b,2
  220               	.LVL10:
  221               	.LBB40:
  222               	.LBB41:
@@ -448,12 +448,12 @@
  230               	.LBE41:
  231               	.LBE40:
   61:lcd.c         **** _delay_ms(5);
-  62:lcd.c         **** PORTD  |=EN;
+  62:lcd.c         **** LCD_PORT  |=EN;
  232               		.loc 1 62 0
- 233 00d4 929A      		sbi 0x12,2
-  63:lcd.c         **** PORTD  &=~EN;
+ 233 00d4 DA9A      		sbi 0x1b,2
+  63:lcd.c         **** LCD_PORT  &=~EN;
  234               		.loc 1 63 0
- 235 00d6 9298      		cbi 0x12,2
+ 235 00d6 DA98      		cbi 0x1b,2
  236               	.LVL11:
  237               	.LBB42:
  238               	.LBB43:
@@ -468,17 +468,17 @@
  247               	.LBE42:
   64:lcd.c         **** _delay_ms(2);
   65:lcd.c         **** 
-  66:lcd.c         **** PORTD &= 0x20;
+  66:lcd.c         **** LCD_PORT &= 0x20;
  248               		.loc 1 66 0
- 249 00e4 82B3      		in r24,0x12
+ 249 00e4 8BB3      		in r24,0x1b
  250 00e6 8072      		andi r24,lo8(32)
- 251 00e8 82BB      		out 0x12,r24
-  67:lcd.c         **** PORTD  |=EN;
+ 251 00e8 8BBB      		out 0x1b,r24
+  67:lcd.c         **** LCD_PORT  |=EN;
  252               		.loc 1 67 0
- 253 00ea 929A      		sbi 0x12,2
-  68:lcd.c         **** PORTD  &=~EN;
+ 253 00ea DA9A      		sbi 0x1b,2
+  68:lcd.c         **** LCD_PORT  &=~EN;
  254               		.loc 1 68 0
- 255 00ec 9298      		cbi 0x12,2
+ 255 00ec DA98      		cbi 0x1b,2
   69:lcd.c         **** lcdcmd(0x28);   //set data length 4 bit 2 line
  256               		.loc 1 69 0
  257 00ee 88E2      		ldi r24,lo8(40)
@@ -791,17 +791,17 @@
  519               		.file 3 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lcd.c
-     /tmp/ccJXO65e.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccJXO65e.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccJXO65e.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccJXO65e.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccJXO65e.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccJXO65e.s:12     .text:0000000000000000 lcdcmd
-     /tmp/ccJXO65e.s:92     .text:000000000000004e lcdData
-     /tmp/ccJXO65e.s:170    .text:000000000000009c lcdInit
-     /tmp/ccJXO65e.s:337    .text:000000000000014a prints
-     /tmp/ccJXO65e.s:379    .text:0000000000000162 gotoXy
-     /tmp/ccJXO65e.s:409    .text:0000000000000172 integerToLcd
+     /tmp/ccJWUzU2.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccJWUzU2.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccJWUzU2.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccJWUzU2.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccJWUzU2.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccJWUzU2.s:12     .text:0000000000000000 lcdcmd
+     /tmp/ccJWUzU2.s:92     .text:000000000000004e lcdData
+     /tmp/ccJWUzU2.s:170    .text:000000000000009c lcdInit
+     /tmp/ccJWUzU2.s:337    .text:000000000000014a prints
+     /tmp/ccJWUzU2.s:379    .text:0000000000000162 gotoXy
+     /tmp/ccJWUzU2.s:409    .text:0000000000000172 integerToLcd
 
 UNDEFINED SYMBOLS
 __divmodhi4

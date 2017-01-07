@@ -29,11 +29,11 @@
    8:keypad.c      **** KB_DIR =0b11110000; //wymuszenie zer dla wszystkich kolumn
   23               		.loc 1 8 0
   24 0004 80EF      		ldi r24,lo8(-16)
-  25 0006 8ABB      		out 0x1a,r24
+  25 0006 84BB      		out 0x14,r24
    9:keypad.c      **** KB_PORT=0b00001111;
   26               		.loc 1 9 0
   27 0008 9FE0      		ldi r25,lo8(15)
-  28 000a 9BBB      		out 0x1b,r25
+  28 000a 95BB      		out 0x15,r25
   29               	.LVL0:
   30               	.LBB6:
   31               	.LBB7:
@@ -213,16 +213,16 @@
   10:keypad.c      **** _delay_ms(200);
   11:keypad.c      **** result=KB_PIN;
   42               		.loc 1 11 0
-  43 0018 29B3      		in r18,0x19
+  43 0018 23B3      		in r18,0x13
   44 001a 2093 0000 		sts result,r18
   12:keypad.c      **** 
   13:keypad.c      **** //odczyt wierszy
   14:keypad.c      **** KB_DIR =0b00001111; //wymuszenie zer dla wszystkich wierszy
   45               		.loc 1 14 0
-  46 001e 9ABB      		out 0x1a,r25
+  46 001e 94BB      		out 0x14,r25
   15:keypad.c      **** KB_PORT=0b11110000;
   47               		.loc 1 15 0
-  48 0020 8BBB      		out 0x1b,r24
+  48 0020 85BB      		out 0x15,r24
   49               	.LVL1:
   50               	.LBB8:
   51               	.LBB9:
@@ -238,7 +238,7 @@
   16:keypad.c      **** _delay_ms(200);
   17:keypad.c      **** result = result | KB_PIN; 
   61               		.loc 1 17 0
-  62 002e 29B3      		in r18,0x19
+  62 002e 23B3      		in r18,0x13
   63 0030 8091 0000 		lds r24,result
   64 0034 822B      		or r24,r18
   65 0036 8093 0000 		sts result,r24
@@ -407,12 +407,12 @@
  185               		.file 3 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keypad.c
-     /tmp/ccJ1ILwh.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccJ1ILwh.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccJ1ILwh.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccJ1ILwh.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccJ1ILwh.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccJ1ILwh.s:12     .text:0000000000000000 keypad
+     /tmp/ccsKMTGm.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccsKMTGm.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccsKMTGm.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccsKMTGm.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccsKMTGm.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccsKMTGm.s:12     .text:0000000000000000 keypad
                             *COM*:0000000000000001 result
                             *COM*:0000000000000001 i
 
