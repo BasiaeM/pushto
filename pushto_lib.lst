@@ -7,17 +7,830 @@
    7               		.text
    8               	.Ltext0:
    9               		.cfi_sections	.debug_frame
-  10               		.comm	keypad_A,20,1
-  11               	.Letext0:
-  12               		.file 1 "keypad.h"
+  10               		.section	.rodata.str1.1,"aMS",@progbits,1
+  11               	.LC0:
+  12 0000 476F 746F 		.string	"Goto polaris-> C"
+  12      2070 6F6C 
+  12      6172 6973 
+  12      2D3E 2043 
+  12      00
+  13               	.LC1:
+  14 0011 476F 746F 		.string	"Goto alkaid -> C"
+  14      2061 6C6B 
+  14      6169 6420 
+  14      2D3E 2043 
+  14      00
+  15               		.text
+  16               	.global	kalibracja
+  18               	kalibracja:
+  19               	.LFB6:
+  20               		.file 1 "pushto_lib.c"
+   1:pushto_lib.c  **** #include "pushto_lib.h"
+   2:pushto_lib.c  **** 
+   3:pushto_lib.c  **** void kalibracja(struct Enc *enk1, struct Enc *enk2, struct Telescope *tel) //enkoder1 - wysokosc, e
+   4:pushto_lib.c  **** {
+  21               		.loc 1 4 0
+  22               		.cfi_startproc
+  23               	.LVL0:
+  24 0000 EF92      		push r14
+  25               	.LCFI0:
+  26               		.cfi_def_cfa_offset 3
+  27               		.cfi_offset 14, -2
+  28 0002 FF92      		push r15
+  29               	.LCFI1:
+  30               		.cfi_def_cfa_offset 4
+  31               		.cfi_offset 15, -3
+  32 0004 0F93      		push r16
+  33               	.LCFI2:
+  34               		.cfi_def_cfa_offset 5
+  35               		.cfi_offset 16, -4
+  36 0006 1F93      		push r17
+  37               	.LCFI3:
+  38               		.cfi_def_cfa_offset 6
+  39               		.cfi_offset 17, -5
+  40 0008 CF93      		push r28
+  41               	.LCFI4:
+  42               		.cfi_def_cfa_offset 7
+  43               		.cfi_offset 28, -6
+  44 000a DF93      		push r29
+  45               	.LCFI5:
+  46               		.cfi_def_cfa_offset 8
+  47               		.cfi_offset 29, -7
+  48               	/* prologue: function */
+  49               	/* frame size = 0 */
+  50               	/* stack size = 6 */
+  51               	.L__stack_usage = 6
+  52 000c 7C01      		movw r14,r24
+  53 000e 8B01      		movw r16,r22
+  54 0010 EA01      		movw r28,r20
+   5:pushto_lib.c  **** 	gotoXy(0,0);
+  55               		.loc 1 5 0
+  56 0012 60E0      		ldi r22,0
+  57               	.LVL1:
+  58 0014 80E0      		ldi r24,0
+  59               	.LVL2:
+  60 0016 0E94 0000 		call gotoXy
+  61               	.LVL3:
+   6:pushto_lib.c  **** 	prints("Goto polaris-> C");
+  62               		.loc 1 6 0
+  63 001a 80E0      		ldi r24,lo8(.LC0)
+  64 001c 90E0      		ldi r25,hi8(.LC0)
+  65 001e 0E94 0000 		call prints
+  66               	.LVL4:
+  67               	.L2:
+   7:pushto_lib.c  **** 	while(keypad(&keypad_A)!=0b01111011){} //oczekuj na C
+  68               		.loc 1 7 0 discriminator 1
+  69 0022 80E0      		ldi r24,lo8(keypad_A)
+  70 0024 90E0      		ldi r25,hi8(keypad_A)
+  71 0026 0E94 0000 		call keypad
+  72               	.LVL5:
+  73 002a 8B37      		cpi r24,lo8(123)
+  74 002c 01F4      		brne .L2
+   8:pushto_lib.c  **** 	enk1->count=0; //ustawienie wysokosci 
+  75               		.loc 1 8 0
+  76 002e F701      		movw r30,r14
+  77 0030 1382      		std Z+3,__zero_reg__
+  78 0032 1282      		std Z+2,__zero_reg__
+   9:pushto_lib.c  **** 	gotoXy(0,0);
+  79               		.loc 1 9 0
+  80 0034 60E0      		ldi r22,0
+  81 0036 80E0      		ldi r24,0
+  82 0038 0E94 0000 		call gotoXy
+  83               	.LVL6:
+  10:pushto_lib.c  **** 	prints("Goto alkaid -> C");
+  84               		.loc 1 10 0
+  85 003c 80E0      		ldi r24,lo8(.LC1)
+  86 003e 90E0      		ldi r25,hi8(.LC1)
+  87 0040 0E94 0000 		call prints
+  88               	.LVL7:
+  89               	.L3:
+  11:pushto_lib.c  **** 	while(keypad(&keypad_A)!=0b01111011){} //oczekuj na C
+  90               		.loc 1 11 0 discriminator 1
+  91 0044 80E0      		ldi r24,lo8(keypad_A)
+  92 0046 90E0      		ldi r25,hi8(keypad_A)
+  93 0048 0E94 0000 		call keypad
+  94               	.LVL8:
+  95 004c 8B37      		cpi r24,lo8(123)
+  96 004e 01F4      		brne .L3
+  12:pushto_lib.c  **** 	enk2->count=0; //ustawienie rektascencji
+  97               		.loc 1 12 0
+  98 0050 F801      		movw r30,r16
+  99 0052 1382      		std Z+3,__zero_reg__
+ 100 0054 1282      		std Z+2,__zero_reg__
+  13:pushto_lib.c  **** 	tel->time=0;//zerowanie zegara
+ 101               		.loc 1 13 0
+ 102 0056 1982      		std Y+1,__zero_reg__
+ 103 0058 1882      		st Y,__zero_reg__
+ 104               	/* epilogue start */
+  14:pushto_lib.c  **** 	lcd_clr();
+  15:pushto_lib.c  **** 
+  16:pushto_lib.c  **** }
+ 105               		.loc 1 16 0
+ 106 005a DF91      		pop r29
+ 107 005c CF91      		pop r28
+ 108               	.LVL9:
+ 109 005e 1F91      		pop r17
+ 110 0060 0F91      		pop r16
+ 111               	.LVL10:
+ 112 0062 FF90      		pop r15
+ 113 0064 EF90      		pop r14
+ 114               	.LVL11:
+  14:pushto_lib.c  **** 	lcd_clr();
+ 115               		.loc 1 14 0
+ 116 0066 0C94 0000 		jmp lcd_clr
+ 117               	.LVL12:
+ 118               		.cfi_endproc
+ 119               	.LFE6:
+ 121               		.section	.rodata.str1.1
+ 122               	.LC2:
+ 123 0022 706F 6461 		.string	"podaj dekl i RA "
+ 123      6A20 6465 
+ 123      6B6C 2069 
+ 123      2052 4120 
+ 123      00
+ 124               	.LC3:
+ 125 0033 666F 726D 		.string	"format xHyMz ->B"
+ 125      6174 2078 
+ 125      4879 4D7A 
+ 125      202D 3E42 
+ 125      00
+ 126               	.LC4:
+ 127 0044 6F7A 6E61 		.string	"oznaczenia:     "
+ 127      637A 656E 
+ 127      6961 3A20 
+ 127      2020 2020 
+ 127      00
+ 128               	.LC5:
+ 129 0055 4828 2A29 		.string	"H(*) M(#)    ->B"
+ 129      204D 2823 
+ 129      2920 2020 
+ 129      202D 3E42 
+ 129      00
+ 130               	.LC6:
+ 131 0066 706F 6461 		.string	"podaj RA     ->B"
+ 131      6A20 5241 
+ 131      2020 2020 
+ 131      202D 3E42 
+ 131      00
+ 132               	.LC7:
+ 133 0077 2569 4825 		.string	"%iH%iM%i"
+ 133      694D 2569 
+ 133      00
+ 134               	.global	__floatsisf
+ 135               	.global	__mulsf3
+ 136               	.global	__addsf3
+ 137               	.LC8:
+ 138 0080 6465 6B6C 		.string	"dekl H to st ->B"
+ 138      2048 2074 
+ 138      6F20 7374 
+ 138      202D 3E42 
+ 138      00
+ 139               	.global	__divsf3
+ 140               		.text
+ 141               	.global	nowy_cel
+ 143               	nowy_cel:
+ 144               	.LFB7:
+  17:pushto_lib.c  **** 
+  18:pushto_lib.c  **** void nowy_cel(struct Key *klaw, struct Telescope *tel)
+  19:pushto_lib.c  **** {
+ 145               		.loc 1 19 0
+ 146               		.cfi_startproc
+ 147               	.LVL13:
+ 148 006a 2F92      		push r2
+ 149               	.LCFI6:
+ 150               		.cfi_def_cfa_offset 3
+ 151               		.cfi_offset 2, -2
+ 152 006c 3F92      		push r3
+ 153               	.LCFI7:
+ 154               		.cfi_def_cfa_offset 4
+ 155               		.cfi_offset 3, -3
+ 156 006e 4F92      		push r4
+ 157               	.LCFI8:
+ 158               		.cfi_def_cfa_offset 5
+ 159               		.cfi_offset 4, -4
+ 160 0070 5F92      		push r5
+ 161               	.LCFI9:
+ 162               		.cfi_def_cfa_offset 6
+ 163               		.cfi_offset 5, -5
+ 164 0072 6F92      		push r6
+ 165               	.LCFI10:
+ 166               		.cfi_def_cfa_offset 7
+ 167               		.cfi_offset 6, -6
+ 168 0074 7F92      		push r7
+ 169               	.LCFI11:
+ 170               		.cfi_def_cfa_offset 8
+ 171               		.cfi_offset 7, -7
+ 172 0076 8F92      		push r8
+ 173               	.LCFI12:
+ 174               		.cfi_def_cfa_offset 9
+ 175               		.cfi_offset 8, -8
+ 176 0078 9F92      		push r9
+ 177               	.LCFI13:
+ 178               		.cfi_def_cfa_offset 10
+ 179               		.cfi_offset 9, -9
+ 180 007a AF92      		push r10
+ 181               	.LCFI14:
+ 182               		.cfi_def_cfa_offset 11
+ 183               		.cfi_offset 10, -10
+ 184 007c BF92      		push r11
+ 185               	.LCFI15:
+ 186               		.cfi_def_cfa_offset 12
+ 187               		.cfi_offset 11, -11
+ 188 007e CF92      		push r12
+ 189               	.LCFI16:
+ 190               		.cfi_def_cfa_offset 13
+ 191               		.cfi_offset 12, -12
+ 192 0080 DF92      		push r13
+ 193               	.LCFI17:
+ 194               		.cfi_def_cfa_offset 14
+ 195               		.cfi_offset 13, -13
+ 196 0082 EF92      		push r14
+ 197               	.LCFI18:
+ 198               		.cfi_def_cfa_offset 15
+ 199               		.cfi_offset 14, -14
+ 200 0084 FF92      		push r15
+ 201               	.LCFI19:
+ 202               		.cfi_def_cfa_offset 16
+ 203               		.cfi_offset 15, -15
+ 204 0086 0F93      		push r16
+ 205               	.LCFI20:
+ 206               		.cfi_def_cfa_offset 17
+ 207               		.cfi_offset 16, -16
+ 208 0088 1F93      		push r17
+ 209               	.LCFI21:
+ 210               		.cfi_def_cfa_offset 18
+ 211               		.cfi_offset 17, -17
+ 212 008a CF93      		push r28
+ 213               	.LCFI22:
+ 214               		.cfi_def_cfa_offset 19
+ 215               		.cfi_offset 28, -18
+ 216 008c DF93      		push r29
+ 217               	.LCFI23:
+ 218               		.cfi_def_cfa_offset 20
+ 219               		.cfi_offset 29, -19
+ 220 008e 00D0      		rcall .
+ 221 0090 00D0      		rcall .
+ 222 0092 00D0      		rcall .
+ 223               	.LCFI24:
+ 224               		.cfi_def_cfa_offset 26
+ 225 0094 CDB7      		in r28,__SP_L__
+ 226 0096 DEB7      		in r29,__SP_H__
+ 227               	.LCFI25:
+ 228               		.cfi_def_cfa_register 28
+ 229               	/* prologue: function */
+ 230               	/* frame size = 6 */
+ 231               	/* stack size = 24 */
+ 232               	.L__stack_usage = 24
+ 233 0098 8C01      		movw r16,r24
+ 234 009a 1B01      		movw r2,r22
+  20:pushto_lib.c  **** 	int h=0;
+ 235               		.loc 1 20 0
+ 236 009c 1E82      		std Y+6,__zero_reg__
+ 237 009e 1D82      		std Y+5,__zero_reg__
+  21:pushto_lib.c  **** 	int m=0;
+ 238               		.loc 1 21 0
+ 239 00a0 1C82      		std Y+4,__zero_reg__
+ 240 00a2 1B82      		std Y+3,__zero_reg__
+  22:pushto_lib.c  **** 	int s=0;
+ 241               		.loc 1 22 0
+ 242 00a4 1A82      		std Y+2,__zero_reg__
+ 243 00a6 1982      		std Y+1,__zero_reg__
+  23:pushto_lib.c  **** 	//testy
+  24:pushto_lib.c  **** 	 gotoXy(0,1);
+ 244               		.loc 1 24 0
+ 245 00a8 61E0      		ldi r22,lo8(1)
+ 246               	.LVL14:
+ 247 00aa 80E0      		ldi r24,0
+ 248               	.LVL15:
+ 249 00ac 0E94 0000 		call gotoXy
+ 250               	.LVL16:
+  25:pushto_lib.c  ****     integerToLcd(h);
+ 251               		.loc 1 25 0
+ 252 00b0 8D81      		ldd r24,Y+5
+ 253 00b2 9E81      		ldd r25,Y+6
+ 254 00b4 0E94 0000 		call integerToLcd
+ 255               	.LVL17:
+  26:pushto_lib.c  ****     gotoXy(6,1);
+ 256               		.loc 1 26 0
+ 257 00b8 61E0      		ldi r22,lo8(1)
+ 258 00ba 86E0      		ldi r24,lo8(6)
+ 259 00bc 0E94 0000 		call gotoXy
+ 260               	.LVL18:
+  27:pushto_lib.c  ****     integerToLcd(m);
+ 261               		.loc 1 27 0
+ 262 00c0 8B81      		ldd r24,Y+3
+ 263 00c2 9C81      		ldd r25,Y+4
+ 264 00c4 0E94 0000 		call integerToLcd
+ 265               	.LVL19:
+  28:pushto_lib.c  ****     gotoXy(11,1);
+ 266               		.loc 1 28 0
+ 267 00c8 61E0      		ldi r22,lo8(1)
+ 268 00ca 8BE0      		ldi r24,lo8(11)
+ 269 00cc 0E94 0000 		call gotoXy
+ 270               	.LVL20:
+  29:pushto_lib.c  ****     integerToLcd(s);
+ 271               		.loc 1 29 0
+ 272 00d0 8981      		ldd r24,Y+1
+ 273 00d2 9A81      		ldd r25,Y+2
+ 274 00d4 0E94 0000 		call integerToLcd
+ 275               	.LVL21:
+ 276               	.L8:
+  30:pushto_lib.c  ****     while(keypad(klaw)!=0b01111101){} //oczekuj na B
+ 277               		.loc 1 30 0 discriminator 1
+ 278 00d8 C801      		movw r24,r16
+ 279 00da 0E94 0000 		call keypad
+ 280               	.LVL22:
+ 281 00de 8D37      		cpi r24,lo8(125)
+ 282 00e0 01F4      		brne .L8
+  31:pushto_lib.c  **** 
+  32:pushto_lib.c  **** 
+  33:pushto_lib.c  **** 	keypad_clr_buf(); //czyszczenie bufora
+ 283               		.loc 1 33 0
+ 284 00e2 0E94 0000 		call keypad_clr_buf
+ 285               	.LVL23:
+  34:pushto_lib.c  **** 	gotoXy(0,0);
+ 286               		.loc 1 34 0
+ 287 00e6 60E0      		ldi r22,0
+ 288 00e8 80E0      		ldi r24,0
+ 289 00ea 0E94 0000 		call gotoXy
+ 290               	.LVL24:
+  35:pushto_lib.c  **** 	prints("podaj dekl i RA ");
+ 291               		.loc 1 35 0
+ 292 00ee 80E0      		ldi r24,lo8(.LC2)
+ 293 00f0 90E0      		ldi r25,hi8(.LC2)
+ 294 00f2 0E94 0000 		call prints
+ 295               	.LVL25:
+  36:pushto_lib.c  **** 	gotoXy(0,1);
+ 296               		.loc 1 36 0
+ 297 00f6 61E0      		ldi r22,lo8(1)
+ 298 00f8 80E0      		ldi r24,0
+ 299 00fa 0E94 0000 		call gotoXy
+ 300               	.LVL26:
+  37:pushto_lib.c  **** 	prints("format xHyMz ->B");
+ 301               		.loc 1 37 0
+ 302 00fe 80E0      		ldi r24,lo8(.LC3)
+ 303 0100 90E0      		ldi r25,hi8(.LC3)
+ 304 0102 0E94 0000 		call prints
+ 305               	.LVL27:
+ 306               	.L9:
+  38:pushto_lib.c  **** 	while(keypad(klaw)!=0b01111101){} //oczekuj na B
+ 307               		.loc 1 38 0 discriminator 1
+ 308 0106 C801      		movw r24,r16
+ 309 0108 0E94 0000 		call keypad
+ 310               	.LVL28:
+ 311 010c 8D37      		cpi r24,lo8(125)
+ 312 010e 01F4      		brne .L9
+  39:pushto_lib.c  **** 	gotoXy(0,0);
+ 313               		.loc 1 39 0
+ 314 0110 60E0      		ldi r22,0
+ 315 0112 80E0      		ldi r24,0
+ 316 0114 0E94 0000 		call gotoXy
+ 317               	.LVL29:
+  40:pushto_lib.c  **** 	prints("oznaczenia:     ");
+ 318               		.loc 1 40 0
+ 319 0118 80E0      		ldi r24,lo8(.LC4)
+ 320 011a 90E0      		ldi r25,hi8(.LC4)
+ 321 011c 0E94 0000 		call prints
+ 322               	.LVL30:
+  41:pushto_lib.c  **** 	gotoXy(0,1);
+ 323               		.loc 1 41 0
+ 324 0120 61E0      		ldi r22,lo8(1)
+ 325 0122 80E0      		ldi r24,0
+ 326 0124 0E94 0000 		call gotoXy
+ 327               	.LVL31:
+  42:pushto_lib.c  **** 	prints("H(*) M(#)    ->B");
+ 328               		.loc 1 42 0
+ 329 0128 80E0      		ldi r24,lo8(.LC5)
+ 330 012a 90E0      		ldi r25,hi8(.LC5)
+ 331 012c 0E94 0000 		call prints
+ 332               	.LVL32:
+ 333               	.L10:
+  43:pushto_lib.c  **** 	while(keypad(klaw)!=0b01111101){} //oczekuj na B
+ 334               		.loc 1 43 0 discriminator 1
+ 335 0130 C801      		movw r24,r16
+ 336 0132 0E94 0000 		call keypad
+ 337               	.LVL33:
+ 338 0136 8D37      		cpi r24,lo8(125)
+ 339 0138 01F4      		brne .L10
+  44:pushto_lib.c  **** 	lcd_clr();
+ 340               		.loc 1 44 0
+ 341 013a 0E94 0000 		call lcd_clr
+ 342               	.LVL34:
+  45:pushto_lib.c  **** 
+  46:pushto_lib.c  **** 	gotoXy(0,0);
+ 343               		.loc 1 46 0
+ 344 013e 60E0      		ldi r22,0
+ 345 0140 80E0      		ldi r24,0
+ 346 0142 0E94 0000 		call gotoXy
+ 347               	.LVL35:
+  47:pushto_lib.c  ****     prints("podaj RA     ->B");
+ 348               		.loc 1 47 0
+ 349 0146 80E0      		ldi r24,lo8(.LC6)
+ 350 0148 90E0      		ldi r25,hi8(.LC6)
+ 351 014a 0E94 0000 		call prints
+ 352               	.LVL36:
+ 353 014e C801      		movw r24,r16
+ 354 0150 0296      		adiw r24,2
+ 355 0152 7C01      		movw r14,r24
+ 356               	.L11:
+  48:pushto_lib.c  ****     while(keypad(klaw)!=0b01111101) //oczekuj na B
+ 357               		.loc 1 48 0
+ 358 0154 C801      		movw r24,r16
+ 359 0156 0E94 0000 		call keypad
+ 360               	.LVL37:
+ 361 015a 8D37      		cpi r24,lo8(125)
+ 362 015c 01F0      		breq .L21
+  49:pushto_lib.c  ****     {
+  50:pushto_lib.c  ****     	gotoXy(0,1);
+ 363               		.loc 1 50 0
+ 364 015e 61E0      		ldi r22,lo8(1)
+ 365 0160 80E0      		ldi r24,0
+ 366 0162 0E94 0000 		call gotoXy
+ 367               	.LVL38:
+  51:pushto_lib.c  ****     	keypad_proc(klaw);
+ 368               		.loc 1 51 0
+ 369 0166 C801      		movw r24,r16
+ 370 0168 0E94 0000 		call keypad_proc
+ 371               	.LVL39:
+  52:pushto_lib.c  ****     	prints(klaw->buf);
+ 372               		.loc 1 52 0
+ 373 016c C701      		movw r24,r14
+ 374 016e 0E94 0000 		call prints
+ 375               	.LVL40:
+ 376 0172 00C0      		rjmp .L11
+ 377               	.L21:
+  53:pushto_lib.c  ****     }
+  54:pushto_lib.c  ****     sscanf(klaw->buf,"%iH%iM%i",&h,&m,&s);
+ 378               		.loc 1 54 0
+ 379 0174 FE01      		movw r30,r28
+ 380 0176 3196      		adiw r30,1
+ 381 0178 4F01      		movw r8,r30
+ 382 017a FF93      		push r31
+ 383 017c EF93      		push r30
+ 384 017e 5E01      		movw r10,r28
+ 385 0180 F3E0      		ldi r31,3
+ 386 0182 AF0E      		add r10,r31
+ 387 0184 B11C      		adc r11,__zero_reg__
+ 388 0186 BF92      		push r11
+ 389 0188 AF92      		push r10
+ 390 018a 6E01      		movw r12,r28
+ 391 018c 85E0      		ldi r24,5
+ 392 018e C80E      		add r12,r24
+ 393 0190 D11C      		adc r13,__zero_reg__
+ 394 0192 DF92      		push r13
+ 395 0194 CF92      		push r12
+ 396 0196 80E0      		ldi r24,lo8(.LC7)
+ 397 0198 90E0      		ldi r25,hi8(.LC7)
+ 398 019a 9F93      		push r25
+ 399 019c 8F93      		push r24
+ 400 019e FF92      		push r15
+ 401 01a0 EF92      		push r14
+ 402 01a2 0E94 0000 		call sscanf
+ 403               	.LVL41:
+  55:pushto_lib.c  ****     //testy
+  56:pushto_lib.c  ****     gotoXy(0,1);
+ 404               		.loc 1 56 0
+ 405 01a6 61E0      		ldi r22,lo8(1)
+ 406 01a8 80E0      		ldi r24,0
+ 407 01aa 0E94 0000 		call gotoXy
+ 408               	.LVL42:
+  57:pushto_lib.c  ****     integerToLcd(h);
+ 409               		.loc 1 57 0
+ 410 01ae 8D81      		ldd r24,Y+5
+ 411 01b0 9E81      		ldd r25,Y+6
+ 412 01b2 0E94 0000 		call integerToLcd
+ 413               	.LVL43:
+  58:pushto_lib.c  ****     gotoXy(6,1);
+ 414               		.loc 1 58 0
+ 415 01b6 61E0      		ldi r22,lo8(1)
+ 416 01b8 86E0      		ldi r24,lo8(6)
+ 417 01ba 0E94 0000 		call gotoXy
+ 418               	.LVL44:
+  59:pushto_lib.c  ****     integerToLcd(m);
+ 419               		.loc 1 59 0
+ 420 01be 8B81      		ldd r24,Y+3
+ 421 01c0 9C81      		ldd r25,Y+4
+ 422 01c2 0E94 0000 		call integerToLcd
+ 423               	.LVL45:
+  60:pushto_lib.c  ****     gotoXy(11,1);
+ 424               		.loc 1 60 0
+ 425 01c6 61E0      		ldi r22,lo8(1)
+ 426 01c8 8BE0      		ldi r24,lo8(11)
+ 427 01ca 0E94 0000 		call gotoXy
+ 428               	.LVL46:
+  61:pushto_lib.c  ****     integerToLcd(s);
+ 429               		.loc 1 61 0
+ 430 01ce 8981      		ldd r24,Y+1
+ 431 01d0 9A81      		ldd r25,Y+2
+ 432 01d2 0E94 0000 		call integerToLcd
+ 433               	.LVL47:
+  62:pushto_lib.c  ****     while(keypad(klaw)!=0b01111101){} //oczekuj na B
+ 434               		.loc 1 62 0
+ 435 01d6 0FB6      		in __tmp_reg__,__SREG__
+ 436 01d8 F894      		cli
+ 437 01da DEBF      		out __SP_H__,r29
+ 438 01dc 0FBE      		out __SREG__,__tmp_reg__
+ 439 01de CDBF      		out __SP_L__,r28
+ 440               	.L13:
+ 441               		.loc 1 62 0 is_stmt 0 discriminator 1
+ 442 01e0 C801      		movw r24,r16
+ 443 01e2 0E94 0000 		call keypad
+ 444               	.LVL48:
+ 445 01e6 8D37      		cpi r24,lo8(125)
+ 446 01e8 01F4      		brne .L13
+  63:pushto_lib.c  ****     tel->obr_zad = 15*h+15/60.0*m+15/3600.0*s;
+ 447               		.loc 1 63 0 is_stmt 1
+ 448 01ea 8D81      		ldd r24,Y+5
+ 449 01ec 9E81      		ldd r25,Y+6
+ 450 01ee 2FE0      		ldi r18,lo8(15)
+ 451 01f0 289F      		mul r18,r24
+ 452 01f2 B001      		movw r22,r0
+ 453 01f4 299F      		mul r18,r25
+ 454 01f6 700D      		add r23,r0
+ 455 01f8 1124      		clr __zero_reg__
+ 456 01fa 072E      		mov __tmp_reg__,r23
+ 457 01fc 000C      		lsl r0
+ 458 01fe 880B      		sbc r24,r24
+ 459 0200 990B      		sbc r25,r25
+ 460 0202 0E94 0000 		call __floatsisf
+ 461               	.LVL49:
+ 462 0206 2B01      		movw r4,r22
+ 463 0208 3C01      		movw r6,r24
+ 464 020a 6B81      		ldd r22,Y+3
+ 465 020c 7C81      		ldd r23,Y+4
+ 466 020e 072E      		mov __tmp_reg__,r23
+ 467 0210 000C      		lsl r0
+ 468 0212 880B      		sbc r24,r24
+ 469 0214 990B      		sbc r25,r25
+ 470 0216 0E94 0000 		call __floatsisf
+ 471               	.LVL50:
+ 472 021a 20E0      		ldi r18,0
+ 473 021c 30E0      		ldi r19,0
+ 474 021e 40E8      		ldi r20,lo8(-128)
+ 475 0220 5EE3      		ldi r21,lo8(62)
+ 476 0222 0E94 0000 		call __mulsf3
+ 477               	.LVL51:
+ 478 0226 9B01      		movw r18,r22
+ 479 0228 AC01      		movw r20,r24
+ 480 022a C301      		movw r24,r6
+ 481 022c B201      		movw r22,r4
+ 482 022e 0E94 0000 		call __addsf3
+ 483               	.LVL52:
+ 484 0232 2B01      		movw r4,r22
+ 485 0234 3C01      		movw r6,r24
+ 486 0236 6981      		ldd r22,Y+1
+ 487 0238 7A81      		ldd r23,Y+2
+ 488 023a 072E      		mov __tmp_reg__,r23
+ 489 023c 000C      		lsl r0
+ 490 023e 880B      		sbc r24,r24
+ 491 0240 990B      		sbc r25,r25
+ 492 0242 0E94 0000 		call __floatsisf
+ 493               	.LVL53:
+ 494 0246 29E8      		ldi r18,lo8(-119)
+ 495 0248 38E8      		ldi r19,lo8(-120)
+ 496 024a 48E8      		ldi r20,lo8(-120)
+ 497 024c 5BE3      		ldi r21,lo8(59)
+ 498 024e 0E94 0000 		call __mulsf3
+ 499               	.LVL54:
+ 500 0252 9B01      		movw r18,r22
+ 501 0254 AC01      		movw r20,r24
+ 502 0256 C301      		movw r24,r6
+ 503 0258 B201      		movw r22,r4
+ 504 025a 0E94 0000 		call __addsf3
+ 505               	.LVL55:
+ 506 025e F101      		movw r30,r2
+ 507 0260 6683      		std Z+6,r22
+ 508 0262 7783      		std Z+7,r23
+ 509 0264 8087      		std Z+8,r24
+ 510 0266 9187      		std Z+9,r25
+  64:pushto_lib.c  **** 
+  65:pushto_lib.c  ****     keypad_clr_buf(); // czyszczenie bufora
+ 511               		.loc 1 65 0
+ 512 0268 0E94 0000 		call keypad_clr_buf
+ 513               	.LVL56:
+  66:pushto_lib.c  ****     lcd_clr();
+ 514               		.loc 1 66 0
+ 515 026c 0E94 0000 		call lcd_clr
+ 516               	.LVL57:
+  67:pushto_lib.c  ****     h=0;m=0;s=0;
+ 517               		.loc 1 67 0
+ 518 0270 1E82      		std Y+6,__zero_reg__
+ 519 0272 1D82      		std Y+5,__zero_reg__
+ 520 0274 1C82      		std Y+4,__zero_reg__
+ 521 0276 1B82      		std Y+3,__zero_reg__
+ 522 0278 1A82      		std Y+2,__zero_reg__
+ 523 027a 1982      		std Y+1,__zero_reg__
+  68:pushto_lib.c  ****     klaw->flags &= ~KB_H;
+  69:pushto_lib.c  **** 	klaw->flags &= ~KB_M;
+ 524               		.loc 1 69 0
+ 525 027c F801      		movw r30,r16
+ 526 027e 8489      		ldd r24,Z+20
+ 527 0280 837F      		andi r24,lo8(-13)
+ 528 0282 848B      		std Z+20,r24
+  70:pushto_lib.c  **** 	gotoXy(0,0);
+ 529               		.loc 1 70 0
+ 530 0284 60E0      		ldi r22,0
+ 531 0286 80E0      		ldi r24,0
+ 532 0288 0E94 0000 		call gotoXy
+ 533               	.LVL58:
+  71:pushto_lib.c  ****     prints("dekl H to st ->B");
+ 534               		.loc 1 71 0
+ 535 028c 80E0      		ldi r24,lo8(.LC8)
+ 536 028e 90E0      		ldi r25,hi8(.LC8)
+ 537               	.L20:
+  72:pushto_lib.c  ****     while(keypad(klaw)!=0b01111101) //oczekuj na B
+  73:pushto_lib.c  ****     {
+  74:pushto_lib.c  ****     	gotoXy(0,1);
+  75:pushto_lib.c  ****     	keypad_proc(klaw);
+  76:pushto_lib.c  ****     	prints(klaw->buf);
+ 538               		.loc 1 76 0
+ 539 0290 0E94 0000 		call prints
+ 540               	.LVL59:
+  72:pushto_lib.c  ****     while(keypad(klaw)!=0b01111101) //oczekuj na B
+ 541               		.loc 1 72 0
+ 542 0294 C801      		movw r24,r16
+ 543 0296 0E94 0000 		call keypad
+ 544               	.LVL60:
+ 545 029a 8D37      		cpi r24,lo8(125)
+ 546 029c 01F0      		breq .L22
+  74:pushto_lib.c  ****     	keypad_proc(klaw);
+ 547               		.loc 1 74 0
+ 548 029e 61E0      		ldi r22,lo8(1)
+ 549 02a0 80E0      		ldi r24,0
+ 550 02a2 0E94 0000 		call gotoXy
+ 551               	.LVL61:
+  75:pushto_lib.c  ****     	prints(klaw->buf);
+ 552               		.loc 1 75 0
+ 553 02a6 C801      		movw r24,r16
+ 554 02a8 0E94 0000 		call keypad_proc
+ 555               	.LVL62:
+ 556               		.loc 1 76 0
+ 557 02ac C701      		movw r24,r14
+ 558 02ae 00C0      		rjmp .L20
+ 559               	.L22:
+  77:pushto_lib.c  ****     }
+  78:pushto_lib.c  ****     sscanf(klaw->buf,"%iH%iM%i",&h,&m,&s);
+ 560               		.loc 1 78 0
+ 561 02b0 9F92      		push r9
+ 562 02b2 8F92      		push r8
+ 563 02b4 BF92      		push r11
+ 564 02b6 AF92      		push r10
+ 565 02b8 DF92      		push r13
+ 566 02ba CF92      		push r12
+ 567 02bc 80E0      		ldi r24,lo8(.LC7)
+ 568 02be 90E0      		ldi r25,hi8(.LC7)
+ 569 02c0 9F93      		push r25
+ 570 02c2 8F93      		push r24
+ 571 02c4 FF92      		push r15
+ 572 02c6 EF92      		push r14
+ 573 02c8 0E94 0000 		call sscanf
+ 574               	.LVL63:
+  79:pushto_lib.c  ****     tel->wys_zad = h+m/60.0+s/3600.0;
+ 575               		.loc 1 79 0
+ 576 02cc 6D81      		ldd r22,Y+5
+ 577 02ce 7E81      		ldd r23,Y+6
+ 578 02d0 072E      		mov __tmp_reg__,r23
+ 579 02d2 000C      		lsl r0
+ 580 02d4 880B      		sbc r24,r24
+ 581 02d6 990B      		sbc r25,r25
+ 582 02d8 0E94 0000 		call __floatsisf
+ 583               	.LVL64:
+ 584 02dc 6B01      		movw r12,r22
+ 585 02de 7C01      		movw r14,r24
+ 586 02e0 8B81      		ldd r24,Y+3
+ 587 02e2 9C81      		ldd r25,Y+4
+ 588 02e4 BC01      		movw r22,r24
+ 589 02e6 990F      		lsl r25
+ 590 02e8 880B      		sbc r24,r24
+ 591 02ea 990B      		sbc r25,r25
+ 592 02ec 0E94 0000 		call __floatsisf
+ 593               	.LVL65:
+ 594 02f0 20E0      		ldi r18,0
+ 595 02f2 30E0      		ldi r19,0
+ 596 02f4 40E7      		ldi r20,lo8(112)
+ 597 02f6 52E4      		ldi r21,lo8(66)
+ 598 02f8 0E94 0000 		call __divsf3
+ 599               	.LVL66:
+ 600 02fc 9B01      		movw r18,r22
+ 601 02fe AC01      		movw r20,r24
+ 602 0300 C701      		movw r24,r14
+ 603 0302 B601      		movw r22,r12
+ 604 0304 0E94 0000 		call __addsf3
+ 605               	.LVL67:
+ 606 0308 6B01      		movw r12,r22
+ 607 030a 7C01      		movw r14,r24
+ 608 030c 8981      		ldd r24,Y+1
+ 609 030e 9A81      		ldd r25,Y+2
+ 610 0310 BC01      		movw r22,r24
+ 611 0312 990F      		lsl r25
+ 612 0314 880B      		sbc r24,r24
+ 613 0316 990B      		sbc r25,r25
+ 614 0318 0E94 0000 		call __floatsisf
+ 615               	.LVL68:
+ 616 031c 20E0      		ldi r18,0
+ 617 031e 30E0      		ldi r19,0
+ 618 0320 41E6      		ldi r20,lo8(97)
+ 619 0322 55E4      		ldi r21,lo8(69)
+ 620 0324 0E94 0000 		call __divsf3
+ 621               	.LVL69:
+ 622 0328 9B01      		movw r18,r22
+ 623 032a AC01      		movw r20,r24
+ 624 032c C701      		movw r24,r14
+ 625 032e B601      		movw r22,r12
+ 626 0330 0E94 0000 		call __addsf3
+ 627               	.LVL70:
+ 628 0334 F101      		movw r30,r2
+ 629 0336 6283      		std Z+2,r22
+ 630 0338 7383      		std Z+3,r23
+ 631 033a 8483      		std Z+4,r24
+ 632 033c 9583      		std Z+5,r25
+  80:pushto_lib.c  ****  	
+  81:pushto_lib.c  ****  	keypad_clr_buf();
+ 633               		.loc 1 81 0
+ 634 033e 0E94 0000 		call keypad_clr_buf
+ 635               	.LVL71:
+  82:pushto_lib.c  ****  	lcd_clr();
+ 636               		.loc 1 82 0
+ 637 0342 0E94 0000 		call lcd_clr
+ 638               	.LVL72:
+  83:pushto_lib.c  **** 	klaw->flags='\0'; //czszczenie flag
+ 639               		.loc 1 83 0
+ 640 0346 F801      		movw r30,r16
+ 641 0348 148A      		std Z+20,__zero_reg__
+ 642 034a 0FB6      		in __tmp_reg__,__SREG__
+ 643 034c F894      		cli
+ 644 034e DEBF      		out __SP_H__,r29
+ 645 0350 0FBE      		out __SREG__,__tmp_reg__
+ 646 0352 CDBF      		out __SP_L__,r28
+ 647               	/* epilogue start */
+  84:pushto_lib.c  **** }...
+ 648               		.loc 1 84 0
+ 649 0354 2696      		adiw r28,6
+ 650 0356 0FB6      		in __tmp_reg__,__SREG__
+ 651 0358 F894      		cli
+ 652 035a DEBF      		out __SP_H__,r29
+ 653 035c 0FBE      		out __SREG__,__tmp_reg__
+ 654 035e CDBF      		out __SP_L__,r28
+ 655 0360 DF91      		pop r29
+ 656 0362 CF91      		pop r28
+ 657 0364 1F91      		pop r17
+ 658 0366 0F91      		pop r16
+ 659               	.LVL73:
+ 660 0368 FF90      		pop r15
+ 661 036a EF90      		pop r14
+ 662               	.LVL74:
+ 663 036c DF90      		pop r13
+ 664 036e CF90      		pop r12
+ 665 0370 BF90      		pop r11
+ 666 0372 AF90      		pop r10
+ 667 0374 9F90      		pop r9
+ 668 0376 8F90      		pop r8
+ 669 0378 7F90      		pop r7
+ 670 037a 6F90      		pop r6
+ 671 037c 5F90      		pop r5
+ 672 037e 4F90      		pop r4
+ 673 0380 3F90      		pop r3
+ 674 0382 2F90      		pop r2
+ 675               	.LVL75:
+ 676 0384 0895      		ret
+ 677               		.cfi_endproc
+ 678               	.LFE7:
+ 680               		.comm	telescope_A,18,1
+ 681               		.comm	encoder2,4,1
+ 682               		.comm	encoder1,4,1
+ 683               		.comm	keypad_A,21,1
+ 684               	.Letext0:
+ 685               		.file 2 "keypad.h"
+ 686               		.file 3 "encoder.h"
+ 687               		.file 4 "pushto_lib.h"
+ 688               		.file 5 "lcd.h"
+ 689               		.file 6 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 pushto_lib.c
-     /tmp/ccmJcIDt.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccmJcIDt.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccmJcIDt.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccmJcIDt.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccmJcIDt.s:6      *ABS*:0000000000000001 __zero_reg__
-                            *COM*:0000000000000014 keypad_A
+     /tmp/cc7QORBy.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc7QORBy.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc7QORBy.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc7QORBy.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc7QORBy.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc7QORBy.s:18     .text:0000000000000000 kalibracja
+                            *COM*:0000000000000015 keypad_A
+     /tmp/cc7QORBy.s:143    .text:000000000000006a nowy_cel
+                            *COM*:0000000000000012 telescope_A
+                            *COM*:0000000000000004 encoder2
+                            *COM*:0000000000000004 encoder1
 
 UNDEFINED SYMBOLS
+gotoXy
+prints
+keypad
+lcd_clr
+__floatsisf
+__mulsf3
+__addsf3
+__divsf3
+integerToLcd
+keypad_clr_buf
+keypad_proc
+sscanf
+__do_copy_data
 __do_clear_bss

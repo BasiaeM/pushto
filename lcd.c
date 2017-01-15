@@ -118,3 +118,11 @@ tens=(integer%100)/10;
 
 	lcdData( ones + 0x30);
 }
+
+void lcd_clr(void)
+{
+  gotoXy(0,0);
+  prints("                ");
+  gotoXy(0,1);
+  prints("                ");
+}

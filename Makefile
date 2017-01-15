@@ -80,7 +80,7 @@ OBJDIR = .
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c lcd.c keypad.c encoder.c pushto_lib.c
+SRC = $(TARGET).c lcd.c keypad.c pushto_lib.c
 
 
 # List C++ source files here. (C dependencies are automatically generated.)

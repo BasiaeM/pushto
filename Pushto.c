@@ -5,11 +5,10 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include "lcd.h"
-#include "encoder.h"
+//#include "encoder.h"
 #include "keypad.h"
 #include "pushto_lib.h"
     
-
 
 void system_init (void)
 {	
@@ -21,7 +20,7 @@ void system_init (void)
 	LCD_DIR = 0xFF;		//Ustawienie pinow dla wyswietlacza LCD
 
 	/*inicjalizacja encoderow*/
-	EN_DIR = 0b00000000; //Ustawienie pinow dla encoderow
+	/*EN_DIR = 0b00000000; //Ustawienie pinow dla encoderow
 	EN_PORT = 0b00001111; //pullupy dla encoderow
 
 	encoder1.maskA=0b00000100;
@@ -29,12 +28,13 @@ void system_init (void)
 	encoder1.count=0; //----------------------------enkodery start 0 
 	encoder2.maskA=0b000001000;
 	encoder2.maskB=0b000000010;
-	encoder2.count=0;
+	encoder2.count=0;*/
 
 	//inicjalizacja klawiatury
 	keypad_A.i=0; //zerowanie wskaznika buforu
 	keypad_A.flags='\0';
-	
+	keypad_A.last_result = 0xFF;
+
 	//############# Timer1 16bit config ####################
 	TCCR1A |= 0;   // not required since WGM11:0, both are zero (0)
  	TCCR1B |= (1 << WGM12)|(1 << CS11)|(1 << CS10);   // Mode = CTC, Prescaler = 64
@@ -54,68 +54,89 @@ void system_init (void)
 
 ISR(TIMER1_COMPA_vect) //obsluga przerwania dla timera
 {
-
+	telescope_A.time++; //czas od kalibracji w sekundachs
 }
 
 ISR(INT0_vect) //przerwanie dla INT0 dla encodera1
 {
-	direction(&encoder1);
+	//direction(&encoder1);
 }
 
 ISR(INT1_vect) //przerwanie dla INT1 dla encodera2
 {
-	direction(&encoder2);
+	//direction(&encoder2);
 }
 
 
 int main(void)
 {
-
 	system_init();
 	lcdInit();
-	prints("PUSHTO");
+	char buf[20];
+	float a=10.1234;
+	//prints("PUSHTO");
 	while(1)
 	{
 
 		
-		gotoXy(0,0);
+		/*gotoXy(0,0);
 		prints("E1=");
 		integerToLcd(encoder1.count);
 		prints(" E2=");
 		integerToLcd(encoder2.count);
+		
+		
+		gotoXy(8,0);
+		integerToLcd(zeg);
 		gotoXy(0,1);
-
 		integerToLcd(keypad(&keypad_A));
-		/*
+
+		if (keypad_A.result==0b11100111)
+			zeg=0x00;
+	
 
 		if(keypad() == 1)
 		{
 			PORTC ^= (1 << 0); 
 		}
-
-		if(!(0xFF & (keypad(&keypad_A)) == 0xFF))  //odczyt klawiatury
-			PORTC ^= (1 << 0); // potwierdzenie odczytu - test
-
+*/
+		keypad(&keypad_A); //odczyt klawiatury
 		keypad_proc(&keypad_A); //przetwarzanie znakow
 
-		gotoXy(0,0);
 		if(keypad_A.flags & KB_NEW)
 		{
-			prints("nowy obiekt");
+			nowy_cel(&keypad_A,&telescope_A);
 			keypad_A.flags &= ~KB_NEW;
 		}
-		gotoXy(0,0);
 		if(keypad_A.flags & KB_CAL)
 		{
-			prints("kalibracja ");
+			kalibracja(&encoder1,&encoder2,&telescope_A); // funkcja z pushto_lib
 			keypad_A.flags &= ~KB_CAL;
 		}
-		gotoXy(0,1);
-		prints(keypad_A.buf[0]);
+		if(keypad_A.flags & KB_CLR)
+			{
+				lcd_clr();
+				keypad_A.flags &= ~KB_CLR;
+			}
+		gotoXy(0,0);
+		//sprintf(buf,"%f",a);
+		//prints(buf);
+		if(telescope_A.obr_zad == 183.504167)
+			prints("poprawnie");
+		else
+		{
+			if(telescope_A.obr_zad ==180) prints("costam");
+			else
+			prints("poszlo w buraki");
+		}
+		//integerToLcd(telescope_A.obr_zad);
+		//gotoXy(0,1);
+		//sprintf(buf,"%f",telescope_A.obr_zad);
+		//integerToLcd(telescope_A.obr_zad);
 
 		if(keypad_A.i > 14)
 			keypad_A.i=0;
-*/
+
 	}
 
 }

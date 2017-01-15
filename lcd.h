@@ -18,6 +18,7 @@ void lcdData(unsigned char);
 void lcdWriteNibble(unsigned char);
 void waitlcd(unsigned char);
 void prints(const char * message);
+void lcd_clr(void);
 
 void integerToLcd(int  );
 #endif

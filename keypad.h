@@ -4,14 +4,15 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define KB_PORT     PORTB
-#define KB_DIR      DDRB
-#define KB_PIN  	PINB
+#define KB_PORT     PORTD
+#define KB_DIR      DDRD
+#define KB_PIN  	PIND
 
 //flagi
 //#define KB_ACP 0x80;
 #define KB_NEW 0x40 //wprowadzanie nowego obiektu
 #define KB_CAL 0x20 //kalibracja
+#define KB_CLR 0x10 //czyszczenie
 #define KB_H 0x08 //flaga znaku godzin H
 #define KB_M 0x04  //flaga znaku minut M
 
@@ -38,7 +39,8 @@
 
 struct Key 
 {
-	char result; // ostatni nacisniety klawisz
+	char result; // nacisniety klawisz
+	char last_result; // poprzednio nacisniety klawisz
 	char buf[16]; //ciag znakow
 	int i; //pozycja w buforze
 	char flags; 
@@ -46,5 +48,6 @@ struct Key
 
 char keypad(struct Key *klaw);
 void keypad_proc(struct Key *klaw);
+void keypad_clr_buf(void);
 
 #endif

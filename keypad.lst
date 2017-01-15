@@ -13,9 +13,10 @@
   14               		.file 1 "keypad.c"
    1:keypad.c      **** #include "keypad.h"
    2:keypad.c      **** 
-   3:keypad.c      **** char keypad(struct Key *klaw) 
-   4:keypad.c      ****  {
-  15               		.loc 1 4 0
+   3:keypad.c      **** 
+   4:keypad.c      **** char keypad(struct Key *klaw) 
+   5:keypad.c      ****  {
+  15               		.loc 1 5 0
   16               		.cfi_startproc
   17               	.LVL0:
   18               	/* prologue: function */
@@ -23,18 +24,18 @@
   20               	/* stack size = 0 */
   21               	.L__stack_usage = 0
   22 0000 FC01      		movw r30,r24
-   5:keypad.c      **** 	klaw->result=0;
-  23               		.loc 1 5 0
+   6:keypad.c      **** 	klaw->result=0;
+  23               		.loc 1 6 0
   24 0002 1082      		st Z,__zero_reg__
-   6:keypad.c      **** 	KB_DIR =0b11110000; //wymuszenie zer dla wszystkich kolumn
-  25               		.loc 1 6 0
+   7:keypad.c      **** 	KB_DIR =0b11110000; //wymuszenie zer dla wszystkich kolumn
+  25               		.loc 1 7 0
   26 0004 80EF      		ldi r24,lo8(-16)
   27               	.LVL1:
-  28 0006 87BB      		out 0x17,r24
-   7:keypad.c      **** 	KB_PORT=0b00001111;
-  29               		.loc 1 7 0
+  28 0006 81BB      		out 0x11,r24
+   8:keypad.c      **** 	KB_PORT=0b00001111;
+  29               		.loc 1 8 0
   30 0008 9FE0      		ldi r25,lo8(15)
-  31 000a 98BB      		out 0x18,r25
+  31 000a 92BB      		out 0x12,r25
   32               	.LVL2:
   33               	.LBB6:
   34               	.LBB7:
@@ -203,358 +204,513 @@
  162:/usr/lib/avr/include/util/delay.h **** 
  163:/usr/lib/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
   36               		.loc 2 163 0
-  37 000c A7EA      		ldi r26,lo8(24999)
-  38 000e B1E6      		ldi r27,hi8(24999)
+  37 000c A7E8      		ldi r26,lo8(4999)
+  38 000e B3E1      		ldi r27,hi8(4999)
   39 0010 1197      	1:	sbiw r26,1
   40 0012 01F4      		brne 1b
   41 0014 00C0      		rjmp .
   42 0016 0000      		nop
   43               	.LBE7:
   44               	.LBE6:
-   8:keypad.c      **** 	_delay_ms(100);
-   9:keypad.c      **** 	klaw->result = KB_PIN;
-  45               		.loc 1 9 0
-  46 0018 26B3      		in r18,0x16
+   9:keypad.c      **** 	_delay_ms(20);
+  10:keypad.c      **** 	klaw->result = KB_PIN;
+  45               		.loc 1 10 0
+  46 0018 20B3      		in r18,0x10
   47 001a 2083      		st Z,r18
-  10:keypad.c      **** 
-  11:keypad.c      **** 	//odczyt wierszy
-  12:keypad.c      **** 	KB_DIR =0b00001111; //wymuszenie zer dla wszystkich wierszy
-  48               		.loc 1 12 0
-  49 001c 97BB      		out 0x17,r25
-  13:keypad.c      **** 	KB_PORT=0b11110000;
-  50               		.loc 1 13 0
-  51 001e 88BB      		out 0x18,r24
+  11:keypad.c      **** 
+  12:keypad.c      **** 	//odczyt wierszy
+  13:keypad.c      **** 	KB_DIR =0b00001111; //wymuszenie zer dla wszystkich wierszy
+  48               		.loc 1 13 0
+  49 001c 91BB      		out 0x11,r25
+  14:keypad.c      **** 	KB_PORT=0b11110000;
+  50               		.loc 1 14 0
+  51 001e 82BB      		out 0x12,r24
   52               	.LVL3:
   53               	.LBB8:
   54               	.LBB9:
   55               		.loc 2 163 0
-  56 0020 87EA      		ldi r24,lo8(24999)
-  57 0022 91E6      		ldi r25,hi8(24999)
+  56 0020 87E8      		ldi r24,lo8(4999)
+  57 0022 93E1      		ldi r25,hi8(4999)
   58 0024 0197      	1:	sbiw r24,1
   59 0026 01F4      		brne 1b
   60 0028 00C0      		rjmp .
   61 002a 0000      		nop
   62               	.LBE9:
   63               	.LBE8:
-  14:keypad.c      **** 	_delay_ms(100);
-  15:keypad.c      **** 	klaw->result |= KB_PIN; 
-  64               		.loc 1 15 0
-  65 002c 86B3      		in r24,0x16
+  15:keypad.c      **** 	_delay_ms(20);
+  16:keypad.c      **** 	klaw->result |= KB_PIN; 
+  64               		.loc 1 16 0
+  65 002c 80B3      		in r24,0x10
   66 002e 9081      		ld r25,Z
-  67 0030 892B      		or r24,r25
-  68 0032 8083      		st Z,r24
-  16:keypad.c      **** 
-  17:keypad.c      **** 	return klaw->result; //ostatnio wcisniety
-  18:keypad.c      **** }
+  67 0030 982B      		or r25,r24
+  68 0032 9083      		st Z,r25
+  17:keypad.c      **** 
+  18:keypad.c      **** 	if(klaw->result == klaw->last_result)
   69               		.loc 1 18 0
-  70 0034 0895      		ret
-  71               		.cfi_endproc
-  72               	.LFE6:
-  74               	.global	keypad_proc
-  76               	keypad_proc:
-  77               	.LFB7:
-  19:keypad.c      **** 
-  20:keypad.c      **** void keypad_proc(struct Key *klaw)
-  21:keypad.c      **** {
-  78               		.loc 1 21 0
-  79               		.cfi_startproc
-  80               	.LVL4:
-  81               	/* prologue: function */
-  82               	/* frame size = 0 */
-  83               	/* stack size = 0 */
-  84               	.L__stack_usage = 0
-  85 0036 FC01      		movw r30,r24
-  22:keypad.c      **** 
-  23:keypad.c      **** 	switch (klaw->result) // akcja dla ostanio wcisnietego klawisza
-  86               		.loc 1 23 0
-  87 0038 8081      		ld r24,Z
-  88               	.LVL5:
-  89 003a 873D      		cpi r24,lo8(-41)
-  90 003c 01F4      		brne .+2
-  91 003e 00C0      		rjmp .L4
-  92 0040 00F4      		brsh .L5
-  93 0042 873B      		cpi r24,lo8(-73)
-  94 0044 01F4      		brne .+2
-  95 0046 00C0      		rjmp .L6
-  96 0048 00F4      		brsh .L7
-  97 004a 8B37      		cpi r24,lo8(123)
-  98 004c 01F0      		breq .L8
-  99 004e 8D37      		cpi r24,lo8(125)
- 100 0050 01F0      		breq .L9
- 101 0052 8737      		cpi r24,lo8(119)
- 102 0054 01F0      		breq .+2
- 103 0056 00C0      		rjmp .L3
- 104 0058 DF01      		movw r26,r30
- 105 005a 1196      		adiw r26,1
- 106 005c CF01      		movw r24,r30
- 107 005e 4196      		adiw r24,17
- 108 0060 00C0      		rjmp .L24
- 109               	.L7:
- 110 0062 8D3B      		cpi r24,lo8(-67)
- 111 0064 01F4      		brne .+2
- 112 0066 00C0      		rjmp .L11
- 113 0068 8E3B      		cpi r24,lo8(-66)
- 114 006a 01F4      		brne .+2
- 115 006c 00C0      		rjmp .L12
- 116 006e 8B3B      		cpi r24,lo8(-69)
- 117 0070 01F0      		breq .+2
- 118 0072 00C0      		rjmp .L3
+  70 0034 8181      		ldd r24,Z+1
+  71 0036 9813      		cpse r25,r24
+  72 0038 00C0      		rjmp .L2
+  19:keypad.c      **** 	{
+  20:keypad.c      **** 		klaw->last_result = klaw->result;
+  21:keypad.c      **** 		return klaw->result=0xFF;
+  73               		.loc 1 21 0
+  74 003a 8FEF      		ldi r24,lo8(-1)
+  75 003c 8083      		st Z,r24
+  76 003e 0895      		ret
+  77               	.L2:
+  22:keypad.c      **** 	}
+  23:keypad.c      **** 	else
   24:keypad.c      **** 	{
-  25:keypad.c      **** 		//klawisze funkcyjne
-  26:keypad.c      **** 		
-  27:keypad.c      **** 		//case 0b01111110     : ; break; //A - potwierdzenie (accept)
-  28:keypad.c      **** 		case 0b01111101     : klaw->flags |= KB_NEW; break; //B - wprowadzanie nowego obiektu
-  29:keypad.c      **** 		case 0b01111011     : klaw->flags |= KB_CAL ; break; //C - kalibracja (calibration)
-  30:keypad.c      **** 
-  31:keypad.c      **** 		case 0b11100111     : { //* H
-  32:keypad.c      **** 			if(!(klaw->flags & KB_H))
-  33:keypad.c      **** 				klaw->buf[klaw->i]='H';
-  34:keypad.c      **** 			klaw->flags |= KB_H;
-  35:keypad.c      **** 
-  36:keypad.c      **** 		} break; 
-  37:keypad.c      **** 		case 0b10110111     :{ //# M
-  38:keypad.c      **** 			if(!(klaw->flags & KB_M))
-  39:keypad.c      **** 				klaw->buf[klaw->i]='M';
-  40:keypad.c      **** 			klaw->flags |= KB_M;
-  41:keypad.c      **** 	
-  42:keypad.c      **** 		}break; 
-  43:keypad.c      **** 
-  44:keypad.c      **** 		case 0b01110111     : { //D - czyszczenie
-  45:keypad.c      **** 			for(int i=0;i<16;i++) //czyszczenie bufora
-  46:keypad.c      **** 				klaw->buf[i]='\0'; 
-  47:keypad.c      **** 			//czyszczenie flag
-  48:keypad.c      **** 			klaw->flags &= ~KB_H;
-  49:keypad.c      **** 			klaw->flags &= ~KB_M;
-  50:keypad.c      **** 			//czyszczenie wskaznika buforu
-  51:keypad.c      **** 			klaw->i = 0;
-  52:keypad.c      **** 		}; break; 
-  53:keypad.c      **** 		
-  54:keypad.c      **** 		
-  55:keypad.c      **** 		//klawisz numeryczny     
-  56:keypad.c      **** 		case 0b11101110     : klaw->buf[klaw->i]='1'; break; //1
-  57:keypad.c      **** 		case 0b11011110     : klaw->buf[klaw->i]='2'; break; //2
-  58:keypad.c      **** 		case 0b10111110     : klaw->buf[klaw->i]='3'; break; //3
-  59:keypad.c      **** 		case 0b11101101     : klaw->buf[klaw->i]='4'; break; //4
-  60:keypad.c      **** 		case 0b11011101     : klaw->buf[klaw->i]='5'; break; //5
-  61:keypad.c      **** 		case 0b10111101     : klaw->buf[klaw->i]='6'; break; //6
-  62:keypad.c      **** 		case 0b11101011     : klaw->buf[klaw->i]='7'; break; //7
-  63:keypad.c      **** 		case 0b11011011     : klaw->buf[klaw->i]='8'; break; //8
-  64:keypad.c      **** 		case 0b10111011     : klaw->buf[klaw->i]='9'; break; //9
- 119               		.loc 1 64 0
- 120 0074 A189      		ldd r26,Z+17
- 121 0076 B289      		ldd r27,Z+18
- 122 0078 AE0F      		add r26,r30
- 123 007a BF1F      		adc r27,r31
- 124 007c 89E3      		ldi r24,lo8(57)
- 125 007e 00C0      		rjmp .L27
- 126               	.L5:
-  23:keypad.c      **** 	{
- 127               		.loc 1 23 0
- 128 0080 873E      		cpi r24,lo8(-25)
- 129 0082 01F0      		breq .L14
- 130 0084 00F4      		brsh .L15
- 131 0086 8D3D      		cpi r24,lo8(-35)
- 132 0088 01F4      		brne .+2
- 133 008a 00C0      		rjmp .L16
- 134 008c 8E3D      		cpi r24,lo8(-34)
- 135 008e 01F4      		brne .+2
- 136 0090 00C0      		rjmp .L17
- 137 0092 8B3D      		cpi r24,lo8(-37)
- 138 0094 01F0      		breq .+2
- 139 0096 00C0      		rjmp .L3
-  63:keypad.c      **** 		case 0b10111011     : klaw->buf[klaw->i]='9'; break; //9
- 140               		.loc 1 63 0
- 141 0098 A189      		ldd r26,Z+17
- 142 009a B289      		ldd r27,Z+18
- 143 009c AE0F      		add r26,r30
- 144 009e BF1F      		adc r27,r31
- 145 00a0 88E3      		ldi r24,lo8(56)
- 146 00a2 00C0      		rjmp .L27
- 147               	.L15:
-  23:keypad.c      **** 	{
- 148               		.loc 1 23 0
- 149 00a4 8D3E      		cpi r24,lo8(-19)
- 150 00a6 01F4      		brne .+2
- 151 00a8 00C0      		rjmp .L19
- 152 00aa 8E3E      		cpi r24,lo8(-18)
- 153 00ac 01F0      		breq .L20
- 154 00ae 8B3E      		cpi r24,lo8(-21)
- 155 00b0 01F0      		breq .+2
- 156 00b2 00C0      		rjmp .L3
-  62:keypad.c      **** 		case 0b11011011     : klaw->buf[klaw->i]='8'; break; //8
- 157               		.loc 1 62 0
- 158 00b4 A189      		ldd r26,Z+17
- 159 00b6 B289      		ldd r27,Z+18
- 160 00b8 AE0F      		add r26,r30
- 161 00ba BF1F      		adc r27,r31
- 162 00bc 87E3      		ldi r24,lo8(55)
- 163 00be 00C0      		rjmp .L27
- 164               	.L9:
-  28:keypad.c      **** 		case 0b01111011     : klaw->flags |= KB_CAL ; break; //C - kalibracja (calibration)
- 165               		.loc 1 28 0
- 166 00c0 8389      		ldd r24,Z+19
- 167 00c2 8064      		ori r24,lo8(64)
- 168 00c4 00C0      		rjmp .L26
- 169               	.L8:
+  25:keypad.c      **** 		klaw->last_result = klaw->result;
+  78               		.loc 1 25 0
+  79 0040 9183      		std Z+1,r25
+  26:keypad.c      **** 		return klaw->result; //ostatnio wcisniety
+  80               		.loc 1 26 0
+  81 0042 892F      		mov r24,r25
+  27:keypad.c      **** 	}
+  28:keypad.c      **** }
+  82               		.loc 1 28 0
+  83 0044 0895      		ret
+  84               		.cfi_endproc
+  85               	.LFE6:
+  87               	.global	keypad_clr_buf
+  89               	keypad_clr_buf:
+  90               	.LFB8:
   29:keypad.c      **** 
- 170               		.loc 1 29 0
- 171 00c6 8389      		ldd r24,Z+19
- 172 00c8 8062      		ori r24,lo8(32)
- 173               	.L26:
- 174 00ca 838B      		std Z+19,r24
- 175 00cc 00C0      		rjmp .L3
- 176               	.L14:
-  32:keypad.c      **** 				klaw->buf[klaw->i]='H';
- 177               		.loc 1 32 0
- 178 00ce 8389      		ldd r24,Z+19
- 179 00d0 83FD      		sbrc r24,3
- 180 00d2 00C0      		rjmp .L22
-  33:keypad.c      **** 			klaw->flags |= KB_H;
- 181               		.loc 1 33 0
- 182 00d4 A189      		ldd r26,Z+17
- 183 00d6 B289      		ldd r27,Z+18
- 184 00d8 AE0F      		add r26,r30
- 185 00da BF1F      		adc r27,r31
- 186 00dc 98E4      		ldi r25,lo8(72)
- 187 00de 1196      		adiw r26,1
- 188 00e0 9C93      		st X,r25
- 189               	.L22:
-  34:keypad.c      **** 
- 190               		.loc 1 34 0
- 191 00e2 8860      		ori r24,lo8(8)
- 192 00e4 00C0      		rjmp .L26
- 193               	.L6:
-  38:keypad.c      **** 				klaw->buf[klaw->i]='M';
- 194               		.loc 1 38 0
- 195 00e6 8389      		ldd r24,Z+19
- 196 00e8 82FD      		sbrc r24,2
- 197 00ea 00C0      		rjmp .L23
-  39:keypad.c      **** 			klaw->flags |= KB_M;
- 198               		.loc 1 39 0
- 199 00ec A189      		ldd r26,Z+17
- 200 00ee B289      		ldd r27,Z+18
- 201 00f0 AE0F      		add r26,r30
- 202 00f2 BF1F      		adc r27,r31
- 203 00f4 9DE4      		ldi r25,lo8(77)
- 204 00f6 1196      		adiw r26,1
- 205 00f8 9C93      		st X,r25
- 206               	.L23:
-  40:keypad.c      **** 	
- 207               		.loc 1 40 0
- 208 00fa 8460      		ori r24,lo8(4)
- 209 00fc 00C0      		rjmp .L26
- 210               	.L24:
- 211               	.LVL6:
- 212               	.LBB10:
-  46:keypad.c      **** 			//czyszczenie flag
- 213               		.loc 1 46 0 discriminator 3
- 214 00fe 1D92      		st X+,__zero_reg__
- 215               	.LVL7:
-  45:keypad.c      **** 				klaw->buf[i]='\0'; 
- 216               		.loc 1 45 0 discriminator 3
- 217 0100 A817      		cp r26,r24
- 218 0102 B907      		cpc r27,r25
- 219 0104 01F4      		brne .L24
- 220               	.LBE10:
-  49:keypad.c      **** 			//czyszczenie wskaznika buforu
- 221               		.loc 1 49 0
- 222 0106 8389      		ldd r24,Z+19
- 223 0108 837F      		andi r24,lo8(-13)
- 224 010a 00C0      		rjmp .L26
- 225               	.LVL8:
- 226               	.L20:
-  56:keypad.c      **** 		case 0b11011110     : klaw->buf[klaw->i]='2'; break; //2
- 227               		.loc 1 56 0
- 228 010c A189      		ldd r26,Z+17
- 229 010e B289      		ldd r27,Z+18
- 230 0110 AE0F      		add r26,r30
- 231 0112 BF1F      		adc r27,r31
- 232 0114 81E3      		ldi r24,lo8(49)
- 233 0116 00C0      		rjmp .L27
- 234               	.L17:
-  57:keypad.c      **** 		case 0b10111110     : klaw->buf[klaw->i]='3'; break; //3
- 235               		.loc 1 57 0
- 236 0118 A189      		ldd r26,Z+17
- 237 011a B289      		ldd r27,Z+18
- 238 011c AE0F      		add r26,r30
- 239 011e BF1F      		adc r27,r31
- 240 0120 82E3      		ldi r24,lo8(50)
- 241 0122 00C0      		rjmp .L27
- 242               	.L12:
-  58:keypad.c      **** 		case 0b11101101     : klaw->buf[klaw->i]='4'; break; //4
- 243               		.loc 1 58 0
- 244 0124 A189      		ldd r26,Z+17
- 245 0126 B289      		ldd r27,Z+18
- 246 0128 AE0F      		add r26,r30
- 247 012a BF1F      		adc r27,r31
- 248 012c 83E3      		ldi r24,lo8(51)
- 249 012e 00C0      		rjmp .L27
- 250               	.L19:
-  59:keypad.c      **** 		case 0b11011101     : klaw->buf[klaw->i]='5'; break; //5
- 251               		.loc 1 59 0
- 252 0130 A189      		ldd r26,Z+17
- 253 0132 B289      		ldd r27,Z+18
- 254 0134 AE0F      		add r26,r30
- 255 0136 BF1F      		adc r27,r31
- 256 0138 84E3      		ldi r24,lo8(52)
- 257 013a 00C0      		rjmp .L27
- 258               	.L16:
-  60:keypad.c      **** 		case 0b10111101     : klaw->buf[klaw->i]='6'; break; //6
- 259               		.loc 1 60 0
- 260 013c A189      		ldd r26,Z+17
- 261 013e B289      		ldd r27,Z+18
- 262 0140 AE0F      		add r26,r30
- 263 0142 BF1F      		adc r27,r31
- 264 0144 85E3      		ldi r24,lo8(53)
- 265 0146 00C0      		rjmp .L27
- 266               	.L11:
-  61:keypad.c      **** 		case 0b11101011     : klaw->buf[klaw->i]='7'; break; //7
- 267               		.loc 1 61 0
- 268 0148 A189      		ldd r26,Z+17
- 269 014a B289      		ldd r27,Z+18
- 270 014c AE0F      		add r26,r30
- 271 014e BF1F      		adc r27,r31
- 272 0150 86E3      		ldi r24,lo8(54)
- 273 0152 00C0      		rjmp .L27
- 274               	.L4:
-  65:keypad.c      **** 		case 0b11010111     : klaw->buf[klaw->i]='0'; break; //0
- 275               		.loc 1 65 0
- 276 0154 A189      		ldd r26,Z+17
- 277 0156 B289      		ldd r27,Z+18
- 278 0158 AE0F      		add r26,r30
- 279 015a BF1F      		adc r27,r31
- 280 015c 80E3      		ldi r24,lo8(48)
- 281               	.L27:
- 282 015e 1196      		adiw r26,1
- 283 0160 8C93      		st X,r24
- 284               	.L3:
-  66:keypad.c      **** 		//default:
-  67:keypad.c      **** 	}
-  68:keypad.c      **** 	klaw->i=0;
- 285               		.loc 1 68 0
- 286 0162 128A      		std Z+18,__zero_reg__
- 287 0164 118A      		std Z+17,__zero_reg__
-  69:keypad.c      **** 	klaw->result=0xFF;
- 288               		.loc 1 69 0
- 289 0166 8FEF      		ldi r24,lo8(-1)
- 290 0168 8083      		st Z,r24
- 291 016a 0895      		ret
- 292               		.cfi_endproc
- 293               	.LFE7:
- 295               		.comm	keypad_A,20,1
- 296               	.Letext0:
- 297               		.file 3 "/usr/lib/avr/include/stdint.h"
- 298               		.file 4 "keypad.h"
+  30:keypad.c      **** void keypad_proc(struct Key *klaw)
+  31:keypad.c      **** {
+  32:keypad.c      **** 
+  33:keypad.c      **** 	switch (klaw->result) // akcja dla ostanio wcisnietego klawisza
+  34:keypad.c      **** 	{
+  35:keypad.c      **** 		//klawisze funkcyjne
+  36:keypad.c      **** 		
+  37:keypad.c      **** 		//case 0b01111110     : ; break; //A - potwierdzenie (accept)
+  38:keypad.c      **** 		case 0b01111101     : klaw->flags |= KB_NEW; break; //B - wprowadzanie nowego obiektu
+  39:keypad.c      **** 		case 0b01111011     : klaw->flags |= KB_CAL ; break; //C - kalibracja (calibration)
+  40:keypad.c      **** 
+  41:keypad.c      **** 		case 0b11100111     : { //* H
+  42:keypad.c      **** 			if(!(klaw->flags & KB_H) && !(klaw->flags & KB_M)) //jesli brak flagi H i M
+  43:keypad.c      **** 				klaw->buf[klaw->i++]='H';
+  44:keypad.c      **** 			klaw->flags |= KB_H;
+  45:keypad.c      **** 
+  46:keypad.c      **** 		} break; 
+  47:keypad.c      **** 		case 0b10110111     :{ //# M
+  48:keypad.c      **** 			if(!(klaw->flags & KB_M))
+  49:keypad.c      **** 				klaw->buf[klaw->i++]='M';
+  50:keypad.c      **** 			klaw->flags |= KB_M;
+  51:keypad.c      **** 	
+  52:keypad.c      **** 		}break; 
+  53:keypad.c      **** 
+  54:keypad.c      **** 		case 0b01110111     : { //D - czyszczenie
+  55:keypad.c      **** 			 keypad_clr_buf();//czyszczenie bufora
+  56:keypad.c      **** 			//czyszczenie flag
+  57:keypad.c      **** 			klaw->flags &= ~KB_H;
+  58:keypad.c      **** 			klaw->flags &= ~KB_M;
+  59:keypad.c      **** 			klaw->flags |= KB_CLR;
+  60:keypad.c      **** 			//czyszczenie wskaznika buforu
+  61:keypad.c      **** 			klaw->i = 0;
+  62:keypad.c      **** 		}; break; 
+  63:keypad.c      **** 		
+  64:keypad.c      **** 
+  65:keypad.c      **** 		
+  66:keypad.c      **** 		//klawisz numeryczny     
+  67:keypad.c      **** 		case 0b11101110     : klaw->buf[klaw->i++]='1'; break; //1
+  68:keypad.c      **** 		case 0b11011110     : klaw->buf[klaw->i++]='2'; break; //2
+  69:keypad.c      **** 		case 0b10111110     : klaw->buf[klaw->i++]='3'; break; //3
+  70:keypad.c      **** 		case 0b11101101     : klaw->buf[klaw->i++]='4'; break; //4
+  71:keypad.c      **** 		case 0b11011101     : klaw->buf[klaw->i++]='5'; break; //5
+  72:keypad.c      **** 		case 0b10111101     : klaw->buf[klaw->i++]='6'; break; //6
+  73:keypad.c      **** 		case 0b11101011     : klaw->buf[klaw->i++]='7'; break; //7
+  74:keypad.c      **** 		case 0b11011011     : klaw->buf[klaw->i++]='8'; break; //8
+  75:keypad.c      **** 		case 0b10111011     : klaw->buf[klaw->i++]='9'; break; //9
+  76:keypad.c      **** 		case 0b11010111     : klaw->buf[klaw->i++]='0'; break; //0
+  77:keypad.c      **** 		//default:
+  78:keypad.c      **** 	}
+  79:keypad.c      **** 	
+  80:keypad.c      **** 
+  81:keypad.c      **** }
+  82:keypad.c      **** 
+  83:keypad.c      **** void keypad_clr_buf(void) //to kiedys do poprawki na wskaznik struct Key *klaw klaw->buf[i]='\0'; i
+  84:keypad.c      **** {
+  91               		.loc 1 84 0
+  92               		.cfi_startproc
+  93               	/* prologue: function */
+  94               	/* frame size = 0 */
+  95               	/* stack size = 0 */
+  96               	.L__stack_usage = 0
+  97               	.LVL4:
+  98 0046 E0E0      		ldi r30,lo8(keypad_A+2)
+  99 0048 F0E0      		ldi r31,hi8(keypad_A+2)
+ 100               	.LVL5:
+ 101               	.L6:
+ 102               	.LBB10:
+  85:keypad.c      **** 	for(int i=0;i<16;i++) //czyszczenie bufora
+  86:keypad.c      **** 				keypad_A.buf[i]='\0'; 
+ 103               		.loc 1 86 0 discriminator 3
+ 104 004a 1192      		st Z+,__zero_reg__
+ 105               	.LVL6:
+  85:keypad.c      **** 	for(int i=0;i<16;i++) //czyszczenie bufora
+ 106               		.loc 1 85 0 discriminator 3
+ 107 004c 80E0      		ldi r24,hi8(keypad_A+18)
+ 108 004e E030      		cpi r30,lo8(keypad_A+18)
+ 109 0050 F807      		cpc r31,r24
+ 110 0052 01F4      		brne .L6
+ 111               	.LBE10:
+  87:keypad.c      **** 	keypad_A.i=0; //zerowanie wskaznika zapisu bufora
+ 112               		.loc 1 87 0
+ 113 0054 1092 0000 		sts keypad_A+18+1,__zero_reg__
+ 114 0058 1092 0000 		sts keypad_A+18,__zero_reg__
+ 115 005c 0895      		ret
+ 116               		.cfi_endproc
+ 117               	.LFE8:
+ 119               	.global	keypad_proc
+ 121               	keypad_proc:
+ 122               	.LFB7:
+  31:keypad.c      **** 
+ 123               		.loc 1 31 0
+ 124               		.cfi_startproc
+ 125               	.LVL7:
+ 126 005e CF93      		push r28
+ 127               	.LCFI0:
+ 128               		.cfi_def_cfa_offset 3
+ 129               		.cfi_offset 28, -2
+ 130 0060 DF93      		push r29
+ 131               	.LCFI1:
+ 132               		.cfi_def_cfa_offset 4
+ 133               		.cfi_offset 29, -3
+ 134               	/* prologue: function */
+ 135               	/* frame size = 0 */
+ 136               	/* stack size = 2 */
+ 137               	.L__stack_usage = 2
+ 138 0062 FC01      		movw r30,r24
+  33:keypad.c      **** 	{
+ 139               		.loc 1 33 0
+ 140 0064 8081      		ld r24,Z
+ 141               	.LVL8:
+ 142 0066 873D      		cpi r24,lo8(-41)
+ 143 0068 01F4      		brne .+2
+ 144 006a 00C0      		rjmp .L10
+ 145 006c 00F4      		brsh .L11
+ 146 006e 873B      		cpi r24,lo8(-73)
+ 147 0070 01F4      		brne .+2
+ 148 0072 00C0      		rjmp .L12
+ 149 0074 00F4      		brsh .L13
+ 150 0076 8B37      		cpi r24,lo8(123)
+ 151 0078 01F4      		brne .+2
+ 152 007a 00C0      		rjmp .L14
+ 153 007c 8D37      		cpi r24,lo8(125)
+ 154 007e 01F4      		brne .+2
+ 155 0080 00C0      		rjmp .L15
+ 156 0082 8737      		cpi r24,lo8(119)
+ 157 0084 01F0      		breq .+2
+ 158 0086 00C0      		rjmp .L8
+ 159 0088 EF01      		movw r28,r30
+  55:keypad.c      **** 			//czyszczenie flag
+ 160               		.loc 1 55 0
+ 161 008a 0E94 0000 		call keypad_clr_buf
+ 162               	.LVL9:
+  58:keypad.c      **** 			klaw->flags |= KB_CLR;
+ 163               		.loc 1 58 0
+ 164 008e 9C89      		ldd r25,Y+20
+ 165 0090 937F      		andi r25,lo8(-13)
+  59:keypad.c      **** 			//czyszczenie wskaznika buforu
+ 166               		.loc 1 59 0
+ 167 0092 9061      		ori r25,lo8(16)
+ 168 0094 9C8B      		std Y+20,r25
+  61:keypad.c      **** 		}; break; 
+ 169               		.loc 1 61 0
+ 170 0096 1B8A      		std Y+19,__zero_reg__
+ 171 0098 1A8A      		std Y+18,__zero_reg__
+  62:keypad.c      **** 		
+ 172               		.loc 1 62 0
+ 173 009a 00C0      		rjmp .L8
+ 174               	.LVL10:
+ 175               	.L13:
+  33:keypad.c      **** 	{
+ 176               		.loc 1 33 0
+ 177 009c 8D3B      		cpi r24,lo8(-67)
+ 178 009e 01F4      		brne .+2
+ 179 00a0 00C0      		rjmp .L17
+ 180 00a2 8E3B      		cpi r24,lo8(-66)
+ 181 00a4 01F4      		brne .+2
+ 182 00a6 00C0      		rjmp .L18
+ 183 00a8 8B3B      		cpi r24,lo8(-69)
+ 184 00aa 01F0      		breq .+2
+ 185 00ac 00C0      		rjmp .L8
+  75:keypad.c      **** 		case 0b11010111     : klaw->buf[klaw->i++]='0'; break; //0
+ 186               		.loc 1 75 0
+ 187 00ae 8289      		ldd r24,Z+18
+ 188 00b0 9389      		ldd r25,Z+19
+ 189 00b2 9C01      		movw r18,r24
+ 190 00b4 2F5F      		subi r18,-1
+ 191 00b6 3F4F      		sbci r19,-1
+ 192 00b8 338B      		std Z+19,r19
+ 193 00ba 228B      		std Z+18,r18
+ 194 00bc E80F      		add r30,r24
+ 195 00be F91F      		adc r31,r25
+ 196               	.LVL11:
+ 197 00c0 89E3      		ldi r24,lo8(57)
+ 198 00c2 00C0      		rjmp .L30
+ 199               	.LVL12:
+ 200               	.L11:
+  33:keypad.c      **** 	{
+ 201               		.loc 1 33 0
+ 202 00c4 873E      		cpi r24,lo8(-25)
+ 203 00c6 01F0      		breq .L20
+ 204 00c8 00F4      		brsh .L21
+ 205 00ca 8D3D      		cpi r24,lo8(-35)
+ 206 00cc 01F4      		brne .+2
+ 207 00ce 00C0      		rjmp .L22
+ 208 00d0 8E3D      		cpi r24,lo8(-34)
+ 209 00d2 01F4      		brne .+2
+ 210 00d4 00C0      		rjmp .L23
+ 211 00d6 8B3D      		cpi r24,lo8(-37)
+ 212 00d8 01F0      		breq .+2
+ 213 00da 00C0      		rjmp .L8
+  74:keypad.c      **** 		case 0b10111011     : klaw->buf[klaw->i++]='9'; break; //9
+ 214               		.loc 1 74 0
+ 215 00dc 8289      		ldd r24,Z+18
+ 216 00de 9389      		ldd r25,Z+19
+ 217 00e0 9C01      		movw r18,r24
+ 218 00e2 2F5F      		subi r18,-1
+ 219 00e4 3F4F      		sbci r19,-1
+ 220 00e6 338B      		std Z+19,r19
+ 221 00e8 228B      		std Z+18,r18
+ 222 00ea E80F      		add r30,r24
+ 223 00ec F91F      		adc r31,r25
+ 224               	.LVL13:
+ 225 00ee 88E3      		ldi r24,lo8(56)
+ 226 00f0 00C0      		rjmp .L30
+ 227               	.LVL14:
+ 228               	.L21:
+  33:keypad.c      **** 	{
+ 229               		.loc 1 33 0
+ 230 00f2 8D3E      		cpi r24,lo8(-19)
+ 231 00f4 01F4      		brne .+2
+ 232 00f6 00C0      		rjmp .L25
+ 233 00f8 8E3E      		cpi r24,lo8(-18)
+ 234 00fa 01F0      		breq .L26
+ 235 00fc 8B3E      		cpi r24,lo8(-21)
+ 236 00fe 01F0      		breq .+2
+ 237 0100 00C0      		rjmp .L8
+  73:keypad.c      **** 		case 0b11011011     : klaw->buf[klaw->i++]='8'; break; //8
+ 238               		.loc 1 73 0
+ 239 0102 8289      		ldd r24,Z+18
+ 240 0104 9389      		ldd r25,Z+19
+ 241 0106 9C01      		movw r18,r24
+ 242 0108 2F5F      		subi r18,-1
+ 243 010a 3F4F      		sbci r19,-1
+ 244 010c 338B      		std Z+19,r19
+ 245 010e 228B      		std Z+18,r18
+ 246 0110 E80F      		add r30,r24
+ 247 0112 F91F      		adc r31,r25
+ 248               	.LVL15:
+ 249 0114 87E3      		ldi r24,lo8(55)
+ 250 0116 00C0      		rjmp .L30
+ 251               	.LVL16:
+ 252               	.L15:
+  38:keypad.c      **** 		case 0b01111011     : klaw->flags |= KB_CAL ; break; //C - kalibracja (calibration)
+ 253               		.loc 1 38 0
+ 254 0118 8489      		ldd r24,Z+20
+ 255 011a 8064      		ori r24,lo8(64)
+ 256 011c 00C0      		rjmp .L31
+ 257               	.L14:
+  39:keypad.c      **** 
+ 258               		.loc 1 39 0
+ 259 011e 8489      		ldd r24,Z+20
+ 260 0120 8062      		ori r24,lo8(32)
+ 261               	.L31:
+ 262 0122 848B      		std Z+20,r24
+ 263 0124 00C0      		rjmp .L8
+ 264               	.L20:
+  42:keypad.c      **** 				klaw->buf[klaw->i++]='H';
+ 265               		.loc 1 42 0
+ 266 0126 8489      		ldd r24,Z+20
+ 267 0128 982F      		mov r25,r24
+ 268 012a 9C70      		andi r25,lo8(12)
+ 269 012c 01F4      		brne .L28
+  43:keypad.c      **** 			klaw->flags |= KB_H;
+ 270               		.loc 1 43 0
+ 271 012e 2289      		ldd r18,Z+18
+ 272 0130 3389      		ldd r19,Z+19
+ 273 0132 A901      		movw r20,r18
+ 274 0134 4F5F      		subi r20,-1
+ 275 0136 5F4F      		sbci r21,-1
+ 276 0138 538B      		std Z+19,r21
+ 277 013a 428B      		std Z+18,r20
+ 278 013c DF01      		movw r26,r30
+ 279 013e A20F      		add r26,r18
+ 280 0140 B31F      		adc r27,r19
+ 281 0142 98E4      		ldi r25,lo8(72)
+ 282 0144 1296      		adiw r26,2
+ 283 0146 9C93      		st X,r25
+ 284               	.L28:
+  44:keypad.c      **** 
+ 285               		.loc 1 44 0
+ 286 0148 8860      		ori r24,lo8(8)
+ 287 014a 00C0      		rjmp .L31
+ 288               	.L12:
+  48:keypad.c      **** 				klaw->buf[klaw->i++]='M';
+ 289               		.loc 1 48 0
+ 290 014c 8489      		ldd r24,Z+20
+ 291 014e 82FD      		sbrc r24,2
+ 292 0150 00C0      		rjmp .L29
+  49:keypad.c      **** 			klaw->flags |= KB_M;
+ 293               		.loc 1 49 0
+ 294 0152 2289      		ldd r18,Z+18
+ 295 0154 3389      		ldd r19,Z+19
+ 296 0156 A901      		movw r20,r18
+ 297 0158 4F5F      		subi r20,-1
+ 298 015a 5F4F      		sbci r21,-1
+ 299 015c 538B      		std Z+19,r21
+ 300 015e 428B      		std Z+18,r20
+ 301 0160 DF01      		movw r26,r30
+ 302 0162 A20F      		add r26,r18
+ 303 0164 B31F      		adc r27,r19
+ 304 0166 9DE4      		ldi r25,lo8(77)
+ 305 0168 1296      		adiw r26,2
+ 306 016a 9C93      		st X,r25
+ 307               	.L29:
+  50:keypad.c      **** 	
+ 308               		.loc 1 50 0
+ 309 016c 8460      		ori r24,lo8(4)
+ 310 016e 00C0      		rjmp .L31
+ 311               	.L26:
+  67:keypad.c      **** 		case 0b11011110     : klaw->buf[klaw->i++]='2'; break; //2
+ 312               		.loc 1 67 0
+ 313 0170 8289      		ldd r24,Z+18
+ 314 0172 9389      		ldd r25,Z+19
+ 315 0174 9C01      		movw r18,r24
+ 316 0176 2F5F      		subi r18,-1
+ 317 0178 3F4F      		sbci r19,-1
+ 318 017a 338B      		std Z+19,r19
+ 319 017c 228B      		std Z+18,r18
+ 320 017e E80F      		add r30,r24
+ 321 0180 F91F      		adc r31,r25
+ 322               	.LVL17:
+ 323 0182 81E3      		ldi r24,lo8(49)
+ 324 0184 00C0      		rjmp .L30
+ 325               	.LVL18:
+ 326               	.L23:
+  68:keypad.c      **** 		case 0b10111110     : klaw->buf[klaw->i++]='3'; break; //3
+ 327               		.loc 1 68 0
+ 328 0186 8289      		ldd r24,Z+18
+ 329 0188 9389      		ldd r25,Z+19
+ 330 018a 9C01      		movw r18,r24
+ 331 018c 2F5F      		subi r18,-1
+ 332 018e 3F4F      		sbci r19,-1
+ 333 0190 338B      		std Z+19,r19
+ 334 0192 228B      		std Z+18,r18
+ 335 0194 E80F      		add r30,r24
+ 336 0196 F91F      		adc r31,r25
+ 337               	.LVL19:
+ 338 0198 82E3      		ldi r24,lo8(50)
+ 339 019a 00C0      		rjmp .L30
+ 340               	.LVL20:
+ 341               	.L18:
+  69:keypad.c      **** 		case 0b11101101     : klaw->buf[klaw->i++]='4'; break; //4
+ 342               		.loc 1 69 0
+ 343 019c 8289      		ldd r24,Z+18
+ 344 019e 9389      		ldd r25,Z+19
+ 345 01a0 9C01      		movw r18,r24
+ 346 01a2 2F5F      		subi r18,-1
+ 347 01a4 3F4F      		sbci r19,-1
+ 348 01a6 338B      		std Z+19,r19
+ 349 01a8 228B      		std Z+18,r18
+ 350 01aa E80F      		add r30,r24
+ 351 01ac F91F      		adc r31,r25
+ 352               	.LVL21:
+ 353 01ae 83E3      		ldi r24,lo8(51)
+ 354 01b0 00C0      		rjmp .L30
+ 355               	.LVL22:
+ 356               	.L25:
+  70:keypad.c      **** 		case 0b11011101     : klaw->buf[klaw->i++]='5'; break; //5
+ 357               		.loc 1 70 0
+ 358 01b2 8289      		ldd r24,Z+18
+ 359 01b4 9389      		ldd r25,Z+19
+ 360 01b6 9C01      		movw r18,r24
+ 361 01b8 2F5F      		subi r18,-1
+ 362 01ba 3F4F      		sbci r19,-1
+ 363 01bc 338B      		std Z+19,r19
+ 364 01be 228B      		std Z+18,r18
+ 365 01c0 E80F      		add r30,r24
+ 366 01c2 F91F      		adc r31,r25
+ 367               	.LVL23:
+ 368 01c4 84E3      		ldi r24,lo8(52)
+ 369 01c6 00C0      		rjmp .L30
+ 370               	.LVL24:
+ 371               	.L22:
+  71:keypad.c      **** 		case 0b10111101     : klaw->buf[klaw->i++]='6'; break; //6
+ 372               		.loc 1 71 0
+ 373 01c8 8289      		ldd r24,Z+18
+ 374 01ca 9389      		ldd r25,Z+19
+ 375 01cc 9C01      		movw r18,r24
+ 376 01ce 2F5F      		subi r18,-1
+ 377 01d0 3F4F      		sbci r19,-1
+ 378 01d2 338B      		std Z+19,r19
+ 379 01d4 228B      		std Z+18,r18
+ 380 01d6 E80F      		add r30,r24
+ 381 01d8 F91F      		adc r31,r25
+ 382               	.LVL25:
+ 383 01da 85E3      		ldi r24,lo8(53)
+ 384 01dc 00C0      		rjmp .L30
+ 385               	.LVL26:
+ 386               	.L17:
+  72:keypad.c      **** 		case 0b11101011     : klaw->buf[klaw->i++]='7'; break; //7
+ 387               		.loc 1 72 0
+ 388 01de 8289      		ldd r24,Z+18
+ 389 01e0 9389      		ldd r25,Z+19
+ 390 01e2 9C01      		movw r18,r24
+ 391 01e4 2F5F      		subi r18,-1
+ 392 01e6 3F4F      		sbci r19,-1
+ 393 01e8 338B      		std Z+19,r19
+ 394 01ea 228B      		std Z+18,r18
+ 395 01ec E80F      		add r30,r24
+ 396 01ee F91F      		adc r31,r25
+ 397               	.LVL27:
+ 398 01f0 86E3      		ldi r24,lo8(54)
+ 399 01f2 00C0      		rjmp .L30
+ 400               	.LVL28:
+ 401               	.L10:
+  76:keypad.c      **** 		//default:
+ 402               		.loc 1 76 0
+ 403 01f4 8289      		ldd r24,Z+18
+ 404 01f6 9389      		ldd r25,Z+19
+ 405 01f8 9C01      		movw r18,r24
+ 406 01fa 2F5F      		subi r18,-1
+ 407 01fc 3F4F      		sbci r19,-1
+ 408 01fe 338B      		std Z+19,r19
+ 409 0200 228B      		std Z+18,r18
+ 410 0202 E80F      		add r30,r24
+ 411 0204 F91F      		adc r31,r25
+ 412               	.LVL29:
+ 413 0206 80E3      		ldi r24,lo8(48)
+ 414               	.L30:
+ 415 0208 8283      		std Z+2,r24
+ 416               	.L8:
+ 417               	/* epilogue start */
+  81:keypad.c      **** 
+ 418               		.loc 1 81 0
+ 419 020a DF91      		pop r29
+ 420 020c CF91      		pop r28
+ 421 020e 0895      		ret
+ 422               		.cfi_endproc
+ 423               	.LFE7:
+ 425               		.comm	keypad_A,21,1
+ 426               	.Letext0:
+ 427               		.file 3 "/usr/lib/avr/include/stdint.h"
+ 428               		.file 4 "keypad.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keypad.c
-     /tmp/ccT3LY4M.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccT3LY4M.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccT3LY4M.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccT3LY4M.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccT3LY4M.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccT3LY4M.s:12     .text:0000000000000000 keypad
-     /tmp/ccT3LY4M.s:76     .text:0000000000000036 keypad_proc
-                            *COM*:0000000000000014 keypad_A
+     /tmp/ccJyEJtO.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccJyEJtO.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccJyEJtO.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccJyEJtO.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccJyEJtO.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccJyEJtO.s:12     .text:0000000000000000 keypad
+     /tmp/ccJyEJtO.s:89     .text:0000000000000046 keypad_clr_buf
+                            *COM*:0000000000000015 keypad_A
+     /tmp/ccJyEJtO.s:121    .text:000000000000005e keypad_proc
 
 UNDEFINED SYMBOLS
 __do_clear_bss

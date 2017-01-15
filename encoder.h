@@ -6,6 +6,8 @@
 #define EN_PORT		PORTD
 #define EN_DIR		DDRD
 #define EN_PIN 		PIND
+#define EN1_RANGE   450
+#define EN2_RANGE   450
 
 struct Enc 
 {
