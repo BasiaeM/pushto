@@ -9,6 +9,7 @@
 
 struct Telescope{
 	int time;
+	bool update;
 	float wys_zad; //wys i obrot wprowadzane przez uzytkownika (uklad rownikowy)
 	float obr_zad;
 	float wys_obl; //wys i obrot obliczone dla enkoderow (uklad horyzontalny)
@@ -16,5 +17,6 @@ struct Telescope{
 } telescope_A;
 
 void kalibracja(struct Enc *enk1, struct Enc *enk2, struct Telescope *tel); //enkoder1 - wysokosc, enkoder2 - obrot
-void nowy_cel(struct Key *klaw, struct Telescope *tel); 
+void nowy_cel(struct Key *klaw, struct Telescope *tel);  //wprowadzanie nowego celu
+void obliczenie_nastaw(struct Telescope *tel); //aktualizacja wartosci zadanych dla enkoderow
 #endif

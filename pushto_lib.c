@@ -2,6 +2,7 @@
 
 void kalibracja(struct Enc *enk1, struct Enc *enk2, struct Telescope *tel) //enkoder1 - wysokosc, enkoder2 - obrot
 {
+    /*funkcja do kalibracji pushtu, okreslenie polozenia ukladu rownikowego wzgledem ukladu horyzontalnego*/
 	gotoXy(0,0);
 	prints("Goto polaris-> C");
 	while(keypad(&keypad_A)!=0b01111011){} //oczekuj na C
@@ -17,6 +18,11 @@ void kalibracja(struct Enc *enk1, struct Enc *enk2, struct Telescope *tel) //enk
 
 void nowy_cel(struct Key *klaw, struct Telescope *tel)
 {
+    /*funkcja obslugujaca wprowadzanie nowego celu, 
+    zawiera wskazowki dotyczace formatu wprowadzania,
+    po wprowadzeniu konwertuje znaki z bufora klawiatury na liczby
+    reprezentujace deklinacje i rektastencje zadana*/
+
 	int h=0;
 	int m=0;
 	int s=0;
@@ -81,4 +87,12 @@ void nowy_cel(struct Key *klaw, struct Telescope *tel)
  	keypad_clr_buf();
  	lcd_clr();
 	klaw->flags='\0'; //czszczenie flag
+}
+
+void obliczenie_nastaw(struct Telescope *tel)
+{
+    /*funkcja obliczajaca nastawy dla enkoderow na podstawie wprowadzonych(zadanych)
+     deklinacji(wys_zad) i rektastencji(obr_zad)
+     oraz czasu ktory minal od momentu kalibracji */
+
 }

@@ -35,6 +35,8 @@ void system_init (void)
 	keypad_A.flags='\0';
 	keypad_A.last_result = 0xFF;
 
+	telescope_A.update=false; //flaga aktualizacja nastaw
+
 	//############# Timer1 16bit config ####################
 	TCCR1A |= 0;   // not required since WGM11:0, both are zero (0)
  	TCCR1B |= (1 << WGM12)|(1 << CS11)|(1 << CS10);   // Mode = CTC, Prescaler = 64
@@ -55,6 +57,8 @@ void system_init (void)
 ISR(TIMER1_COMPA_vect) //obsluga przerwania dla timera
 {
 	telescope_A.time++; //czas od kalibracji w sekundachs
+	if(telescope_A.time%10==0)
+		telescope_A.update=true;
 }
 
 ISR(INT0_vect) //przerwanie dla INT0 dla encodera1
@@ -114,21 +118,18 @@ int main(void)
 			keypad_A.flags &= ~KB_CAL;
 		}
 		if(keypad_A.flags & KB_CLR)
-			{
-				lcd_clr();
-				keypad_A.flags &= ~KB_CLR;
-			}
-		gotoXy(0,0);
+		{
+			lcd_clr();
+			keypad_A.flags &= ~KB_CLR;
+		}
+		if(telescope_A.update)
+		{
+			obliczenie_nastaw(&telescope_A); //funkcja na obliczenie nastaw, co 10sek (patrz ISR(TIMER1_COMPA_vect))
+		}
+
+		
 		//sprintf(buf,"%f",a);
 		//prints(buf);
-		if(telescope_A.obr_zad == 183.504167)
-			prints("poprawnie");
-		else
-		{
-			if(telescope_A.obr_zad ==180) prints("costam");
-			else
-			prints("poszlo w buraki");
-		}
 		//integerToLcd(telescope_A.obr_zad);
 		//gotoXy(0,1);
 		//sprintf(buf,"%f",telescope_A.obr_zad);
