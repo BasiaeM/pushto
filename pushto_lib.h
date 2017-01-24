@@ -27,4 +27,5 @@ struct Telescope{
 void kalibracja(struct Enc *enk1, struct Enc *enk2, struct Telescope *tel); //enkoder1 - wysokosc, enkoder2 - obrot
 void nowy_cel(struct Key *klaw, struct Telescope *tel);  //wprowadzanie nowego celu
 void obliczenie_nastaw(struct Telescope *tel); //aktualizacja wartosci zadanych dla enkoderow
+void naprowadzanie(struct Enc *enk1, struct Enc *enk2, struct Telescope *tel); //komunikacja w userem
 #endif

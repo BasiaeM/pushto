@@ -100,7 +100,8 @@ int main(void)
 			telescope_A.update=0;
 		}
 
-
+		naprowadzanie(&encoder1, &encoder2, &telescope_A);
+		
 		if(keypad_A.i > 14)
 			keypad_A.i=0;
 

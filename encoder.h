@@ -6,6 +6,7 @@
 #define EN_PORT		PORTD
 #define EN_DIR		DDRD
 #define EN_PIN 		PIND
+//enkoder1 - wysokosc, enkoder2 - obrot
 #define EN1_RANGE   450.0
 #define EN2_RANGE   450.0
 

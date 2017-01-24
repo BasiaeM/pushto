@@ -106,8 +106,17 @@ void obliczenie_nastaw(struct Telescope *tel)
 	tel->obr_obl=(tel->obr_obl*EN2_RANGE)/(2.0*PI);
 }
 
-void naprowadzanie(struct Telescope *tel)
+void naprowadzanie(struct Enc *enk1, struct Enc *enk2, struct Telescope *tel)
 {
 	/*Funkcja naprowadzająca urzytkownika na obiekt na podstawie różnicy między
 	zadanymi i obliczonymi obrotami enkoderow*/
+	long int wysokosc = lroundf ((tel->wys_obl *EN1_RANGE/(2.0*PI) - enk1->count));
+	long int obrot = lroundf ((tel->obr_obl *EN2_RANGE/(2.0*PI) - enk2->count));
+
+	gotoXy(0,0);
+	prints("Wysokosc: ");
+	integerToLcd((int)wysokosc);
+	gotoXy(0,1);
+	prints("Obrot:    ");
+	integerToLcd((int)obrot);
 }

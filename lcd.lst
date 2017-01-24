@@ -915,18 +915,18 @@
  615               		.file 3 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lcd.c
-     /tmp/cc0DtGEE.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/cc0DtGEE.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/cc0DtGEE.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/cc0DtGEE.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/cc0DtGEE.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/cc0DtGEE.s:12     .text:0000000000000000 lcdcmd
-     /tmp/cc0DtGEE.s:92     .text:000000000000004e lcdData
-     /tmp/cc0DtGEE.s:170    .text:000000000000009c lcdInit
-     /tmp/cc0DtGEE.s:337    .text:000000000000014a prints
-     /tmp/cc0DtGEE.s:379    .text:0000000000000162 gotoXy
-     /tmp/cc0DtGEE.s:409    .text:0000000000000172 integerToLcd
-     /tmp/cc0DtGEE.s:599    .text:0000000000000274 lcd_clr
+     /tmp/cc7EjjNp.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc7EjjNp.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc7EjjNp.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc7EjjNp.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc7EjjNp.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc7EjjNp.s:12     .text:0000000000000000 lcdcmd
+     /tmp/cc7EjjNp.s:92     .text:000000000000004e lcdData
+     /tmp/cc7EjjNp.s:170    .text:000000000000009c lcdInit
+     /tmp/cc7EjjNp.s:337    .text:000000000000014a prints
+     /tmp/cc7EjjNp.s:379    .text:0000000000000162 gotoXy
+     /tmp/cc7EjjNp.s:409    .text:0000000000000172 integerToLcd
+     /tmp/cc7EjjNp.s:599    .text:0000000000000274 lcd_clr
 
 UNDEFINED SYMBOLS
 __divmodhi4

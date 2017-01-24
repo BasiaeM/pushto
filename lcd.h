@@ -15,10 +15,8 @@ void gotoXy(unsigned char  ,unsigned char );
 void lcdInit(void);
 void lcdCmd(unsigned char);
 void lcdData(unsigned char);
-void lcdWriteNibble(unsigned char);
-void waitlcd(unsigned char);
 void prints(const char * message);
 void lcd_clr(void);
 
-void integerToLcd(int  );
+void integerToLcd(int integer);
 #endif

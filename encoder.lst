@@ -124,12 +124,12 @@
   96               		.file 3 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 encoder.c
-     /tmp/ccrSG7qJ.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccrSG7qJ.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccrSG7qJ.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccrSG7qJ.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccrSG7qJ.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccrSG7qJ.s:14     .text:0000000000000000 direction
+     /tmp/ccQKMDEy.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccQKMDEy.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccQKMDEy.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccQKMDEy.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccQKMDEy.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccQKMDEy.s:14     .text:0000000000000000 direction
                             *COM*:0000000000000008 encoder2
                             *COM*:0000000000000008 encoder1
 

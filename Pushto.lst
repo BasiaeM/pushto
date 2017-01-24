@@ -612,48 +612,58 @@
  521               	.L9:
  101:Pushto.c      **** 		}
  102:Pushto.c      **** 
- 103:Pushto.c      **** 
- 104:Pushto.c      **** 		if(keypad_A.i > 14)
- 522               		.loc 1 104 0
- 523 008a 8091 0000 		lds r24,keypad_A+18
- 524 008e 9091 0000 		lds r25,keypad_A+18+1
- 525 0092 0F97      		sbiw r24,15
- 526 0094 04F4      		brge .+2
- 527 0096 00C0      		rjmp .L10
- 105:Pushto.c      **** 			keypad_A.i=0;
- 528               		.loc 1 105 0
- 529 0098 1092 0000 		sts keypad_A+18+1,__zero_reg__
- 530 009c 1092 0000 		sts keypad_A+18,__zero_reg__
- 531 00a0 00C0      		rjmp .L10
- 532               		.cfi_endproc
- 533               	.LFE11:
- 535               		.comm	telescope_A,26,1
- 536               		.comm	keypad_A,21,1
- 537               		.comm	encoder2,8,1
- 538               		.comm	encoder1,8,1
- 539               		.text
- 540               	.Letext0:
- 541               		.file 2 "/usr/lib/avr/include/stdint.h"
- 542               		.file 3 "encoder.h"
- 543               		.file 4 "keypad.h"
- 544               		.file 5 "pushto_lib.h"
- 545               		.file 6 "lcd.h"
+ 103:Pushto.c      **** 		naprowadzanie(&encoder1, &encoder2, &telescope_A);
+ 522               		.loc 1 103 0
+ 523 008a 40E0      		ldi r20,lo8(telescope_A)
+ 524 008c 50E0      		ldi r21,hi8(telescope_A)
+ 525 008e 60E0      		ldi r22,lo8(encoder2)
+ 526 0090 70E0      		ldi r23,hi8(encoder2)
+ 527 0092 80E0      		ldi r24,lo8(encoder1)
+ 528 0094 90E0      		ldi r25,hi8(encoder1)
+ 529 0096 0E94 0000 		call naprowadzanie
+ 530               	.LVL11:
+ 104:Pushto.c      **** 		
+ 105:Pushto.c      **** 		if(keypad_A.i > 14)
+ 531               		.loc 1 105 0
+ 532 009a 8091 0000 		lds r24,keypad_A+18
+ 533 009e 9091 0000 		lds r25,keypad_A+18+1
+ 534 00a2 0F97      		sbiw r24,15
+ 535 00a4 04F4      		brge .+2
+ 536 00a6 00C0      		rjmp .L10
+ 106:Pushto.c      **** 			keypad_A.i=0;
+ 537               		.loc 1 106 0
+ 538 00a8 1092 0000 		sts keypad_A+18+1,__zero_reg__
+ 539 00ac 1092 0000 		sts keypad_A+18,__zero_reg__
+ 540 00b0 00C0      		rjmp .L10
+ 541               		.cfi_endproc
+ 542               	.LFE11:
+ 544               		.comm	telescope_A,26,1
+ 545               		.comm	keypad_A,21,1
+ 546               		.comm	encoder2,8,1
+ 547               		.comm	encoder1,8,1
+ 548               		.text
+ 549               	.Letext0:
+ 550               		.file 2 "/usr/lib/avr/include/stdint.h"
+ 551               		.file 3 "encoder.h"
+ 552               		.file 4 "keypad.h"
+ 553               		.file 5 "pushto_lib.h"
+ 554               		.file 6 "lcd.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Pushto.c
-     /tmp/cc1tZjGk.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/cc1tZjGk.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/cc1tZjGk.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/cc1tZjGk.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/cc1tZjGk.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/cc1tZjGk.s:12     .text:0000000000000000 system_init
+     /tmp/cc3uglcn.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc3uglcn.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc3uglcn.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc3uglcn.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc3uglcn.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc3uglcn.s:12     .text:0000000000000000 system_init
                             *COM*:0000000000000008 encoder1
                             *COM*:0000000000000008 encoder2
                             *COM*:0000000000000015 keypad_A
                             *COM*:000000000000001a telescope_A
-     /tmp/cc1tZjGk.s:120    .text:000000000000008a __vector_6
-     /tmp/cc1tZjGk.s:244    .text:0000000000000100 __vector_1
-     /tmp/cc1tZjGk.s:340    .text:000000000000014c __vector_2
-     /tmp/cc1tZjGk.s:437    .text.startup:0000000000000000 main
+     /tmp/cc3uglcn.s:120    .text:000000000000008a __vector_6
+     /tmp/cc3uglcn.s:244    .text:0000000000000100 __vector_1
+     /tmp/cc3uglcn.s:340    .text:000000000000014c __vector_2
+     /tmp/cc3uglcn.s:437    .text.startup:0000000000000000 main
 
 UNDEFINED SYMBOLS
 __addsf3
@@ -665,4 +675,5 @@ nowy_cel
 kalibracja
 lcd_clr
 obliczenie_nastaw
+naprowadzanie
 __do_clear_bss

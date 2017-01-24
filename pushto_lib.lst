@@ -1404,45 +1404,232 @@
  1263 0734 0895      		ret
  1264               		.cfi_endproc
  1265               	.LFE9:
- 1267               	.global	naprowadzanie
- 1269               	naprowadzanie:
- 1270               	.LFB10:
+ 1267               		.section	.rodata.str1.1
+ 1268               	.LC10:
+ 1269 00a0 5779 736F 		.string	"Wysokosc: "
+ 1269      6B6F 7363 
+ 1269      3A20 00
+ 1270               	.LC11:
+ 1271 00ab 4F62 726F 		.string	"Obrot:    "
+ 1271      743A 2020 
+ 1271      2020 00
+ 1272               		.text
+ 1273               	.global	naprowadzanie
+ 1275               	naprowadzanie:
+ 1276               	.LFB10:
  108:pushto_lib.c  **** 
- 109:pushto_lib.c  **** void naprowadzanie(struct Telescope *tel)
+ 109:pushto_lib.c  **** void naprowadzanie(struct Enc *enk1, struct Enc *enk2, struct Telescope *tel)
  110:pushto_lib.c  **** {
- 1271               		.loc 1 110 0
- 1272               		.cfi_startproc
- 1273               	.LVL125:
- 1274               	/* prologue: function */
- 1275               	/* frame size = 0 */
- 1276               	/* stack size = 0 */
- 1277               	.L__stack_usage = 0
- 1278 0736 0895      		ret
- 1279               		.cfi_endproc
- 1280               	.LFE10:
- 1282               		.comm	telescope_A,26,1
- 1283               		.comm	encoder2,8,1
- 1284               		.comm	encoder1,8,1
- 1285               		.comm	keypad_A,21,1
- 1286               	.Letext0:
- 1287               		.file 2 "keypad.h"
- 1288               		.file 3 "encoder.h"
- 1289               		.file 4 "pushto_lib.h"
- 1290               		.file 5 "lcd.h"
- 1291               		.file 6 "/usr/lib/avr/include/math.h"
- 1292               		.file 7 "/usr/lib/avr/include/stdio.h"
+ 1277               		.loc 1 110 0
+ 1278               		.cfi_startproc
+ 1279               	.LVL125:
+ 1280 0736 8F92      		push r8
+ 1281               	.LCFI54:
+ 1282               		.cfi_def_cfa_offset 3
+ 1283               		.cfi_offset 8, -2
+ 1284 0738 9F92      		push r9
+ 1285               	.LCFI55:
+ 1286               		.cfi_def_cfa_offset 4
+ 1287               		.cfi_offset 9, -3
+ 1288 073a AF92      		push r10
+ 1289               	.LCFI56:
+ 1290               		.cfi_def_cfa_offset 5
+ 1291               		.cfi_offset 10, -4
+ 1292 073c BF92      		push r11
+ 1293               	.LCFI57:
+ 1294               		.cfi_def_cfa_offset 6
+ 1295               		.cfi_offset 11, -5
+ 1296 073e CF92      		push r12
+ 1297               	.LCFI58:
+ 1298               		.cfi_def_cfa_offset 7
+ 1299               		.cfi_offset 12, -6
+ 1300 0740 DF92      		push r13
+ 1301               	.LCFI59:
+ 1302               		.cfi_def_cfa_offset 8
+ 1303               		.cfi_offset 13, -7
+ 1304 0742 EF92      		push r14
+ 1305               	.LCFI60:
+ 1306               		.cfi_def_cfa_offset 9
+ 1307               		.cfi_offset 14, -8
+ 1308 0744 FF92      		push r15
+ 1309               	.LCFI61:
+ 1310               		.cfi_def_cfa_offset 10
+ 1311               		.cfi_offset 15, -9
+ 1312 0746 CF93      		push r28
+ 1313               	.LCFI62:
+ 1314               		.cfi_def_cfa_offset 11
+ 1315               		.cfi_offset 28, -10
+ 1316 0748 DF93      		push r29
+ 1317               	.LCFI63:
+ 1318               		.cfi_def_cfa_offset 12
+ 1319               		.cfi_offset 29, -11
+ 1320               	/* prologue: function */
+ 1321               	/* frame size = 0 */
+ 1322               	/* stack size = 10 */
+ 1323               	.L__stack_usage = 10
+ 1324 074a 4C01      		movw r8,r24
+ 1325 074c EB01      		movw r28,r22
+ 1326 074e 5A01      		movw r10,r20
+ 111:pushto_lib.c  **** 	/*Funkcja naprowadzająca urzytkownika na obiekt na podstawie różnicy między
+ 112:pushto_lib.c  **** 	zadanymi i obliczonymi obrotami enkoderow*/
+ 113:pushto_lib.c  **** 	long int wysokosc = lroundf ((tel->wys_obl *EN1_RANGE/(2.0*PI) - enk1->count));
+ 1327               		.loc 1 113 0
+ 1328 0750 20E0      		ldi r18,0
+ 1329 0752 30E0      		ldi r19,0
+ 1330 0754 41EE      		ldi r20,lo8(-31)
+ 1331 0756 53E4      		ldi r21,lo8(67)
+ 1332 0758 F501      		movw r30,r10
+ 1333 075a 6685      		ldd r22,Z+14
+ 1334 075c 7785      		ldd r23,Z+15
+ 1335 075e 8089      		ldd r24,Z+16
+ 1336 0760 9189      		ldd r25,Z+17
+ 1337               	.LVL126:
+ 1338 0762 0E94 0000 		call __mulsf3
+ 1339               	.LVL127:
+ 1340 0766 2BED      		ldi r18,lo8(-37)
+ 1341 0768 3FE0      		ldi r19,lo8(15)
+ 1342 076a 49EC      		ldi r20,lo8(-55)
+ 1343 076c 50E4      		ldi r21,lo8(64)
+ 1344 076e 0E94 0000 		call __divsf3
+ 1345               	.LVL128:
+ 1346 0772 6B01      		movw r12,r22
+ 1347 0774 7C01      		movw r14,r24
+ 1348 0776 F401      		movw r30,r8
+ 1349 0778 8281      		ldd r24,Z+2
+ 1350 077a 9381      		ldd r25,Z+3
+ 1351 077c BC01      		movw r22,r24
+ 1352 077e 990F      		lsl r25
+ 1353 0780 880B      		sbc r24,r24
+ 1354 0782 990B      		sbc r25,r25
+ 1355 0784 0E94 0000 		call __floatsisf
+ 1356               	.LVL129:
+ 1357 0788 9B01      		movw r18,r22
+ 1358 078a AC01      		movw r20,r24
+ 1359 078c C701      		movw r24,r14
+ 1360 078e B601      		movw r22,r12
+ 1361 0790 0E94 0000 		call __subsf3
+ 1362               	.LVL130:
+ 1363 0794 0E94 0000 		call lround
+ 1364               	.LVL131:
+ 1365 0798 6B01      		movw r12,r22
+ 1366 079a 7C01      		movw r14,r24
+ 114:pushto_lib.c  **** 	long int obrot = lroundf ((tel->obr_obl *EN2_RANGE/(2.0*PI) - enk2->count));
+ 1367               		.loc 1 114 0
+ 1368 079c 20E0      		ldi r18,0
+ 1369 079e 30E0      		ldi r19,0
+ 1370 07a0 41EE      		ldi r20,lo8(-31)
+ 1371 07a2 53E4      		ldi r21,lo8(67)
+ 1372 07a4 F501      		movw r30,r10
+ 1373 07a6 6289      		ldd r22,Z+18
+ 1374 07a8 7389      		ldd r23,Z+19
+ 1375 07aa 8489      		ldd r24,Z+20
+ 1376 07ac 9589      		ldd r25,Z+21
+ 1377 07ae 0E94 0000 		call __mulsf3
+ 1378               	.LVL132:
+ 1379 07b2 2BED      		ldi r18,lo8(-37)
+ 1380 07b4 3FE0      		ldi r19,lo8(15)
+ 1381 07b6 49EC      		ldi r20,lo8(-55)
+ 1382 07b8 50E4      		ldi r21,lo8(64)
+ 1383 07ba 0E94 0000 		call __divsf3
+ 1384               	.LVL133:
+ 1385 07be 4B01      		movw r8,r22
+ 1386 07c0 5C01      		movw r10,r24
+ 1387               	.LVL134:
+ 1388 07c2 4A81      		ldd r20,Y+2
+ 1389 07c4 5B81      		ldd r21,Y+3
+ 1390 07c6 BA01      		movw r22,r20
+ 1391 07c8 550F      		lsl r21
+ 1392 07ca 880B      		sbc r24,r24
+ 1393 07cc 990B      		sbc r25,r25
+ 1394 07ce 0E94 0000 		call __floatsisf
+ 1395               	.LVL135:
+ 1396 07d2 9B01      		movw r18,r22
+ 1397 07d4 AC01      		movw r20,r24
+ 1398 07d6 C501      		movw r24,r10
+ 1399 07d8 B401      		movw r22,r8
+ 1400 07da 0E94 0000 		call __subsf3
+ 1401               	.LVL136:
+ 1402 07de 0E94 0000 		call lround
+ 1403               	.LVL137:
+ 1404 07e2 4B01      		movw r8,r22
+ 1405 07e4 5C01      		movw r10,r24
+ 115:pushto_lib.c  **** 
+ 116:pushto_lib.c  **** 	gotoXy(0,0);
+ 1406               		.loc 1 116 0
+ 1407 07e6 60E0      		ldi r22,0
+ 1408 07e8 80E0      		ldi r24,0
+ 1409 07ea 0E94 0000 		call gotoXy
+ 1410               	.LVL138:
+ 117:pushto_lib.c  **** 	prints("Wysokosc: ");
+ 1411               		.loc 1 117 0
+ 1412 07ee 80E0      		ldi r24,lo8(.LC10)
+ 1413 07f0 90E0      		ldi r25,hi8(.LC10)
+ 1414 07f2 0E94 0000 		call prints
+ 1415               	.LVL139:
+ 118:pushto_lib.c  **** 	integerToLcd((int)wysokosc);
+ 1416               		.loc 1 118 0
+ 1417 07f6 C601      		movw r24,r12
+ 1418 07f8 0E94 0000 		call integerToLcd
+ 1419               	.LVL140:
+ 119:pushto_lib.c  **** 	gotoXy(0,1);
+ 1420               		.loc 1 119 0
+ 1421 07fc 61E0      		ldi r22,lo8(1)
+ 1422 07fe 80E0      		ldi r24,0
+ 1423 0800 0E94 0000 		call gotoXy
+ 1424               	.LVL141:
+ 120:pushto_lib.c  **** 	prints("Obrot:    ");
+ 1425               		.loc 1 120 0
+ 1426 0804 80E0      		ldi r24,lo8(.LC11)
+ 1427 0806 90E0      		ldi r25,hi8(.LC11)
+ 1428 0808 0E94 0000 		call prints
+ 1429               	.LVL142:
+ 121:pushto_lib.c  **** 	integerToLcd((int)obrot);
+ 1430               		.loc 1 121 0
+ 1431 080c C401      		movw r24,r8
+ 1432               	/* epilogue start */
+ 122:pushto_lib.c  **** }...
+ 1433               		.loc 1 122 0
+ 1434 080e DF91      		pop r29
+ 1435 0810 CF91      		pop r28
+ 1436               	.LVL143:
+ 1437 0812 FF90      		pop r15
+ 1438 0814 EF90      		pop r14
+ 1439 0816 DF90      		pop r13
+ 1440 0818 CF90      		pop r12
+ 1441 081a BF90      		pop r11
+ 1442 081c AF90      		pop r10
+ 1443               	.LVL144:
+ 1444 081e 9F90      		pop r9
+ 1445 0820 8F90      		pop r8
+ 121:pushto_lib.c  **** 	integerToLcd((int)obrot);
+ 1446               		.loc 1 121 0
+ 1447 0822 0C94 0000 		jmp integerToLcd
+ 1448               	.LVL145:
+ 1449               		.cfi_endproc
+ 1450               	.LFE10:
+ 1452               		.comm	telescope_A,26,1
+ 1453               		.comm	encoder2,8,1
+ 1454               		.comm	encoder1,8,1
+ 1455               		.comm	keypad_A,21,1
+ 1456               	.Letext0:
+ 1457               		.file 2 "keypad.h"
+ 1458               		.file 3 "encoder.h"
+ 1459               		.file 4 "pushto_lib.h"
+ 1460               		.file 5 "lcd.h"
+ 1461               		.file 6 "/usr/lib/avr/include/math.h"
+ 1462               		.file 7 "/usr/lib/avr/include/stdio.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 pushto_lib.c
-     /tmp/ccGdBZHo.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccGdBZHo.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccGdBZHo.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccGdBZHo.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccGdBZHo.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccGdBZHo.s:26     .text:0000000000000000 kalibracja
+     /tmp/ccnaarKr.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccnaarKr.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccnaarKr.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccnaarKr.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccnaarKr.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccnaarKr.s:26     .text:0000000000000000 kalibracja
                             *COM*:0000000000000015 keypad_A
-     /tmp/ccGdBZHo.s:388    .text:00000000000001f4 nowy_cel
-     /tmp/ccGdBZHo.s:865    .text:00000000000004b8 obliczenie_nastaw
-     /tmp/ccGdBZHo.s:1269   .text:0000000000000736 naprowadzanie
+     /tmp/ccnaarKr.s:388    .text:00000000000001f4 nowy_cel
+     /tmp/ccnaarKr.s:865    .text:00000000000004b8 obliczenie_nastaw
+     /tmp/ccnaarKr.s:1275   .text:0000000000000736 naprowadzanie
                             *COM*:000000000000001a telescope_A
                             *COM*:0000000000000008 encoder2
                             *COM*:0000000000000008 encoder1
@@ -1468,5 +1655,7 @@ __ltsf2
 __gtsf2
 asin
 atan
+lround
+integerToLcd
 __do_copy_data
 __do_clear_bss
