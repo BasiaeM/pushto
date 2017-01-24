@@ -23,11 +23,10 @@ void kalibracja(struct Enc *enk1, struct Enc *enk2, struct Telescope *tel) //enk
 	prints("Goto alkaid -> C");
 	while(keypad(&keypad_A)!=0b01111011){} //oczekuj na C
 	
-	halk=(((EN1_RANGE/4)-enk1->count)/EN1_RANGE)*2.0*PI; //przeliczenie zmierzonej wysokości na radiany
+	halk=(enk1->count/EN1_RANGE)*2.0*PI; //przeliczenie zmierzonej wysokości na radiany
 	talk= acos(((sin(halk)-sin(tel->h_pol)*sin(dalk))/(cos(dalk)*cos(tel->h_pol))));
 	if(enk2->count*2.0*PI/EN2_RANGE<=PI) talk+=PI; //wynikajace z zakresu funkcji asin
 
-	//w radianach????????????????????????????????????
 	tel->time=talk+ralk; //ustawianie zegara
 	lcd_clr();
 
@@ -43,15 +42,6 @@ void nowy_cel(struct Key *klaw, struct Telescope *tel)
 	int h=0;
 	int m=0;
 	int s=0;
-	//testy
-	 gotoXy(0,1);
-    integerToLcd(h);
-    gotoXy(6,1);
-    integerToLcd(m);
-    gotoXy(11,1);
-    integerToLcd(s);
-    while(keypad(klaw)!=0b01111101){} //oczekuj na B
-
 
 	keypad_clr_buf(); //czyszczenie bufora
 	gotoXy(0,0);
@@ -75,14 +65,7 @@ void nowy_cel(struct Key *klaw, struct Telescope *tel)
     	prints(klaw->buf);
     }
     sscanf(klaw->buf,"%iH%iM%i",&h,&m,&s);
-    //testy
-    gotoXy(0,1);
-    integerToLcd(h);
-    gotoXy(6,1);
-    integerToLcd(m);
-    gotoXy(11,1);
-    integerToLcd(s);
-    while(keypad(klaw)!=0b01111101){} //oczekuj na B
+
     tel->re_zad = (15*h+15/60.0*m+15/3600.0*s)*(PI/180.0); //z przeliczeniem na radiany
 
     keypad_clr_buf(); // czyszczenie bufora
@@ -115,8 +98,16 @@ void obliczenie_nastaw(struct Telescope *tel)
 	float o_time = tel->time-tel->re_zad; //kąt godzinny obiektu
 	tel->wys_obl= asin(sin(tel->de_zad)*sin(tel->h_pol)+cos(tel->de_zad)*cos(tel->h_pol)*cos(o_time));
 	tel->obr_obl= atan(cos(tel->de_zad)*sin(o_time)/(-sin(tel->de_zad)*cos(tel->h_pol)+cos(tel->de_zad)*sin(tel->h_pol)*cos(o_time)));
-		if(tel->obr_obl<=0) tel->obr_obl+=2*PI;
+		if(o_time<(PI/2.0) || o_time>(3.0*PI/2.0)) tel->obr_obl+=PI; // z zależności azymutu i kąta godzinnego 
+		if(tel->obr_obl<=0) tel->obr_obl+=2*PI; //z własności atan
+
 
 	tel->wys_obl=(tel->wys_obl*EN1_RANGE)/(2.0*PI); //przeliczenie na obroty
 	tel->obr_obl=(tel->obr_obl*EN2_RANGE)/(2.0*PI);
+}
+
+void naprowadzanie(struct Telescope *tel)
+{
+	/*Funkcja naprowadzająca urzytkownika na obiekt na podstawie różnicy między
+	zadanymi i obliczonymi obrotami enkoderow*/
 }
