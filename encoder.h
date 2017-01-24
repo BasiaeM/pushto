@@ -14,6 +14,7 @@ struct Enc
 	unsigned char maskA;
 	unsigned char maskB; //maska do sprawdzania, czy na danej nozce jest stan wysoki - jedynka na danej nodze
 	int count;			//licznik obrotow enkodera
+	float range;
 } encoder1, encoder2;
 /*funkcja sprawdzajaca w ktora strone jest wykonywany obrot i zmieniajaca licznik encodera*/
 void direction(struct Enc *danyEncoder); 

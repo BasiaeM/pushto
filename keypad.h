@@ -4,9 +4,9 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define KB_PORT     PORTD
-#define KB_DIR      DDRD
-#define KB_PIN  	PIND
+#define KB_PORT     PORTC
+#define KB_DIR      DDRC
+#define KB_PIN  	PINC
 
 //flagi
 //#define KB_ACP 0x80;
