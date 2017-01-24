@@ -121,6 +121,7 @@ tens=(integer%100)/10;
 
   lcdData( ones + 0x30);
 }
+
 else //wyswietlanie ujemnych liczb
 {
   //wyswietlenie znaku

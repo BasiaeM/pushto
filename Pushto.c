@@ -5,7 +5,7 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include "lcd.h"
-//#include "encoder.h"
+#include "encoder.h"
 #include "keypad.h"
 #include "pushto_lib.h"
     
@@ -39,21 +39,20 @@ void system_init (void)
 
 	telescope_A.update=0; //flaga aktualizacja nastaw
 
-	//############# Timer1 16bit config ####################
+	//konfiguracja timera TIMER1
 	TCCR1A |= 0;   // not required since WGM11:0, both are zero (0)
- 	TCCR1B |= (1 << WGM12)|(1 << CS11)|(1 << CS10);   // Mode = CTC, Prescaler = 64
-	OCR1A = 31250;   // timer compare value 1Hz - 31250 
-	TIMSK|=(1<<OCIE1A); //enable compare reg A interrupt
+ 	TCCR1B |= (1 << WGM12)|(1 << CS11)|(1 << CS10);   // Tryb = CTC, Dzielnik = 64
+	OCR1A = 31165;   // licznik porownawczy 1Hz - 31250, dla sekundy gwiazdowej -31165
+	TIMSK|=(1<<OCIE1A); //włączenie przerwań na porownanie z rejestrem A
 	
-    	sei(); // enable global interrupts
+    	sei(); //globalne włączenie przerwań
 
 }
 
 ISR(TIMER1_COMPA_vect) //obsluga przerwania dla timera
 {
-	telescope_A.time++; //czas od kalibracji w sekundach
-	if(telescope_A.time%10==0)
-		telescope_A.update=1;
+	telescope_A.time+=0.000004835; //czas gwiazdowy w radianach
+	telescope_A.update++;
 }
 
 ISR(INT0_vect) //przerwanie dla INT0 dla encodera1
@@ -95,9 +94,10 @@ int main(void)
 			keypad_A.flags &= ~KB_CLR;
 		}
 
-		if(telescope_A.update)
+		if(telescope_A.update==10)
 		{
 			obliczenie_nastaw(&telescope_A); //funkcja na obliczenie nastaw, co 10sek (patrz ISR(TIMER1_COMPA_vect))
+			telescope_A.update=0;
 		}
 
 

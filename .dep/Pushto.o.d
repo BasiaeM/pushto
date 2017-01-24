@@ -1,9 +1,9 @@
-Pushto.o: Pushto.c lcd.h keypad.h pushto_lib.h encoder.h
+Pushto.o: Pushto.c lcd.h encoder.h keypad.h pushto_lib.h
 
 lcd.h:
+
+encoder.h:
 
 keypad.h:
 
 pushto_lib.h:
-
-encoder.h:

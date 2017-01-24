@@ -7,82 +7,133 @@
    7               		.text
    8               	.Ltext0:
    9               		.cfi_sections	.debug_frame
-  10               	.global	direction
-  12               	direction:
-  13               	.LFB0:
-  14               		.file 1 "encoder.c"
+  10               	.global	__floatsisf
+  11               	.global	__gesf2
+  12               	.global	direction
+  14               	direction:
+  15               	.LFB0:
+  16               		.file 1 "encoder.c"
    1:encoder.c     **** #include "encoder.h"
    2:encoder.c     **** 
    3:encoder.c     **** void direction(struct Enc *danyEncoder)
    4:encoder.c     **** {
-  15               		.loc 1 4 0
-  16               		.cfi_startproc
-  17               	.LVL0:
-  18               	/* prologue: function */
-  19               	/* frame size = 0 */
-  20               	/* stack size = 0 */
-  21               	.L__stack_usage = 0
-  22 0000 FC01      		movw r30,r24
-   5:encoder.c     **** if (EN_PIN & danyEncoder->maskA)		//A zmianilo stan na wysoki
-  23               		.loc 1 5 0
-  24 0002 90B3      		in r25,0x10
-  25 0004 8081      		ld r24,Z
-  26               	.LVL1:
-  27 0006 8923      		and r24,r25
-  28 0008 9181      		ldd r25,Z+1
-  29 000a 2281      		ldd r18,Z+2
-  30 000c 3381      		ldd r19,Z+3
-  31 000e 8823      		tst r24
-  32 0010 01F0      		breq .L2
-   6:encoder.c     **** {
-   7:encoder.c     **** 	if(EN_PIN & danyEncoder->maskB)
-  33               		.loc 1 7 0
-  34 0012 80B3      		in r24,0x10
-  35 0014 9823      		and r25,r24
-  36 0016 01F0      		breq .L3
-  37               	.L5:
-   8:encoder.c     **** 		danyEncoder->count-=1;
-  38               		.loc 1 8 0
-  39 0018 2150      		subi r18,1
-  40 001a 3109      		sbc r19,__zero_reg__
-  41 001c 00C0      		rjmp .L9
-  42               	.L2:
-   9:encoder.c     **** 	else
-  10:encoder.c     **** 		danyEncoder->count+=1;
-  11:encoder.c     **** }
-  12:encoder.c     **** else									//A zmienilo stan na niski
-  13:encoder.c     **** {
-  14:encoder.c     **** 	if(EN_PIN & danyEncoder->maskB)
-  43               		.loc 1 14 0
-  44 001e 80B3      		in r24,0x10
-  45 0020 9823      		and r25,r24
-  46 0022 01F0      		breq .L5
-  47               	.L3:
-  10:encoder.c     **** }
-  48               		.loc 1 10 0
-  49 0024 2F5F      		subi r18,-1
-  50 0026 3F4F      		sbci r19,-1
-  51               	.L9:
-  52 0028 3383      		std Z+3,r19
-  53 002a 2283      		std Z+2,r18
-  54 002c 0895      		ret
-  55               		.cfi_endproc
-  56               	.LFE0:
-  58               		.comm	encoder2,4,1
-  59               		.comm	encoder1,4,1
-  60               	.Letext0:
-  61               		.file 2 "encoder.h"
-  62               		.file 3 "/usr/lib/avr/include/stdint.h"
+  17               		.loc 1 4 0
+  18               		.cfi_startproc
+  19               	.LVL0:
+  20 0000 CF93      		push r28
+  21               	.LCFI0:
+  22               		.cfi_def_cfa_offset 3
+  23               		.cfi_offset 28, -2
+  24 0002 DF93      		push r29
+  25               	.LCFI1:
+  26               		.cfi_def_cfa_offset 4
+  27               		.cfi_offset 29, -3
+  28               	/* prologue: function */
+  29               	/* frame size = 0 */
+  30               	/* stack size = 2 */
+  31               	.L__stack_usage = 2
+  32 0004 EC01      		movw r28,r24
+   5:encoder.c     **** 	/*funkcja wykonywana po przyjściu przerwania (zmiany stanu nóżki enkodera)
+   6:encoder.c     **** 	zmieniająca determinująca kierunek obrotu i odpowiednio
+   7:encoder.c     **** 	inkrementująca licznik enkodera*/
+   8:encoder.c     **** 
+   9:encoder.c     **** 	if (EN_PIN & danyEncoder->maskA)		//A zmianilo stan na wysoki
+  33               		.loc 1 9 0
+  34 0006 30B3      		in r19,0x10
+  35 0008 8881      		ld r24,Y
+  36               	.LVL1:
+  37 000a 3823      		and r19,r24
+  38 000c 2981      		ldd r18,Y+1
+  39 000e 8A81      		ldd r24,Y+2
+  40 0010 9B81      		ldd r25,Y+3
+  41 0012 3323      		tst r19
+  42 0014 01F0      		breq .L2
+  10:encoder.c     **** 	{
+  11:encoder.c     **** 		if(EN_PIN & danyEncoder->maskB)
+  43               		.loc 1 11 0
+  44 0016 30B3      		in r19,0x10
+  45 0018 2323      		and r18,r19
+  46 001a 01F0      		breq .L3
+  47               	.L5:
+  12:encoder.c     **** 			danyEncoder->count-=1;
+  48               		.loc 1 12 0
+  49 001c 0197      		sbiw r24,1
+  50 001e 00C0      		rjmp .L12
+  51               	.L2:
+  13:encoder.c     **** 		else
+  14:encoder.c     **** 			danyEncoder->count+=1;
+  15:encoder.c     **** 	}
+  16:encoder.c     **** 
+  17:encoder.c     **** 	else									//A zmienilo stan na niski
+  18:encoder.c     **** 	{
+  19:encoder.c     **** 		if(EN_PIN & danyEncoder->maskB)
+  52               		.loc 1 19 0
+  53 0020 30B3      		in r19,0x10
+  54 0022 2323      		and r18,r19
+  55 0024 01F0      		breq .L5
+  56               	.L3:
+  14:encoder.c     **** 	}
+  57               		.loc 1 14 0
+  58 0026 0196      		adiw r24,1
+  59               	.L12:
+  60 0028 9B83      		std Y+3,r25
+  61 002a 8A83      		std Y+2,r24
+  20:encoder.c     **** 			danyEncoder->count+=1;
+  21:encoder.c     **** 		else
+  22:encoder.c     **** 			danyEncoder->count-=1;
+  23:encoder.c     **** 	}
+  24:encoder.c     **** 
+  25:encoder.c     **** 	if (danyEncoder->count >=danyEncoder->range) //zerowanie po pełnym obrocie
+  62               		.loc 1 25 0
+  63 002c 6A81      		ldd r22,Y+2
+  64 002e 7B81      		ldd r23,Y+3
+  65 0030 072E      		mov __tmp_reg__,r23
+  66 0032 000C      		lsl r0
+  67 0034 880B      		sbc r24,r24
+  68 0036 990B      		sbc r25,r25
+  69 0038 0E94 0000 		call __floatsisf
+  70               	.LVL2:
+  71 003c 2C81      		ldd r18,Y+4
+  72 003e 3D81      		ldd r19,Y+5
+  73 0040 4E81      		ldd r20,Y+6
+  74 0042 5F81      		ldd r21,Y+7
+  75 0044 0E94 0000 		call __gesf2
+  76               	.LVL3:
+  77 0048 87FD      		sbrc r24,7
+  78 004a 00C0      		rjmp .L1
+  26:encoder.c     **** 	{
+  27:encoder.c     **** 		danyEncoder->count=0; 
+  79               		.loc 1 27 0
+  80 004c 1B82      		std Y+3,__zero_reg__
+  81 004e 1A82      		std Y+2,__zero_reg__
+  82               	.L1:
+  83               	/* epilogue start */
+  28:encoder.c     **** }
+  29:encoder.c     **** }
+  84               		.loc 1 29 0
+  85 0050 DF91      		pop r29
+  86 0052 CF91      		pop r28
+  87               	.LVL4:
+  88 0054 0895      		ret
+  89               		.cfi_endproc
+  90               	.LFE0:
+  92               		.comm	encoder2,8,1
+  93               		.comm	encoder1,8,1
+  94               	.Letext0:
+  95               		.file 2 "encoder.h"
+  96               		.file 3 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 encoder.c
-     /tmp/ccc0RyID.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccc0RyID.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccc0RyID.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccc0RyID.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccc0RyID.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccc0RyID.s:12     .text:0000000000000000 direction
-                            *COM*:0000000000000004 encoder2
-                            *COM*:0000000000000004 encoder1
+     /tmp/ccrSG7qJ.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccrSG7qJ.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccrSG7qJ.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccrSG7qJ.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccrSG7qJ.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccrSG7qJ.s:14     .text:0000000000000000 direction
+                            *COM*:0000000000000008 encoder2
+                            *COM*:0000000000000008 encoder1
 
 UNDEFINED SYMBOLS
+__floatsisf
+__gesf2
 __do_clear_bss

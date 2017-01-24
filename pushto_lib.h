@@ -14,7 +14,7 @@
 #define dalk (49.0+18.0/60)*(PI/180.0)	
 
 struct Telescope{
-	int time;
+	float time;
 	short int update;
 	float de_zad; //deklinacja i rektascencja wprowadzane przez uzytkownika (uklad rownikowy)
 	float re_zad;

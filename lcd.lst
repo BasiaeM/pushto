@@ -371,29 +371,27 @@
  170               	lcdInit:
  171               	.LFB8:
   44:lcd.c         **** 
-  45:lcd.c         **** 
+  45:lcd.c         **** }
   46:lcd.c         **** 
-  47:lcd.c         **** }
-  48:lcd.c         **** 
-  49:lcd.c         **** void lcdInit(void)
-  50:lcd.c         **** {
- 172               		.loc 1 50 0
+  47:lcd.c         **** void lcdInit(void)
+  48:lcd.c         **** {
+ 172               		.loc 1 48 0
  173               		.cfi_startproc
  174               	/* prologue: function */
  175               	/* frame size = 0 */
  176               	/* stack size = 0 */
  177               	.L__stack_usage = 0
-  51:lcd.c         **** LCD_PORT &=~RS;
- 178               		.loc 1 51 0
+  49:lcd.c         **** LCD_PORT &=~RS;
+ 178               		.loc 1 49 0
  179 009c D898      		cbi 0x1b,0
-  52:lcd.c         **** LCD_PORT  &=~EN;
- 180               		.loc 1 52 0
+  50:lcd.c         **** LCD_PORT  &=~EN;
+ 180               		.loc 1 50 0
  181 009e DA98      		cbi 0x1b,2
-  53:lcd.c         **** LCD_PORT &=~RW;
- 182               		.loc 1 53 0
+  51:lcd.c         **** LCD_PORT &=~RW;
+ 182               		.loc 1 51 0
  183 00a0 D998      		cbi 0x1b,1
-  54:lcd.c         **** LCD_PORT |= 0x30;
- 184               		.loc 1 54 0
+  52:lcd.c         **** LCD_PORT |= 0x30;
+ 184               		.loc 1 52 0
  185 00a2 8BB3      		in r24,0x1b
  186 00a4 8063      		ori r24,lo8(48)
  187 00a6 8BBB      		out 0x1b,r24
@@ -409,12 +407,12 @@
  197 00b2 0000      		nop
  198               	.LBE37:
  199               	.LBE36:
-  55:lcd.c         **** _delay_ms(40);
-  56:lcd.c         **** LCD_PORT  |=EN;
- 200               		.loc 1 56 0
+  53:lcd.c         **** _delay_ms(40);
+  54:lcd.c         **** LCD_PORT  |=EN;
+ 200               		.loc 1 54 0
  201 00b4 DA9A      		sbi 0x1b,2
-  57:lcd.c         **** LCD_PORT  &=~EN;
- 202               		.loc 1 57 0
+  55:lcd.c         **** LCD_PORT  &=~EN;
+ 202               		.loc 1 55 0
  203 00b6 DA98      		cbi 0x1b,2
  204               	.LVL9:
  205               	.LBB38:
@@ -428,12 +426,12 @@
  213 00c2 0000      		nop
  214               	.LBE39:
  215               	.LBE38:
-  58:lcd.c         **** _delay_ms(5);
-  59:lcd.c         **** LCD_PORT  |=EN;
- 216               		.loc 1 59 0
+  56:lcd.c         **** _delay_ms(5);
+  57:lcd.c         **** LCD_PORT  |=EN;
+ 216               		.loc 1 57 0
  217 00c4 DA9A      		sbi 0x1b,2
-  60:lcd.c         **** LCD_PORT  &=~EN;
- 218               		.loc 1 60 0
+  58:lcd.c         **** LCD_PORT  &=~EN;
+ 218               		.loc 1 58 0
  219 00c6 DA98      		cbi 0x1b,2
  220               	.LVL10:
  221               	.LBB40:
@@ -447,12 +445,12 @@
  229 00d2 0000      		nop
  230               	.LBE41:
  231               	.LBE40:
-  61:lcd.c         **** _delay_ms(5);
-  62:lcd.c         **** LCD_PORT  |=EN;
- 232               		.loc 1 62 0
+  59:lcd.c         **** _delay_ms(5);
+  60:lcd.c         **** LCD_PORT  |=EN;
+ 232               		.loc 1 60 0
  233 00d4 DA9A      		sbi 0x1b,2
-  63:lcd.c         **** LCD_PORT  &=~EN;
- 234               		.loc 1 63 0
+  61:lcd.c         **** LCD_PORT  &=~EN;
+ 234               		.loc 1 61 0
  235 00d6 DA98      		cbi 0x1b,2
  236               	.LVL11:
  237               	.LBB42:
@@ -466,21 +464,21 @@
  245 00e2 0000      		nop
  246               	.LBE43:
  247               	.LBE42:
-  64:lcd.c         **** _delay_ms(2);
-  65:lcd.c         **** 
-  66:lcd.c         **** LCD_PORT &= 0x20;
- 248               		.loc 1 66 0
+  62:lcd.c         **** _delay_ms(2);
+  63:lcd.c         **** 
+  64:lcd.c         **** LCD_PORT &= 0x20;
+ 248               		.loc 1 64 0
  249 00e4 8BB3      		in r24,0x1b
  250 00e6 8072      		andi r24,lo8(32)
  251 00e8 8BBB      		out 0x1b,r24
-  67:lcd.c         **** LCD_PORT  |=EN;
- 252               		.loc 1 67 0
+  65:lcd.c         **** LCD_PORT  |=EN;
+ 252               		.loc 1 65 0
  253 00ea DA9A      		sbi 0x1b,2
-  68:lcd.c         **** LCD_PORT  &=~EN;
- 254               		.loc 1 68 0
+  66:lcd.c         **** LCD_PORT  &=~EN;
+ 254               		.loc 1 66 0
  255 00ec DA98      		cbi 0x1b,2
-  69:lcd.c         **** lcdcmd(0x28);   //set data length 4 bit 2 line
- 256               		.loc 1 69 0
+  67:lcd.c         **** lcdcmd(0x28);   //set data length 4 bit 2 line
+ 256               		.loc 1 67 0
  257 00ee 88E2      		ldi r24,lo8(40)
  258 00f0 0E94 0000 		call lcdcmd
  259               	.LVL12:
@@ -495,9 +493,9 @@
  268 00fe 0000      		nop
  269               	.LBE45:
  270               	.LBE44:
-  70:lcd.c         **** _delay_ms(50);
-  71:lcd.c         **** lcdcmd(0x0E);   // set display on cursor on blink on
- 271               		.loc 1 71 0
+  68:lcd.c         **** _delay_ms(50);
+  69:lcd.c         **** lcdcmd(0x0E);   // set display on cursor on blink on
+ 271               		.loc 1 69 0
  272 0100 8EE0      		ldi r24,lo8(14)
  273 0102 0E94 0000 		call lcdcmd
  274               	.LVL13:
@@ -512,9 +510,9 @@
  283 0110 0000      		nop
  284               	.LBE47:
  285               	.LBE46:
-  72:lcd.c         **** _delay_ms(50);
-  73:lcd.c         **** lcdcmd(0x01); // clear lcd
- 286               		.loc 1 73 0
+  70:lcd.c         **** _delay_ms(50);
+  71:lcd.c         **** lcdcmd(0x01); // clear lcd
+ 286               		.loc 1 71 0
  287 0112 81E0      		ldi r24,lo8(1)
  288 0114 0E94 0000 		call lcdcmd
  289               	.LVL14:
@@ -529,9 +527,9 @@
  298 0122 0000      		nop
  299               	.LBE49:
  300               	.LBE48:
-  74:lcd.c         **** _delay_ms(50);
-  75:lcd.c         **** lcdcmd(0x06);  // cursor shift direction
- 301               		.loc 1 75 0
+  72:lcd.c         **** _delay_ms(50);
+  73:lcd.c         **** lcdcmd(0x06);  // cursor shift direction
+ 301               		.loc 1 73 0
  302 0124 86E0      		ldi r24,lo8(6)
  303 0126 0E94 0000 		call lcdcmd
  304               	.LVL15:
@@ -546,9 +544,9 @@
  313 0134 0000      		nop
  314               	.LBE51:
  315               	.LBE50:
-  76:lcd.c         **** _delay_ms(50);
-  77:lcd.c         **** lcdcmd(0x80);  //set ram address
- 316               		.loc 1 77 0
+  74:lcd.c         **** _delay_ms(50);
+  75:lcd.c         **** lcdcmd(0x80);  //set ram address
+ 316               		.loc 1 75 0
  317 0136 80E8      		ldi r24,lo8(-128)
  318 0138 0E94 0000 		call lcdcmd
  319               	.LVL16:
@@ -569,14 +567,14 @@
  335               	.global	prints
  337               	prints:
  338               	.LFB9:
-  78:lcd.c         **** _delay_ms(50);
-  79:lcd.c         **** }
+  76:lcd.c         **** _delay_ms(50);
+  77:lcd.c         **** }
+  78:lcd.c         **** 
+  79:lcd.c         **** 
   80:lcd.c         **** 
-  81:lcd.c         **** 
-  82:lcd.c         **** 
-  83:lcd.c         **** void prints(const char *s)
-  84:lcd.c         ****   {
- 339               		.loc 1 84 0
+  81:lcd.c         **** void prints(const char *s)
+  82:lcd.c         ****   {
+ 339               		.loc 1 82 0
  340               		.cfi_startproc
  341               	.LVL17:
  342 014a CF93      		push r28
@@ -594,26 +592,26 @@
  354 014e EC01      		movw r28,r24
  355               	.LVL18:
  356               	.L5:
-  85:lcd.c         **** 
-  86:lcd.c         ****     while (*s)
- 357               		.loc 1 86 0
+  83:lcd.c         **** 
+  84:lcd.c         ****     while (*s)
+ 357               		.loc 1 84 0
  358 0150 8991      		ld r24,Y+
  359               	.LVL19:
  360 0152 8823      		tst r24
  361 0154 01F0      		breq .L8
-  87:lcd.c         ****       {
-  88:lcd.c         **** 	 lcdData(*s);
- 362               		.loc 1 88 0
+  85:lcd.c         ****       {
+  86:lcd.c         **** 	 lcdData(*s);
+ 362               		.loc 1 86 0
  363 0156 0E94 0000 		call lcdData
  364               	.LVL20:
  365 015a 00C0      		rjmp .L5
  366               	.LVL21:
  367               	.L8:
  368               	/* epilogue start */
-  89:lcd.c         **** 	 s++;
-  90:lcd.c         ****       }
-  91:lcd.c         ****   }
- 369               		.loc 1 91 0
+  87:lcd.c         **** 	 s++;
+  88:lcd.c         ****       }
+  89:lcd.c         ****   }
+ 369               		.loc 1 89 0
  370 015c DF91      		pop r29
  371 015e CF91      		pop r28
  372               	.LVL22:
@@ -623,250 +621,312 @@
  377               	.global	gotoXy
  379               	gotoXy:
  380               	.LFB10:
-  92:lcd.c         **** 
-  93:lcd.c         **** void gotoXy(unsigned char  x,unsigned char y)
-  94:lcd.c         **** {
- 381               		.loc 1 94 0
+  90:lcd.c         **** 
+  91:lcd.c         **** void gotoXy(unsigned char  x,unsigned char y)
+  92:lcd.c         **** {
+ 381               		.loc 1 92 0
  382               		.cfi_startproc
  383               	.LVL23:
  384               	/* prologue: function */
  385               	/* frame size = 0 */
  386               	/* stack size = 0 */
  387               	.L__stack_usage = 0
-  95:lcd.c         ****  if(x<40)
- 388               		.loc 1 95 0
+  93:lcd.c         ****  if(x<40)
+ 388               		.loc 1 93 0
  389 0162 8832      		cpi r24,lo8(40)
  390 0164 00F4      		brsh .L9
- 391               	.LVL24:
- 392               	.LBB56:
- 393               	.LBB57:
-  96:lcd.c         ****  {
-  97:lcd.c         ****   if(y) x |= 0x40;
- 394               		.loc 1 97 0
- 395 0166 6111      		cpse r22,__zero_reg__
- 396 0168 8064      		ori r24,lo8(64)
- 397               	.LVL25:
- 398               	.L11:
-  98:lcd.c         ****   x |=0x80;
-  99:lcd.c         ****   lcdcmd(x);
- 399               		.loc 1 99 0
- 400 016a 8068      		ori r24,lo8(-128)
+  94:lcd.c         ****  {
+  95:lcd.c         ****   if(y) x |= 0x40;
+ 391               		.loc 1 95 0
+ 392 0166 6111      		cpse r22,__zero_reg__
+ 393               		.loc 1 95 0 is_stmt 0 discriminator 1
+ 394 0168 8064      		ori r24,lo8(64)
+ 395               	.LVL24:
+ 396               	.L11:
+  96:lcd.c         ****   x |=0x80;
+  97:lcd.c         ****   lcdcmd(x);
+ 397               		.loc 1 97 0 is_stmt 1
+ 398 016a 8068      		ori r24,lo8(-128)
+ 399               	.LVL25:
+ 400 016c 0C94 0000 		jmp lcdcmd
  401               	.LVL26:
- 402 016c 0C94 0000 		jmp lcdcmd
- 403               	.LVL27:
- 404               	.L9:
- 405 0170 0895      		ret
- 406               	.LBE57:
- 407               	.LBE56:
- 408               		.cfi_endproc
- 409               	.LFE10:
- 411               	.global	integerToLcd
- 413               	integerToLcd:
- 414               	.LFB11:
- 100:lcd.c         ****   }
- 101:lcd.c         **** 
- 102:lcd.c         **** }
- 103:lcd.c         **** void integerToLcd(int integer )
- 104:lcd.c         **** {
- 415               		.loc 1 104 0
- 416               		.cfi_startproc
- 417               	.LVL28:
- 418 0172 EF92      		push r14
- 419               	.LCFI2:
- 420               		.cfi_def_cfa_offset 3
- 421               		.cfi_offset 14, -2
- 422 0174 FF92      		push r15
- 423               	.LCFI3:
- 424               		.cfi_def_cfa_offset 4
- 425               		.cfi_offset 15, -3
- 426 0176 0F93      		push r16
- 427               	.LCFI4:
- 428               		.cfi_def_cfa_offset 5
- 429               		.cfi_offset 16, -4
- 430 0178 1F93      		push r17
- 431               	.LCFI5:
- 432               		.cfi_def_cfa_offset 6
- 433               		.cfi_offset 17, -5
- 434 017a CF93      		push r28
- 435               	.LCFI6:
- 436               		.cfi_def_cfa_offset 7
- 437               		.cfi_offset 28, -6
- 438 017c DF93      		push r29
- 439               	.LCFI7:
- 440               		.cfi_def_cfa_offset 8
- 441               		.cfi_offset 29, -7
- 442 017e 1F92      		push __zero_reg__
- 443               	.LCFI8:
- 444               		.cfi_def_cfa_offset 9
- 445 0180 CDB7      		in r28,__SP_L__
- 446 0182 DEB7      		in r29,__SP_H__
- 447               	.LCFI9:
- 448               		.cfi_def_cfa_register 28
- 449               	/* prologue: function */
- 450               	/* frame size = 1 */
- 451               	/* stack size = 7 */
- 452               	.L__stack_usage = 7
- 453 0184 7C01      		movw r14,r24
- 105:lcd.c         **** 
- 106:lcd.c         **** unsigned char thousands,hundreds,tens,ones;
- 107:lcd.c         **** thousands = integer / 1000;
- 454               		.loc 1 107 0
- 455 0186 68EE      		ldi r22,lo8(-24)
- 456 0188 73E0      		ldi r23,lo8(3)
- 457 018a 0E94 0000 		call __divmodhi4
- 458               	.LVL29:
- 108:lcd.c         **** 
- 109:lcd.c         ****     lcdData(thousands + 0x30);
- 459               		.loc 1 109 0
- 460 018e 80E3      		ldi r24,lo8(48)
- 461 0190 860F      		add r24,r22
- 462 0192 6983      		std Y+1,r22
- 463 0194 0E94 0000 		call lcdData
+ 402               	.L9:
+ 403 0170 0895      		ret
+ 404               		.cfi_endproc
+ 405               	.LFE10:
+ 407               	.global	integerToLcd
+ 409               	integerToLcd:
+ 410               	.LFB11:
+  98:lcd.c         ****   }
+  99:lcd.c         **** 
+ 100:lcd.c         **** }
+ 101:lcd.c         **** void integerToLcd(int integer )
+ 102:lcd.c         **** {
+ 411               		.loc 1 102 0
+ 412               		.cfi_startproc
+ 413               	.LVL27:
+ 414 0172 EF92      		push r14
+ 415               	.LCFI2:
+ 416               		.cfi_def_cfa_offset 3
+ 417               		.cfi_offset 14, -2
+ 418 0174 FF92      		push r15
+ 419               	.LCFI3:
+ 420               		.cfi_def_cfa_offset 4
+ 421               		.cfi_offset 15, -3
+ 422 0176 0F93      		push r16
+ 423               	.LCFI4:
+ 424               		.cfi_def_cfa_offset 5
+ 425               		.cfi_offset 16, -4
+ 426 0178 1F93      		push r17
+ 427               	.LCFI5:
+ 428               		.cfi_def_cfa_offset 6
+ 429               		.cfi_offset 17, -5
+ 430 017a CF93      		push r28
+ 431               	.LCFI6:
+ 432               		.cfi_def_cfa_offset 7
+ 433               		.cfi_offset 28, -6
+ 434 017c DF93      		push r29
+ 435               	.LCFI7:
+ 436               		.cfi_def_cfa_offset 8
+ 437               		.cfi_offset 29, -7
+ 438 017e 1F92      		push __zero_reg__
+ 439               	.LCFI8:
+ 440               		.cfi_def_cfa_offset 9
+ 441 0180 CDB7      		in r28,__SP_L__
+ 442 0182 DEB7      		in r29,__SP_H__
+ 443               	.LCFI9:
+ 444               		.cfi_def_cfa_register 28
+ 445               	/* prologue: function */
+ 446               	/* frame size = 1 */
+ 447               	/* stack size = 7 */
+ 448               	.L__stack_usage = 7
+ 449 0184 7C01      		movw r14,r24
+ 103:lcd.c         **** 
+ 104:lcd.c         **** unsigned char thousands,hundreds,tens,ones;
+ 105:lcd.c         **** if(integer >=0) //wyswietlanie dodatnich liczb 
+ 450               		.loc 1 105 0
+ 451 0186 97FD      		sbrc r25,7
+ 452 0188 00C0      		rjmp .L16
+ 106:lcd.c         **** {
+ 107:lcd.c         ****   //wyswietlenie znaku
+ 108:lcd.c         ****   lcdData(0x2B); //+
+ 453               		.loc 1 108 0
+ 454 018a 8BE2      		ldi r24,lo8(43)
+ 455               	.LVL28:
+ 456 018c 0E94 0000 		call lcdData
+ 457               	.LVL29:
+ 109:lcd.c         ****   //wyswietlenie liczby
+ 110:lcd.c         ****   thousands = integer / 1000;
+ 458               		.loc 1 110 0
+ 459 0190 C701      		movw r24,r14
+ 460 0192 68EE      		ldi r22,lo8(-24)
+ 461 0194 73E0      		ldi r23,lo8(3)
+ 462 0196 0E94 0000 		call __divmodhi4
+ 463 019a 8B01      		movw r16,r22
  464               	.LVL30:
- 110:lcd.c         **** 
- 111:lcd.c         **** 	 hundreds = ((integer - thousands*1000)-1) / 100;
- 465               		.loc 1 111 0
- 466 0198 88E1      		ldi r24,lo8(24)
- 467 019a 9CEF      		ldi r25,lo8(-4)
- 468 019c 6981      		ldd r22,Y+1
- 469 019e 689F      		mul r22,r24
- 470 01a0 9001      		movw r18,r0
- 471 01a2 699F      		mul r22,r25
- 472 01a4 300D      		add r19,r0
- 473 01a6 1124      		clr __zero_reg__
- 474 01a8 2E0D      		add r18,r14
- 475 01aa 3F1D      		adc r19,r15
- 476 01ac C901      		movw r24,r18
- 477 01ae 0197      		sbiw r24,1
- 478 01b0 04E6      		ldi r16,lo8(100)
- 479 01b2 10E0      		ldi r17,0
- 480 01b4 B801      		movw r22,r16
- 481 01b6 0E94 0000 		call __divmodhi4
- 112:lcd.c         **** 
- 113:lcd.c         **** 	lcdData( hundreds + 0x30);
- 482               		.loc 1 113 0
- 483 01ba 80E3      		ldi r24,lo8(48)
- 484 01bc 860F      		add r24,r22
- 485 01be 0E94 0000 		call lcdData
- 486               	.LVL31:
- 114:lcd.c         **** tens=(integer%100)/10;
- 487               		.loc 1 114 0
- 488 01c2 C701      		movw r24,r14
- 489 01c4 B801      		movw r22,r16
- 490 01c6 0E94 0000 		call __divmodhi4
- 491 01ca 0AE0      		ldi r16,lo8(10)
- 492 01cc 10E0      		ldi r17,0
- 493 01ce B801      		movw r22,r16
- 494 01d0 0E94 0000 		call __divmodhi4
+ 111:lcd.c         **** 
+ 112:lcd.c         ****     lcdData(thousands + 0x30);
+ 465               		.loc 1 112 0
+ 466 019c 80E3      		ldi r24,lo8(48)
+ 467 019e 860F      		add r24,r22
+ 468 01a0 0E94 0000 		call lcdData
+ 469               	.LVL31:
+ 113:lcd.c         **** 
+ 114:lcd.c         ****    hundreds = ((integer - thousands*1000)-1) / 100;
+ 470               		.loc 1 114 0
+ 471 01a4 28E1      		ldi r18,lo8(24)
+ 472 01a6 3CEF      		ldi r19,lo8(-4)
+ 473 01a8 029F      		mul r16,r18
+ 474 01aa C001      		movw r24,r0
+ 475 01ac 039F      		mul r16,r19
+ 476 01ae 900D      		add r25,r0
+ 477 01b0 129F      		mul r17,r18
+ 478 01b2 900D      		add r25,r0
+ 479 01b4 1124      		clr r1
+ 480               	.LVL32:
+ 481 01b6 8E0D      		add r24,r14
+ 482 01b8 9F1D      		adc r25,r15
+ 483               	.LVL33:
+ 484 01ba 0197      		sbiw r24,1
+ 485 01bc 04E6      		ldi r16,lo8(100)
+ 486 01be 10E0      		ldi r17,0
+ 487               	.LVL34:
+ 488 01c0 B801      		movw r22,r16
+ 489 01c2 0E94 0000 		call __divmodhi4
  115:lcd.c         **** 
- 116:lcd.c         **** 	lcdData( tens + 0x30);
- 495               		.loc 1 116 0
- 496 01d4 80E3      		ldi r24,lo8(48)
- 497 01d6 860F      		add r24,r22
- 498 01d8 0E94 0000 		call lcdData
- 499               	.LVL32:
- 117:lcd.c         **** 	ones=integer%10;
- 500               		.loc 1 117 0
- 501 01dc C701      		movw r24,r14
- 502 01de B801      		movw r22,r16
- 503 01e0 0E94 0000 		call __divmodhi4
+ 116:lcd.c         ****   lcdData( hundreds + 0x30);
+ 490               		.loc 1 116 0
+ 491 01c6 80E3      		ldi r24,lo8(48)
+ 492 01c8 860F      		add r24,r22
+ 493 01ca 0E94 0000 		call lcdData
+ 494               	.LVL35:
+ 117:lcd.c         **** tens=(integer%100)/10;
+ 495               		.loc 1 117 0
+ 496 01ce C701      		movw r24,r14
+ 497 01d0 B801      		movw r22,r16
+ 498 01d2 0E94 0000 		call __divmodhi4
+ 499 01d6 0AE0      		ldi r16,lo8(10)
+ 500 01d8 10E0      		ldi r17,0
+ 501 01da B801      		movw r22,r16
+ 502 01dc 0E94 0000 		call __divmodhi4
  118:lcd.c         **** 
- 119:lcd.c         **** 	lcdData( ones + 0x30);
- 504               		.loc 1 119 0
- 505 01e4 805D      		subi r24,lo8(-(48))
- 506               	/* epilogue start */
- 120:lcd.c         **** }
- 507               		.loc 1 120 0
- 508 01e6 0F90      		pop __tmp_reg__
- 509 01e8 DF91      		pop r29
- 510 01ea CF91      		pop r28
- 511 01ec 1F91      		pop r17
- 512 01ee 0F91      		pop r16
- 513 01f0 FF90      		pop r15
- 514 01f2 EF90      		pop r14
- 515               	.LVL33:
- 119:lcd.c         **** }
- 516               		.loc 1 119 0
- 517 01f4 0C94 0000 		jmp lcdData
- 518               	.LVL34:
- 519               		.cfi_endproc
- 520               	.LFE11:
- 522               		.section	.rodata.str1.1,"aMS",@progbits,1
- 523               	.LC0:
- 524 0000 2020 2020 		.string	"                "
- 524      2020 2020 
- 524      2020 2020 
- 524      2020 2020 
- 524      00
- 525               		.text
- 526               	.global	lcd_clr
- 528               	lcd_clr:
- 529               	.LFB12:
+ 119:lcd.c         ****   lcdData( tens + 0x30);
+ 503               		.loc 1 119 0
+ 504 01e0 80E3      		ldi r24,lo8(48)
+ 505 01e2 860F      		add r24,r22
+ 506 01e4 0E94 0000 		call lcdData
+ 507               	.LVL36:
+ 120:lcd.c         ****   ones=integer%10;
+ 508               		.loc 1 120 0
+ 509 01e8 C701      		movw r24,r14
+ 510 01ea B801      		movw r22,r16
+ 511 01ec 00C0      		rjmp .L17
+ 512               	.LVL37:
+ 513               	.L16:
  121:lcd.c         **** 
- 122:lcd.c         **** void lcd_clr(void)
- 123:lcd.c         **** {
- 530               		.loc 1 123 0
- 531               		.cfi_startproc
- 532               	/* prologue: function */
- 533               	/* frame size = 0 */
- 534               	/* stack size = 0 */
- 535               	.L__stack_usage = 0
- 536               	.LVL35:
- 537               	.LBB66:
- 538               	.LBB67:
- 539               	.LBB68:
-  99:lcd.c         ****   }
- 540               		.loc 1 99 0
- 541 01f8 80E8      		ldi r24,lo8(-128)
- 542 01fa 0E94 0000 		call lcdcmd
- 543               	.LVL36:
- 544               	.LBE68:
- 545               	.LBE67:
- 546               	.LBE66:
- 124:lcd.c         ****   gotoXy(0,0);
- 125:lcd.c         ****   prints("                ");
- 547               		.loc 1 125 0
- 548 01fe 80E0      		ldi r24,lo8(.LC0)
- 549 0200 90E0      		ldi r25,hi8(.LC0)
- 550 0202 0E94 0000 		call prints
- 551               	.LVL37:
- 552               	.LBB69:
- 553               	.LBB70:
- 554               	.LBB71:
-  99:lcd.c         ****   }
- 555               		.loc 1 99 0
- 556 0206 80EC      		ldi r24,lo8(-64)
- 557 0208 0E94 0000 		call lcdcmd
- 558               	.LVL38:
- 559               	.LBE71:
- 560               	.LBE70:
- 561               	.LBE69:
- 126:lcd.c         ****   gotoXy(0,1);
- 127:lcd.c         ****   prints("                ");
- 562               		.loc 1 127 0
- 563 020c 80E0      		ldi r24,lo8(.LC0)
- 564 020e 90E0      		ldi r25,hi8(.LC0)
- 565 0210 0C94 0000 		jmp prints
- 566               	.LVL39:
- 567               		.cfi_endproc
- 568               	.LFE12:
- 570               	.Letext0:
- 571               		.file 3 "/usr/lib/avr/include/stdint.h"
+ 122:lcd.c         ****   lcdData( ones + 0x30);
+ 123:lcd.c         **** }
+ 124:lcd.c         **** 
+ 125:lcd.c         **** else //wyswietlanie ujemnych liczb
+ 126:lcd.c         **** {
+ 127:lcd.c         ****   //wyswietlenie znaku
+ 128:lcd.c         ****   lcdData(0x2D); //-
+ 514               		.loc 1 128 0
+ 515 01ee 8DE2      		ldi r24,lo8(45)
+ 516 01f0 0E94 0000 		call lcdData
+ 517               	.LVL38:
+ 129:lcd.c         ****   //wyswietlenie liczby
+ 130:lcd.c         ****   integer = integer*(-1);
+ 518               		.loc 1 130 0
+ 519 01f4 0027      		clr r16
+ 520 01f6 1127      		clr r17
+ 521 01f8 0E19      		sub r16,r14
+ 522 01fa 1F09      		sbc r17,r15
+ 523               	.LVL39:
+ 131:lcd.c         ****   thousands = integer / 1000;
+ 524               		.loc 1 131 0
+ 525 01fc C801      		movw r24,r16
+ 526 01fe 68EE      		ldi r22,lo8(-24)
+ 527 0200 73E0      		ldi r23,lo8(3)
+ 528 0202 0E94 0000 		call __divmodhi4
+ 529               	.LVL40:
+ 132:lcd.c         **** 
+ 133:lcd.c         ****       lcdData(thousands + 0x30);
+ 530               		.loc 1 133 0
+ 531 0206 80E3      		ldi r24,lo8(48)
+ 532 0208 860F      		add r24,r22
+ 533 020a 6983      		std Y+1,r22
+ 534 020c 0E94 0000 		call lcdData
+ 535               	.LVL41:
+ 134:lcd.c         **** 
+ 135:lcd.c         ****      hundreds = ((integer - thousands*1000)-1) / 100;
+ 536               		.loc 1 135 0
+ 537 0210 88E1      		ldi r24,lo8(24)
+ 538 0212 9CEF      		ldi r25,lo8(-4)
+ 539 0214 6981      		ldd r22,Y+1
+ 540 0216 689F      		mul r22,r24
+ 541 0218 9001      		movw r18,r0
+ 542 021a 699F      		mul r22,r25
+ 543 021c 300D      		add r19,r0
+ 544 021e 1124      		clr __zero_reg__
+ 545 0220 2E19      		sub r18,r14
+ 546 0222 3F09      		sbc r19,r15
+ 547 0224 C901      		movw r24,r18
+ 548 0226 0197      		sbiw r24,1
+ 549 0228 24E6      		ldi r18,lo8(100)
+ 550 022a E22E      		mov r14,r18
+ 551 022c F12C      		mov r15,__zero_reg__
+ 552 022e B701      		movw r22,r14
+ 553 0230 0E94 0000 		call __divmodhi4
+ 136:lcd.c         **** 
+ 137:lcd.c         ****     lcdData( hundreds + 0x30);
+ 554               		.loc 1 137 0
+ 555 0234 80E3      		ldi r24,lo8(48)
+ 556 0236 860F      		add r24,r22
+ 557 0238 0E94 0000 		call lcdData
+ 558               	.LVL42:
+ 138:lcd.c         ****   tens=(integer%100)/10;
+ 559               		.loc 1 138 0
+ 560 023c C801      		movw r24,r16
+ 561 023e B701      		movw r22,r14
+ 562 0240 0E94 0000 		call __divmodhi4
+ 563 0244 3AE0      		ldi r19,lo8(10)
+ 564 0246 E32E      		mov r14,r19
+ 565 0248 F12C      		mov r15,__zero_reg__
+ 566 024a B701      		movw r22,r14
+ 567 024c 0E94 0000 		call __divmodhi4
+ 139:lcd.c         **** 
+ 140:lcd.c         ****     lcdData( tens + 0x30);
+ 568               		.loc 1 140 0
+ 569 0250 80E3      		ldi r24,lo8(48)
+ 570 0252 860F      		add r24,r22
+ 571 0254 0E94 0000 		call lcdData
+ 572               	.LVL43:
+ 141:lcd.c         ****     ones=integer%10;
+ 573               		.loc 1 141 0
+ 574 0258 C801      		movw r24,r16
+ 575 025a B701      		movw r22,r14
+ 576               	.LVL44:
+ 577               	.L17:
+ 578 025c 0E94 0000 		call __divmodhi4
+ 579               	.LVL45:
+ 142:lcd.c         **** 
+ 143:lcd.c         ****     lcdData( ones + 0x30);
+ 580               		.loc 1 143 0
+ 581 0260 805D      		subi r24,lo8(-(48))
+ 582               	/* epilogue start */
+ 144:lcd.c         **** }
+ 145:lcd.c         **** 
+ 146:lcd.c         **** }
+ 583               		.loc 1 146 0
+ 584 0262 0F90      		pop __tmp_reg__
+ 585 0264 DF91      		pop r29
+ 586 0266 CF91      		pop r28
+ 587 0268 1F91      		pop r17
+ 588 026a 0F91      		pop r16
+ 589 026c FF90      		pop r15
+ 590 026e EF90      		pop r14
+ 143:lcd.c         **** }
+ 591               		.loc 1 143 0
+ 592 0270 0C94 0000 		jmp lcdData
+ 593               	.LVL46:
+ 594               		.cfi_endproc
+ 595               	.LFE11:
+ 597               	.global	lcd_clr
+ 599               	lcd_clr:
+ 600               	.LFB12:
+ 147:lcd.c         **** 
+ 148:lcd.c         **** void lcd_clr(void)
+ 149:lcd.c         **** {
+ 601               		.loc 1 149 0
+ 602               		.cfi_startproc
+ 603               	/* prologue: function */
+ 604               	/* frame size = 0 */
+ 605               	/* stack size = 0 */
+ 606               	.L__stack_usage = 0
+ 150:lcd.c         ****   lcdcmd(0x01); //czyszczenie wyswietlacza
+ 607               		.loc 1 150 0
+ 608 0274 81E0      		ldi r24,lo8(1)
+ 609 0276 0C94 0000 		jmp lcdcmd
+ 610               	.LVL47:
+ 611               		.cfi_endproc
+ 612               	.LFE12:
+ 614               	.Letext0:
+ 615               		.file 3 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lcd.c
-     /tmp/ccNtuoo3.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccNtuoo3.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccNtuoo3.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccNtuoo3.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccNtuoo3.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccNtuoo3.s:12     .text:0000000000000000 lcdcmd
-     /tmp/ccNtuoo3.s:92     .text:000000000000004e lcdData
-     /tmp/ccNtuoo3.s:170    .text:000000000000009c lcdInit
-     /tmp/ccNtuoo3.s:337    .text:000000000000014a prints
-     /tmp/ccNtuoo3.s:379    .text:0000000000000162 gotoXy
-     /tmp/ccNtuoo3.s:413    .text:0000000000000172 integerToLcd
-     /tmp/ccNtuoo3.s:528    .text:00000000000001f8 lcd_clr
+     /tmp/cc0DtGEE.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc0DtGEE.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc0DtGEE.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc0DtGEE.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc0DtGEE.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc0DtGEE.s:12     .text:0000000000000000 lcdcmd
+     /tmp/cc0DtGEE.s:92     .text:000000000000004e lcdData
+     /tmp/cc0DtGEE.s:170    .text:000000000000009c lcdInit
+     /tmp/cc0DtGEE.s:337    .text:000000000000014a prints
+     /tmp/cc0DtGEE.s:379    .text:0000000000000162 gotoXy
+     /tmp/cc0DtGEE.s:409    .text:0000000000000172 integerToLcd
+     /tmp/cc0DtGEE.s:599    .text:0000000000000274 lcd_clr
 
 UNDEFINED SYMBOLS
 __divmodhi4
-__do_copy_data
