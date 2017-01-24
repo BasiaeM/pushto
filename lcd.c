@@ -42,8 +42,6 @@ LCD_PORT  |=EN;
 _delay_ms(2);
 LCD_PORT  &=~EN;
 
-
-
 }
 
 void lcdInit(void)
@@ -104,25 +102,55 @@ void integerToLcd(int integer )
 {
 
 unsigned char thousands,hundreds,tens,ones;
-thousands = integer / 1000;
+if(integer >=0) //wyswietlanie dodatnich liczb 
+{
+  //wyswietlenie znaku
+  lcdData(0x2B); //+
+  //wyswietlenie liczby
+  thousands = integer / 1000;
 
     lcdData(thousands + 0x30);
 
-	 hundreds = ((integer - thousands*1000)-1) / 100;
+   hundreds = ((integer - thousands*1000)-1) / 100;
 
-	lcdData( hundreds + 0x30);
+  lcdData( hundreds + 0x30);
 tens=(integer%100)/10;
 
-	lcdData( tens + 0x30);
-	ones=integer%10;
+  lcdData( tens + 0x30);
+  ones=integer%10;
 
-	lcdData( ones + 0x30);
+  lcdData( ones + 0x30);
+}
+else //wyswietlanie ujemnych liczb
+{
+  //wyswietlenie znaku
+  lcdData(0x2D); //-
+  //wyswietlenie liczby
+  integer = integer*(-1);
+  thousands = integer / 1000;
+
+      lcdData(thousands + 0x30);
+
+     hundreds = ((integer - thousands*1000)-1) / 100;
+
+    lcdData( hundreds + 0x30);
+  tens=(integer%100)/10;
+
+    lcdData( tens + 0x30);
+    ones=integer%10;
+
+    lcdData( ones + 0x30);
+}
+
 }
 
 void lcd_clr(void)
 {
-  gotoXy(0,0);
-  prints("                ");
-  gotoXy(0,1);
-  prints("                ");
+  lcdcmd(0x01); //czyszczenie wyswietlacza
+  /*
+    gotoXy(0,0);
+    prints("                ");
+    gotoXy(0,1);
+    prints("                ");
+  */
 }
