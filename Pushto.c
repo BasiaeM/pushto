@@ -76,8 +76,6 @@ int main(void)
 {
 	system_init();
 	lcdInit();
-	char buf[20];
-	float a=10.1234;
 	//prints("PUSHTO");
 	while(1)
 	{
@@ -127,13 +125,6 @@ int main(void)
 			obliczenie_nastaw(&telescope_A); //funkcja na obliczenie nastaw, co 10sek (patrz ISR(TIMER1_COMPA_vect))
 		}
 
-		
-		//sprintf(buf,"%f",a);
-		//prints(buf);
-		//integerToLcd(telescope_A.obr_zad);
-		//gotoXy(0,1);
-		//sprintf(buf,"%f",telescope_A.obr_zad);
-		//integerToLcd(telescope_A.obr_zad);
 
 		if(keypad_A.i > 14)
 			keypad_A.i=0;

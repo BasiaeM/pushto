@@ -304,76 +304,74 @@
  235 0004 0E94 0000 		call lcdInit
  236               	.LVL1:
  237               	.L12:
-  79:Pushto.c      **** 	char buf[20];
-  80:Pushto.c      **** 	float a=10.1234;
-  81:Pushto.c      **** 	//prints("PUSHTO");
-  82:Pushto.c      **** 	while(1)
-  83:Pushto.c      **** 	{
-  84:Pushto.c      **** 
-  85:Pushto.c      **** 		
-  86:Pushto.c      **** 		/*gotoXy(0,0);
-  87:Pushto.c      **** 		prints("E1=");
-  88:Pushto.c      **** 		integerToLcd(encoder1.count);
-  89:Pushto.c      **** 		prints(" E2=");
-  90:Pushto.c      **** 		integerToLcd(encoder2.count);
-  91:Pushto.c      **** 		
-  92:Pushto.c      **** 		
-  93:Pushto.c      **** 		gotoXy(8,0);
-  94:Pushto.c      **** 		integerToLcd(zeg);
-  95:Pushto.c      **** 		gotoXy(0,1);
-  96:Pushto.c      **** 		integerToLcd(keypad(&keypad_A));
-  97:Pushto.c      **** 
-  98:Pushto.c      **** 		if (keypad_A.result==0b11100111)
-  99:Pushto.c      **** 			zeg=0x00;
- 100:Pushto.c      **** 	
- 101:Pushto.c      **** 
- 102:Pushto.c      **** 		if(keypad() == 1)
- 103:Pushto.c      **** 		{
- 104:Pushto.c      **** 			PORTC ^= (1 << 0); 
- 105:Pushto.c      **** 		}
- 106:Pushto.c      **** */
- 107:Pushto.c      **** 		keypad(&keypad_A); //odczyt klawiatury
- 238               		.loc 1 107 0
+  79:Pushto.c      **** 	//prints("PUSHTO");
+  80:Pushto.c      **** 	while(1)
+  81:Pushto.c      **** 	{
+  82:Pushto.c      **** 
+  83:Pushto.c      **** 		
+  84:Pushto.c      **** 		/*gotoXy(0,0);
+  85:Pushto.c      **** 		prints("E1=");
+  86:Pushto.c      **** 		integerToLcd(encoder1.count);
+  87:Pushto.c      **** 		prints(" E2=");
+  88:Pushto.c      **** 		integerToLcd(encoder2.count);
+  89:Pushto.c      **** 		
+  90:Pushto.c      **** 		
+  91:Pushto.c      **** 		gotoXy(8,0);
+  92:Pushto.c      **** 		integerToLcd(zeg);
+  93:Pushto.c      **** 		gotoXy(0,1);
+  94:Pushto.c      **** 		integerToLcd(keypad(&keypad_A));
+  95:Pushto.c      **** 
+  96:Pushto.c      **** 		if (keypad_A.result==0b11100111)
+  97:Pushto.c      **** 			zeg=0x00;
+  98:Pushto.c      **** 	
+  99:Pushto.c      **** 
+ 100:Pushto.c      **** 		if(keypad() == 1)
+ 101:Pushto.c      **** 		{
+ 102:Pushto.c      **** 			PORTC ^= (1 << 0); 
+ 103:Pushto.c      **** 		}
+ 104:Pushto.c      **** */
+ 105:Pushto.c      **** 		keypad(&keypad_A); //odczyt klawiatury
+ 238               		.loc 1 105 0
  239 0008 80E0      		ldi r24,lo8(keypad_A)
  240 000a 90E0      		ldi r25,hi8(keypad_A)
  241 000c 0E94 0000 		call keypad
  242               	.LVL2:
- 108:Pushto.c      **** 		keypad_proc(&keypad_A); //przetwarzanie znakow
- 243               		.loc 1 108 0
+ 106:Pushto.c      **** 		keypad_proc(&keypad_A); //przetwarzanie znakow
+ 243               		.loc 1 106 0
  244 0010 80E0      		ldi r24,lo8(keypad_A)
  245 0012 90E0      		ldi r25,hi8(keypad_A)
  246 0014 0E94 0000 		call keypad_proc
  247               	.LVL3:
- 109:Pushto.c      **** 
- 110:Pushto.c      **** 		if(keypad_A.flags & KB_NEW)
- 248               		.loc 1 110 0
+ 107:Pushto.c      **** 
+ 108:Pushto.c      **** 		if(keypad_A.flags & KB_NEW)
+ 248               		.loc 1 108 0
  249 0018 8091 0000 		lds r24,keypad_A+20
  250 001c 86FF      		sbrs r24,6
  251 001e 00C0      		rjmp .L8
- 111:Pushto.c      **** 		{
- 112:Pushto.c      **** 			nowy_cel(&keypad_A,&telescope_A);
- 252               		.loc 1 112 0
+ 109:Pushto.c      **** 		{
+ 110:Pushto.c      **** 			nowy_cel(&keypad_A,&telescope_A);
+ 252               		.loc 1 110 0
  253 0020 60E0      		ldi r22,lo8(telescope_A)
  254 0022 70E0      		ldi r23,hi8(telescope_A)
  255 0024 80E0      		ldi r24,lo8(keypad_A)
  256 0026 90E0      		ldi r25,hi8(keypad_A)
  257 0028 0E94 0000 		call nowy_cel
  258               	.LVL4:
- 113:Pushto.c      **** 			keypad_A.flags &= ~KB_NEW;
- 259               		.loc 1 113 0
+ 111:Pushto.c      **** 			keypad_A.flags &= ~KB_NEW;
+ 259               		.loc 1 111 0
  260 002c 8091 0000 		lds r24,keypad_A+20
  261 0030 8F7B      		andi r24,lo8(-65)
  262 0032 8093 0000 		sts keypad_A+20,r24
  263               	.L8:
- 114:Pushto.c      **** 		}
- 115:Pushto.c      **** 		if(keypad_A.flags & KB_CAL)
- 264               		.loc 1 115 0
+ 112:Pushto.c      **** 		}
+ 113:Pushto.c      **** 		if(keypad_A.flags & KB_CAL)
+ 264               		.loc 1 113 0
  265 0036 8091 0000 		lds r24,keypad_A+20
  266 003a 85FF      		sbrs r24,5
  267 003c 00C0      		rjmp .L9
- 116:Pushto.c      **** 		{
- 117:Pushto.c      **** 			kalibracja(&encoder1,&encoder2,&telescope_A); // funkcja z pushto_lib
- 268               		.loc 1 117 0
+ 114:Pushto.c      **** 		{
+ 115:Pushto.c      **** 			kalibracja(&encoder1,&encoder2,&telescope_A); // funkcja z pushto_lib
+ 268               		.loc 1 115 0
  269 003e 40E0      		ldi r20,lo8(telescope_A)
  270 0040 50E0      		ldi r21,hi8(telescope_A)
  271 0042 60E0      		ldi r22,lo8(encoder2)
@@ -382,63 +380,56 @@
  274 0048 90E0      		ldi r25,hi8(encoder1)
  275 004a 0E94 0000 		call kalibracja
  276               	.LVL5:
- 118:Pushto.c      **** 			keypad_A.flags &= ~KB_CAL;
- 277               		.loc 1 118 0
+ 116:Pushto.c      **** 			keypad_A.flags &= ~KB_CAL;
+ 277               		.loc 1 116 0
  278 004e 8091 0000 		lds r24,keypad_A+20
  279 0052 8F7D      		andi r24,lo8(-33)
  280 0054 8093 0000 		sts keypad_A+20,r24
  281               	.L9:
- 119:Pushto.c      **** 		}
- 120:Pushto.c      **** 		if(keypad_A.flags & KB_CLR)
- 282               		.loc 1 120 0
+ 117:Pushto.c      **** 		}
+ 118:Pushto.c      **** 		if(keypad_A.flags & KB_CLR)
+ 282               		.loc 1 118 0
  283 0058 8091 0000 		lds r24,keypad_A+20
  284 005c 84FF      		sbrs r24,4
  285 005e 00C0      		rjmp .L10
- 121:Pushto.c      **** 		{
- 122:Pushto.c      **** 			lcd_clr();
- 286               		.loc 1 122 0
+ 119:Pushto.c      **** 		{
+ 120:Pushto.c      **** 			lcd_clr();
+ 286               		.loc 1 120 0
  287 0060 0E94 0000 		call lcd_clr
  288               	.LVL6:
- 123:Pushto.c      **** 			keypad_A.flags &= ~KB_CLR;
- 289               		.loc 1 123 0
+ 121:Pushto.c      **** 			keypad_A.flags &= ~KB_CLR;
+ 289               		.loc 1 121 0
  290 0064 8091 0000 		lds r24,keypad_A+20
  291 0068 8F7E      		andi r24,lo8(-17)
  292 006a 8093 0000 		sts keypad_A+20,r24
  293               	.L10:
- 124:Pushto.c      **** 		}
- 125:Pushto.c      **** 		if(telescope_A.update)
- 294               		.loc 1 125 0
+ 122:Pushto.c      **** 		}
+ 123:Pushto.c      **** 		if(telescope_A.update)
+ 294               		.loc 1 123 0
  295 006e 8091 0000 		lds r24,telescope_A+2
  296 0072 9091 0000 		lds r25,telescope_A+2+1
  297 0076 892B      		or r24,r25
  298 0078 01F0      		breq .L11
- 126:Pushto.c      **** 		{
- 127:Pushto.c      **** 			obliczenie_nastaw(&telescope_A); //funkcja na obliczenie nastaw, co 10sek (patrz ISR(TIMER1_COMP
- 299               		.loc 1 127 0
+ 124:Pushto.c      **** 		{
+ 125:Pushto.c      **** 			obliczenie_nastaw(&telescope_A); //funkcja na obliczenie nastaw, co 10sek (patrz ISR(TIMER1_COMP
+ 299               		.loc 1 125 0
  300 007a 80E0      		ldi r24,lo8(telescope_A)
  301 007c 90E0      		ldi r25,hi8(telescope_A)
  302 007e 0E94 0000 		call obliczenie_nastaw
  303               	.LVL7:
  304               	.L11:
- 128:Pushto.c      **** 		}
- 129:Pushto.c      **** 
- 130:Pushto.c      **** 		
- 131:Pushto.c      **** 		//sprintf(buf,"%f",a);
- 132:Pushto.c      **** 		//prints(buf);
- 133:Pushto.c      **** 		//integerToLcd(telescope_A.obr_zad);
- 134:Pushto.c      **** 		//gotoXy(0,1);
- 135:Pushto.c      **** 		//sprintf(buf,"%f",telescope_A.obr_zad);
- 136:Pushto.c      **** 		//integerToLcd(telescope_A.obr_zad);
- 137:Pushto.c      **** 
- 138:Pushto.c      **** 		if(keypad_A.i > 14)
- 305               		.loc 1 138 0
+ 126:Pushto.c      **** 		}
+ 127:Pushto.c      **** 
+ 128:Pushto.c      **** 
+ 129:Pushto.c      **** 		if(keypad_A.i > 14)
+ 305               		.loc 1 129 0
  306 0082 8091 0000 		lds r24,keypad_A+18
  307 0086 9091 0000 		lds r25,keypad_A+18+1
  308 008a 0F97      		sbiw r24,15
  309 008c 04F4      		brge .+2
  310 008e 00C0      		rjmp .L12
- 139:Pushto.c      **** 			keypad_A.i=0;
- 311               		.loc 1 139 0
+ 130:Pushto.c      **** 			keypad_A.i=0;
+ 311               		.loc 1 130 0
  312 0090 1092 0000 		sts keypad_A+18+1,__zero_reg__
  313 0094 1092 0000 		sts keypad_A+18,__zero_reg__
  314 0098 00C0      		rjmp .L12
@@ -457,18 +448,18 @@
  328               		.file 6 "lcd.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Pushto.c
-     /tmp/ccOArmqT.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccOArmqT.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccOArmqT.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccOArmqT.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccOArmqT.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccOArmqT.s:12     .text:0000000000000000 system_init
+     /tmp/ccr86JZ8.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccr86JZ8.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccr86JZ8.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccr86JZ8.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccr86JZ8.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccr86JZ8.s:12     .text:0000000000000000 system_init
                             *COM*:0000000000000015 keypad_A
                             *COM*:0000000000000018 telescope_A
-     /tmp/ccOArmqT.s:76     .text:0000000000000044 __vector_6
-     /tmp/ccOArmqT.s:160    .text:000000000000009e __vector_1
-     /tmp/ccOArmqT.s:191    .text:00000000000000b2 __vector_2
-     /tmp/ccOArmqT.s:223    .text.startup:0000000000000000 main
+     /tmp/ccr86JZ8.s:76     .text:0000000000000044 __vector_6
+     /tmp/ccr86JZ8.s:160    .text:000000000000009e __vector_1
+     /tmp/ccr86JZ8.s:191    .text:00000000000000b2 __vector_2
+     /tmp/ccr86JZ8.s:223    .text.startup:0000000000000000 main
                             *COM*:0000000000000004 encoder2
                             *COM*:0000000000000004 encoder1
 

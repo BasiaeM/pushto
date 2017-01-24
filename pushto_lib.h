@@ -4,11 +4,14 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <math.h>
+#include <stdio.h>
 #include "keypad.h"
 #include "lcd.h"
 #include "encoder.h"
 
 #define PI 3.14159265
+#define ralk ((13.0*15.0)+48.0*(15.0/60.0)+32.0*(15.0/3600.0))*(PI/180.0) //rektascencja gwiazdy alkaid
+#define dalk (49.0+18.0/60)*(PI/180.0)	
 
 struct Telescope{
 	int time;
