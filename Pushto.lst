@@ -74,434 +74,411 @@
   39               		.loc 1 36 0
   40 001a 8183      		std Z+1,r24
   37:Pushto.c      **** 
-  38:Pushto.c      **** 	//############# Timer1 16bit config ####################
-  39:Pushto.c      **** 	TCCR1A |= 0;   // not required since WGM11:0, both are zero (0)
-  41               		.loc 1 39 0
-  42 001c 9FB5      		in r25,0x2f
-  43 001e 9FBD      		out 0x2f,r25
-  40:Pushto.c      ****  	TCCR1B |= (1 << WGM12)|(1 << CS11)|(1 << CS10);   // Mode = CTC, Prescaler = 64
-  44               		.loc 1 40 0
-  45 0020 9EB5      		in r25,0x2e
-  46 0022 9B60      		ori r25,lo8(11)
-  47 0024 9EBD      		out 0x2e,r25
-  41:Pushto.c      **** 	OCR1A = 31250;   // timer compare value 1Hz - 31250 
-  48               		.loc 1 41 0
-  49 0026 22E1      		ldi r18,lo8(18)
-  50 0028 3AE7      		ldi r19,lo8(122)
-  51 002a 3BBD      		out 0x2a+1,r19
-  52 002c 2ABD      		out 0x2a,r18
-  42:Pushto.c      **** 	TIMSK|=(1<<OCIE1A); //enable compare reg A interrupt
-  53               		.loc 1 42 0
-  54 002e 99B7      		in r25,0x39
-  55 0030 9061      		ori r25,lo8(16)
-  56 0032 99BF      		out 0x39,r25
-  43:Pushto.c      **** 	
-  44:Pushto.c      ****     	sei(); // enable global interrupts
-  57               		.loc 1 44 0
-  58               	/* #APP */
-  59               	 ;  44 "Pushto.c" 1
-  60 0034 7894      		sei
-  61               	 ;  0 "" 2
-  45:Pushto.c      **** 
-  46:Pushto.c      ****     	//dioda -test
-  47:Pushto.c      ****     	DDRC = 0xFF;
-  62               		.loc 1 47 0
-  63               	/* #NOAPP */
-  64 0036 84BB      		out 0x14,r24
-  48:Pushto.c      ****     	PORTC = 0xFF;
-  65               		.loc 1 48 0
-  66 0038 85BB      		out 0x15,r24
-  67 003a 0895      		ret
-  68               		.cfi_endproc
-  69               	.LFE7:
-  71               	.global	__vector_6
-  73               	__vector_6:
-  74               	.LFB8:
-  49:Pushto.c      ****     	/*  test
-  50:Pushto.c      ****     	char buf1[20];
-  51:Pushto.c      ****     	sscanf(buf1,"ala ma kota"); // dziala, moze byc uzywane
-  52:Pushto.c      ****     	*/
-  53:Pushto.c      **** }
-  54:Pushto.c      **** 
-  55:Pushto.c      **** ISR(TIMER1_COMPA_vect) //obsluga przerwania dla timera
-  56:Pushto.c      **** {
-  75               		.loc 1 56 0
-  76               		.cfi_startproc
-  77 003c 1F92      		push r1
-  78               	.LCFI0:
-  79               		.cfi_def_cfa_offset 3
-  80               		.cfi_offset 1, -2
-  81 003e 0F92      		push r0
-  82               	.LCFI1:
-  83               		.cfi_def_cfa_offset 4
-  84               		.cfi_offset 0, -3
-  85 0040 0FB6      		in r0,__SREG__
-  86 0042 0F92      		push r0
-  87 0044 1124      		clr __zero_reg__
-  88 0046 8F93      		push r24
-  89               	.LCFI2:
-  90               		.cfi_def_cfa_offset 5
-  91               		.cfi_offset 24, -4
-  92 0048 9F93      		push r25
-  93               	.LCFI3:
-  94               		.cfi_def_cfa_offset 6
-  95               		.cfi_offset 25, -5
-  96 004a EF93      		push r30
-  97               	.LCFI4:
-  98               		.cfi_def_cfa_offset 7
-  99               		.cfi_offset 30, -6
- 100 004c FF93      		push r31
- 101               	.LCFI5:
- 102               		.cfi_def_cfa_offset 8
- 103               		.cfi_offset 31, -7
- 104               	/* prologue: Signal */
- 105               	/* frame size = 0 */
- 106               	/* stack size = 7 */
- 107               	.L__stack_usage = 7
-  57:Pushto.c      **** 	telescope_A.time++; //czas od kalibracji w sekundachs
- 108               		.loc 1 57 0
- 109 004e E0E0      		ldi r30,lo8(telescope_A)
- 110 0050 F0E0      		ldi r31,hi8(telescope_A)
- 111 0052 8081      		ld r24,Z
- 112 0054 9181      		ldd r25,Z+1
- 113 0056 0196      		adiw r24,1
- 114 0058 9183      		std Z+1,r25
- 115 005a 8083      		st Z,r24
- 116               	/* epilogue start */
-  58:Pushto.c      **** }
- 117               		.loc 1 58 0
- 118 005c FF91      		pop r31
- 119 005e EF91      		pop r30
- 120 0060 9F91      		pop r25
- 121 0062 8F91      		pop r24
- 122 0064 0F90      		pop r0
- 123 0066 0FBE      		out __SREG__,r0
- 124 0068 0F90      		pop r0
- 125 006a 1F90      		pop r1
- 126 006c 1895      		reti
- 127               		.cfi_endproc
- 128               	.LFE8:
- 130               	.global	__vector_1
- 132               	__vector_1:
- 133               	.LFB9:
-  59:Pushto.c      **** 
-  60:Pushto.c      **** ISR(INT0_vect) //przerwanie dla INT0 dla encodera1
-  61:Pushto.c      **** {
- 134               		.loc 1 61 0
- 135               		.cfi_startproc
- 136 006e 1F92      		push r1
- 137               	.LCFI6:
- 138               		.cfi_def_cfa_offset 3
- 139               		.cfi_offset 1, -2
- 140 0070 0F92      		push r0
- 141               	.LCFI7:
- 142               		.cfi_def_cfa_offset 4
- 143               		.cfi_offset 0, -3
- 144 0072 0FB6      		in r0,__SREG__
- 145 0074 0F92      		push r0
- 146 0076 1124      		clr __zero_reg__
- 147               	/* prologue: Signal */
- 148               	/* frame size = 0 */
- 149               	/* stack size = 3 */
- 150               	.L__stack_usage = 3
- 151               	/* epilogue start */
-  62:Pushto.c      **** 	//direction(&encoder1);
-  63:Pushto.c      **** }
- 152               		.loc 1 63 0
- 153 0078 0F90      		pop r0
- 154 007a 0FBE      		out __SREG__,r0
- 155 007c 0F90      		pop r0
- 156 007e 1F90      		pop r1
- 157 0080 1895      		reti
- 158               		.cfi_endproc
- 159               	.LFE9:
- 161               	.global	__vector_2
- 163               	__vector_2:
- 164               	.LFB10:
-  64:Pushto.c      **** 
-  65:Pushto.c      **** ISR(INT1_vect) //przerwanie dla INT1 dla encodera2
-  66:Pushto.c      **** {
- 165               		.loc 1 66 0
- 166               		.cfi_startproc
- 167 0082 1F92      		push r1
- 168               	.LCFI8:
- 169               		.cfi_def_cfa_offset 3
- 170               		.cfi_offset 1, -2
- 171 0084 0F92      		push r0
- 172               	.LCFI9:
- 173               		.cfi_def_cfa_offset 4
- 174               		.cfi_offset 0, -3
- 175 0086 0FB6      		in r0,__SREG__
- 176 0088 0F92      		push r0
- 177 008a 1124      		clr __zero_reg__
- 178               	/* prologue: Signal */
- 179               	/* frame size = 0 */
- 180               	/* stack size = 3 */
- 181               	.L__stack_usage = 3
- 182               	/* epilogue start */
-  67:Pushto.c      **** 	//direction(&encoder2);
-  68:Pushto.c      **** }
- 183               		.loc 1 68 0
- 184 008c 0F90      		pop r0
- 185 008e 0FBE      		out __SREG__,r0
- 186 0090 0F90      		pop r0
- 187 0092 1F90      		pop r1
- 188 0094 1895      		reti
- 189               		.cfi_endproc
- 190               	.LFE10:
- 192               	.global	__eqsf2
- 193               		.section	.rodata.str1.1,"aMS",@progbits,1
- 194               	.LC0:
- 195 0000 706F 7072 		.string	"poprawnie"
- 195      6177 6E69 
- 195      6500 
- 196               	.LC1:
- 197 000a 636F 7374 		.string	"costam"
- 197      616D 00
- 198               	.LC2:
- 199 0011 706F 737A 		.string	"poszlo w buraki"
- 199      6C6F 2077 
- 199      2062 7572 
- 199      616B 6900 
- 200               		.section	.text.startup,"ax",@progbits
- 201               	.global	main
- 203               	main:
- 204               	.LFB11:
-  69:Pushto.c      **** 
-  70:Pushto.c      **** 
-  71:Pushto.c      **** int main(void)
-  72:Pushto.c      **** {
- 205               		.loc 1 72 0
- 206               		.cfi_startproc
- 207               	/* prologue: function */
- 208               	/* frame size = 0 */
- 209               	/* stack size = 0 */
- 210               	.L__stack_usage = 0
-  73:Pushto.c      **** 	system_init();
- 211               		.loc 1 73 0
- 212 0000 0E94 0000 		call system_init
- 213               	.LVL0:
-  74:Pushto.c      **** 	lcdInit();
- 214               		.loc 1 74 0
- 215 0004 0E94 0000 		call lcdInit
- 216               	.LVL1:
- 217               	.L14:
-  75:Pushto.c      **** 	char buf[20];
-  76:Pushto.c      **** 	float a=10.1234;
-  77:Pushto.c      **** 	//prints("PUSHTO");
-  78:Pushto.c      **** 	while(1)
-  79:Pushto.c      **** 	{
-  80:Pushto.c      **** 
-  81:Pushto.c      **** 		
-  82:Pushto.c      **** 		/*gotoXy(0,0);
-  83:Pushto.c      **** 		prints("E1=");
-  84:Pushto.c      **** 		integerToLcd(encoder1.count);
-  85:Pushto.c      **** 		prints(" E2=");
-  86:Pushto.c      **** 		integerToLcd(encoder2.count);
-  87:Pushto.c      **** 		
-  88:Pushto.c      **** 		
-  89:Pushto.c      **** 		gotoXy(8,0);
-  90:Pushto.c      **** 		integerToLcd(zeg);
-  91:Pushto.c      **** 		gotoXy(0,1);
-  92:Pushto.c      **** 		integerToLcd(keypad(&keypad_A));
-  93:Pushto.c      **** 
-  94:Pushto.c      **** 		if (keypad_A.result==0b11100111)
-  95:Pushto.c      **** 			zeg=0x00;
-  96:Pushto.c      **** 	
+  38:Pushto.c      **** 	telescope_A.update=0; //flaga aktualizacja nastaw
+  41               		.loc 1 38 0
+  42 001c 1092 0000 		sts telescope_A+2+1,__zero_reg__
+  43 0020 1092 0000 		sts telescope_A+2,__zero_reg__
+  39:Pushto.c      **** 
+  40:Pushto.c      **** 	//############# Timer1 16bit config ####################
+  41:Pushto.c      **** 	TCCR1A |= 0;   // not required since WGM11:0, both are zero (0)
+  44               		.loc 1 41 0
+  45 0024 9FB5      		in r25,0x2f
+  46 0026 9FBD      		out 0x2f,r25
+  42:Pushto.c      ****  	TCCR1B |= (1 << WGM12)|(1 << CS11)|(1 << CS10);   // Mode = CTC, Prescaler = 64
+  47               		.loc 1 42 0
+  48 0028 9EB5      		in r25,0x2e
+  49 002a 9B60      		ori r25,lo8(11)
+  50 002c 9EBD      		out 0x2e,r25
+  43:Pushto.c      **** 	OCR1A = 31250;   // timer compare value 1Hz - 31250 
+  51               		.loc 1 43 0
+  52 002e 22E1      		ldi r18,lo8(18)
+  53 0030 3AE7      		ldi r19,lo8(122)
+  54 0032 3BBD      		out 0x2a+1,r19
+  55 0034 2ABD      		out 0x2a,r18
+  44:Pushto.c      **** 	TIMSK|=(1<<OCIE1A); //enable compare reg A interrupt
+  56               		.loc 1 44 0
+  57 0036 99B7      		in r25,0x39
+  58 0038 9061      		ori r25,lo8(16)
+  59 003a 99BF      		out 0x39,r25
+  45:Pushto.c      **** 	
+  46:Pushto.c      ****     	sei(); // enable global interrupts
+  60               		.loc 1 46 0
+  61               	/* #APP */
+  62               	 ;  46 "Pushto.c" 1
+  63 003c 7894      		sei
+  64               	 ;  0 "" 2
+  47:Pushto.c      **** 
+  48:Pushto.c      ****     	//dioda -test
+  49:Pushto.c      ****     	DDRC = 0xFF;
+  65               		.loc 1 49 0
+  66               	/* #NOAPP */
+  67 003e 84BB      		out 0x14,r24
+  50:Pushto.c      ****     	PORTC = 0xFF;
+  68               		.loc 1 50 0
+  69 0040 85BB      		out 0x15,r24
+  70 0042 0895      		ret
+  71               		.cfi_endproc
+  72               	.LFE7:
+  74               	.global	__vector_6
+  76               	__vector_6:
+  77               	.LFB8:
+  51:Pushto.c      ****     	/*  test
+  52:Pushto.c      ****     	char buf1[20];
+  53:Pushto.c      ****     	sscanf(buf1,"ala ma kota"); // dziala, moze byc uzywane
+  54:Pushto.c      ****     	*/
+  55:Pushto.c      **** }
+  56:Pushto.c      **** 
+  57:Pushto.c      **** ISR(TIMER1_COMPA_vect) //obsluga przerwania dla timera
+  58:Pushto.c      **** {
+  78               		.loc 1 58 0
+  79               		.cfi_startproc
+  80 0044 1F92      		push r1
+  81               	.LCFI0:
+  82               		.cfi_def_cfa_offset 3
+  83               		.cfi_offset 1, -2
+  84 0046 0F92      		push r0
+  85               	.LCFI1:
+  86               		.cfi_def_cfa_offset 4
+  87               		.cfi_offset 0, -3
+  88 0048 0FB6      		in r0,__SREG__
+  89 004a 0F92      		push r0
+  90 004c 1124      		clr __zero_reg__
+  91 004e 5F93      		push r21
+  92               	.LCFI2:
+  93               		.cfi_def_cfa_offset 5
+  94               		.cfi_offset 21, -4
+  95 0050 6F93      		push r22
+  96               	.LCFI3:
+  97               		.cfi_def_cfa_offset 6
+  98               		.cfi_offset 22, -5
+  99 0052 7F93      		push r23
+ 100               	.LCFI4:
+ 101               		.cfi_def_cfa_offset 7
+ 102               		.cfi_offset 23, -6
+ 103 0054 8F93      		push r24
+ 104               	.LCFI5:
+ 105               		.cfi_def_cfa_offset 8
+ 106               		.cfi_offset 24, -7
+ 107 0056 9F93      		push r25
+ 108               	.LCFI6:
+ 109               		.cfi_def_cfa_offset 9
+ 110               		.cfi_offset 25, -8
+ 111 0058 AF93      		push r26
+ 112               	.LCFI7:
+ 113               		.cfi_def_cfa_offset 10
+ 114               		.cfi_offset 26, -9
+ 115 005a BF93      		push r27
+ 116               	.LCFI8:
+ 117               		.cfi_def_cfa_offset 11
+ 118               		.cfi_offset 27, -10
+ 119               	/* prologue: Signal */
+ 120               	/* frame size = 0 */
+ 121               	/* stack size = 10 */
+ 122               	.L__stack_usage = 10
+  59:Pushto.c      **** 	telescope_A.time++; //czas od kalibracji w sekundachs
+ 123               		.loc 1 59 0
+ 124 005c 8091 0000 		lds r24,telescope_A
+ 125 0060 9091 0000 		lds r25,telescope_A+1
+ 126 0064 0196      		adiw r24,1
+ 127 0066 9093 0000 		sts telescope_A+1,r25
+ 128 006a 8093 0000 		sts telescope_A,r24
+  60:Pushto.c      **** 	if(telescope_A.time%10==0)
+ 129               		.loc 1 60 0
+ 130 006e 6AE0      		ldi r22,lo8(10)
+ 131 0070 70E0      		ldi r23,0
+ 132 0072 0E94 0000 		call __divmodhi4
+ 133 0076 892B      		or r24,r25
+ 134 0078 01F4      		brne .L2
+  61:Pushto.c      **** 		telescope_A.update=1;
+ 135               		.loc 1 61 0
+ 136 007a 81E0      		ldi r24,lo8(1)
+ 137 007c 90E0      		ldi r25,0
+ 138 007e 9093 0000 		sts telescope_A+2+1,r25
+ 139 0082 8093 0000 		sts telescope_A+2,r24
+ 140               	.L2:
+ 141               	/* epilogue start */
+  62:Pushto.c      **** }
+ 142               		.loc 1 62 0
+ 143 0086 BF91      		pop r27
+ 144 0088 AF91      		pop r26
+ 145 008a 9F91      		pop r25
+ 146 008c 8F91      		pop r24
+ 147 008e 7F91      		pop r23
+ 148 0090 6F91      		pop r22
+ 149 0092 5F91      		pop r21
+ 150 0094 0F90      		pop r0
+ 151 0096 0FBE      		out __SREG__,r0
+ 152 0098 0F90      		pop r0
+ 153 009a 1F90      		pop r1
+ 154 009c 1895      		reti
+ 155               		.cfi_endproc
+ 156               	.LFE8:
+ 158               	.global	__vector_1
+ 160               	__vector_1:
+ 161               	.LFB9:
+  63:Pushto.c      **** 
+  64:Pushto.c      **** ISR(INT0_vect) //przerwanie dla INT0 dla encodera1
+  65:Pushto.c      **** {
+ 162               		.loc 1 65 0
+ 163               		.cfi_startproc
+ 164 009e 1F92      		push r1
+ 165               	.LCFI9:
+ 166               		.cfi_def_cfa_offset 3
+ 167               		.cfi_offset 1, -2
+ 168 00a0 0F92      		push r0
+ 169               	.LCFI10:
+ 170               		.cfi_def_cfa_offset 4
+ 171               		.cfi_offset 0, -3
+ 172 00a2 0FB6      		in r0,__SREG__
+ 173 00a4 0F92      		push r0
+ 174 00a6 1124      		clr __zero_reg__
+ 175               	/* prologue: Signal */
+ 176               	/* frame size = 0 */
+ 177               	/* stack size = 3 */
+ 178               	.L__stack_usage = 3
+ 179               	/* epilogue start */
+  66:Pushto.c      **** 	//direction(&encoder1);
+  67:Pushto.c      **** }
+ 180               		.loc 1 67 0
+ 181 00a8 0F90      		pop r0
+ 182 00aa 0FBE      		out __SREG__,r0
+ 183 00ac 0F90      		pop r0
+ 184 00ae 1F90      		pop r1
+ 185 00b0 1895      		reti
+ 186               		.cfi_endproc
+ 187               	.LFE9:
+ 189               	.global	__vector_2
+ 191               	__vector_2:
+ 192               	.LFB10:
+  68:Pushto.c      **** 
+  69:Pushto.c      **** ISR(INT1_vect) //przerwanie dla INT1 dla encodera2
+  70:Pushto.c      **** {
+ 193               		.loc 1 70 0
+ 194               		.cfi_startproc
+ 195 00b2 1F92      		push r1
+ 196               	.LCFI11:
+ 197               		.cfi_def_cfa_offset 3
+ 198               		.cfi_offset 1, -2
+ 199 00b4 0F92      		push r0
+ 200               	.LCFI12:
+ 201               		.cfi_def_cfa_offset 4
+ 202               		.cfi_offset 0, -3
+ 203 00b6 0FB6      		in r0,__SREG__
+ 204 00b8 0F92      		push r0
+ 205 00ba 1124      		clr __zero_reg__
+ 206               	/* prologue: Signal */
+ 207               	/* frame size = 0 */
+ 208               	/* stack size = 3 */
+ 209               	.L__stack_usage = 3
+ 210               	/* epilogue start */
+  71:Pushto.c      **** 	//direction(&encoder2);
+  72:Pushto.c      **** }
+ 211               		.loc 1 72 0
+ 212 00bc 0F90      		pop r0
+ 213 00be 0FBE      		out __SREG__,r0
+ 214 00c0 0F90      		pop r0
+ 215 00c2 1F90      		pop r1
+ 216 00c4 1895      		reti
+ 217               		.cfi_endproc
+ 218               	.LFE10:
+ 220               		.section	.text.startup,"ax",@progbits
+ 221               	.global	main
+ 223               	main:
+ 224               	.LFB11:
+  73:Pushto.c      **** 
+  74:Pushto.c      **** 
+  75:Pushto.c      **** int main(void)
+  76:Pushto.c      **** {
+ 225               		.loc 1 76 0
+ 226               		.cfi_startproc
+ 227               	/* prologue: function */
+ 228               	/* frame size = 0 */
+ 229               	/* stack size = 0 */
+ 230               	.L__stack_usage = 0
+  77:Pushto.c      **** 	system_init();
+ 231               		.loc 1 77 0
+ 232 0000 0E94 0000 		call system_init
+ 233               	.LVL0:
+  78:Pushto.c      **** 	lcdInit();
+ 234               		.loc 1 78 0
+ 235 0004 0E94 0000 		call lcdInit
+ 236               	.LVL1:
+ 237               	.L12:
+  79:Pushto.c      **** 	char buf[20];
+  80:Pushto.c      **** 	float a=10.1234;
+  81:Pushto.c      **** 	//prints("PUSHTO");
+  82:Pushto.c      **** 	while(1)
+  83:Pushto.c      **** 	{
+  84:Pushto.c      **** 
+  85:Pushto.c      **** 		
+  86:Pushto.c      **** 		/*gotoXy(0,0);
+  87:Pushto.c      **** 		prints("E1=");
+  88:Pushto.c      **** 		integerToLcd(encoder1.count);
+  89:Pushto.c      **** 		prints(" E2=");
+  90:Pushto.c      **** 		integerToLcd(encoder2.count);
+  91:Pushto.c      **** 		
+  92:Pushto.c      **** 		
+  93:Pushto.c      **** 		gotoXy(8,0);
+  94:Pushto.c      **** 		integerToLcd(zeg);
+  95:Pushto.c      **** 		gotoXy(0,1);
+  96:Pushto.c      **** 		integerToLcd(keypad(&keypad_A));
   97:Pushto.c      **** 
-  98:Pushto.c      **** 		if(keypad() == 1)
-  99:Pushto.c      **** 		{
- 100:Pushto.c      **** 			PORTC ^= (1 << 0); 
- 101:Pushto.c      **** 		}
- 102:Pushto.c      **** */
- 103:Pushto.c      **** 		keypad(&keypad_A); //odczyt klawiatury
- 218               		.loc 1 103 0
- 219 0008 80E0      		ldi r24,lo8(keypad_A)
- 220 000a 90E0      		ldi r25,hi8(keypad_A)
- 221 000c 0E94 0000 		call keypad
- 222               	.LVL2:
- 104:Pushto.c      **** 		keypad_proc(&keypad_A); //przetwarzanie znakow
- 223               		.loc 1 104 0
- 224 0010 80E0      		ldi r24,lo8(keypad_A)
- 225 0012 90E0      		ldi r25,hi8(keypad_A)
- 226 0014 0E94 0000 		call keypad_proc
- 227               	.LVL3:
- 105:Pushto.c      **** 
- 106:Pushto.c      **** 		if(keypad_A.flags & KB_NEW)
- 228               		.loc 1 106 0
- 229 0018 8091 0000 		lds r24,keypad_A+20
- 230 001c 86FF      		sbrs r24,6
- 231 001e 00C0      		rjmp .L6
- 107:Pushto.c      **** 		{
- 108:Pushto.c      **** 			nowy_cel(&keypad_A,&telescope_A);
- 232               		.loc 1 108 0
- 233 0020 60E0      		ldi r22,lo8(telescope_A)
- 234 0022 70E0      		ldi r23,hi8(telescope_A)
- 235 0024 80E0      		ldi r24,lo8(keypad_A)
- 236 0026 90E0      		ldi r25,hi8(keypad_A)
- 237 0028 0E94 0000 		call nowy_cel
- 238               	.LVL4:
- 109:Pushto.c      **** 			keypad_A.flags &= ~KB_NEW;
- 239               		.loc 1 109 0
- 240 002c 8091 0000 		lds r24,keypad_A+20
- 241 0030 8F7B      		andi r24,lo8(-65)
- 242 0032 8093 0000 		sts keypad_A+20,r24
- 243               	.L6:
- 110:Pushto.c      **** 		}
- 111:Pushto.c      **** 		if(keypad_A.flags & KB_CAL)
- 244               		.loc 1 111 0
- 245 0036 8091 0000 		lds r24,keypad_A+20
- 246 003a 85FF      		sbrs r24,5
- 247 003c 00C0      		rjmp .L7
- 112:Pushto.c      **** 		{
- 113:Pushto.c      **** 			kalibracja(&encoder1,&encoder2,&telescope_A); // funkcja z pushto_lib
- 248               		.loc 1 113 0
- 249 003e 40E0      		ldi r20,lo8(telescope_A)
- 250 0040 50E0      		ldi r21,hi8(telescope_A)
- 251 0042 60E0      		ldi r22,lo8(encoder2)
- 252 0044 70E0      		ldi r23,hi8(encoder2)
- 253 0046 80E0      		ldi r24,lo8(encoder1)
- 254 0048 90E0      		ldi r25,hi8(encoder1)
- 255 004a 0E94 0000 		call kalibracja
- 256               	.LVL5:
- 114:Pushto.c      **** 			keypad_A.flags &= ~KB_CAL;
- 257               		.loc 1 114 0
- 258 004e 8091 0000 		lds r24,keypad_A+20
- 259 0052 8F7D      		andi r24,lo8(-33)
- 260 0054 8093 0000 		sts keypad_A+20,r24
- 261               	.L7:
- 115:Pushto.c      **** 		}
- 116:Pushto.c      **** 		if(keypad_A.flags & KB_CLR)
- 262               		.loc 1 116 0
- 263 0058 8091 0000 		lds r24,keypad_A+20
- 264 005c 84FF      		sbrs r24,4
- 265 005e 00C0      		rjmp .L8
- 117:Pushto.c      **** 			{
- 118:Pushto.c      **** 				lcd_clr();
- 266               		.loc 1 118 0
- 267 0060 0E94 0000 		call lcd_clr
- 268               	.LVL6:
- 119:Pushto.c      **** 				keypad_A.flags &= ~KB_CLR;
- 269               		.loc 1 119 0
- 270 0064 8091 0000 		lds r24,keypad_A+20
- 271 0068 8F7E      		andi r24,lo8(-17)
- 272 006a 8093 0000 		sts keypad_A+20,r24
- 273               	.L8:
- 120:Pushto.c      **** 			}
- 121:Pushto.c      **** 		gotoXy(0,0);
- 274               		.loc 1 121 0
- 275 006e 60E0      		ldi r22,0
- 276 0070 80E0      		ldi r24,0
- 277 0072 0E94 0000 		call gotoXy
- 278               	.LVL7:
- 122:Pushto.c      **** 		//sprintf(buf,"%f",a);
- 123:Pushto.c      **** 		//prints(buf);
- 124:Pushto.c      **** 		if(telescope_A.obr_zad == 183.504167)
- 279               		.loc 1 124 0
- 280 0076 C090 0000 		lds r12,telescope_A+6
- 281 007a D090 0000 		lds r13,telescope_A+6+1
- 282 007e E090 0000 		lds r14,telescope_A+6+2
- 283 0082 F090 0000 		lds r15,telescope_A+6+3
- 284 0086 21E1      		ldi r18,lo8(17)
- 285 0088 31E8      		ldi r19,lo8(-127)
- 286 008a 47E3      		ldi r20,lo8(55)
- 287 008c 53E4      		ldi r21,lo8(67)
- 288 008e C701      		movw r24,r14
- 289 0090 B601      		movw r22,r12
- 290 0092 0E94 0000 		call __eqsf2
- 291               	.LVL8:
- 292 0096 8111      		cpse r24,__zero_reg__
- 293 0098 00C0      		rjmp .L28
- 125:Pushto.c      **** 			prints("poprawnie");
+  98:Pushto.c      **** 		if (keypad_A.result==0b11100111)
+  99:Pushto.c      **** 			zeg=0x00;
+ 100:Pushto.c      **** 	
+ 101:Pushto.c      **** 
+ 102:Pushto.c      **** 		if(keypad() == 1)
+ 103:Pushto.c      **** 		{
+ 104:Pushto.c      **** 			PORTC ^= (1 << 0); 
+ 105:Pushto.c      **** 		}
+ 106:Pushto.c      **** */
+ 107:Pushto.c      **** 		keypad(&keypad_A); //odczyt klawiatury
+ 238               		.loc 1 107 0
+ 239 0008 80E0      		ldi r24,lo8(keypad_A)
+ 240 000a 90E0      		ldi r25,hi8(keypad_A)
+ 241 000c 0E94 0000 		call keypad
+ 242               	.LVL2:
+ 108:Pushto.c      **** 		keypad_proc(&keypad_A); //przetwarzanie znakow
+ 243               		.loc 1 108 0
+ 244 0010 80E0      		ldi r24,lo8(keypad_A)
+ 245 0012 90E0      		ldi r25,hi8(keypad_A)
+ 246 0014 0E94 0000 		call keypad_proc
+ 247               	.LVL3:
+ 109:Pushto.c      **** 
+ 110:Pushto.c      **** 		if(keypad_A.flags & KB_NEW)
+ 248               		.loc 1 110 0
+ 249 0018 8091 0000 		lds r24,keypad_A+20
+ 250 001c 86FF      		sbrs r24,6
+ 251 001e 00C0      		rjmp .L8
+ 111:Pushto.c      **** 		{
+ 112:Pushto.c      **** 			nowy_cel(&keypad_A,&telescope_A);
+ 252               		.loc 1 112 0
+ 253 0020 60E0      		ldi r22,lo8(telescope_A)
+ 254 0022 70E0      		ldi r23,hi8(telescope_A)
+ 255 0024 80E0      		ldi r24,lo8(keypad_A)
+ 256 0026 90E0      		ldi r25,hi8(keypad_A)
+ 257 0028 0E94 0000 		call nowy_cel
+ 258               	.LVL4:
+ 113:Pushto.c      **** 			keypad_A.flags &= ~KB_NEW;
+ 259               		.loc 1 113 0
+ 260 002c 8091 0000 		lds r24,keypad_A+20
+ 261 0030 8F7B      		andi r24,lo8(-65)
+ 262 0032 8093 0000 		sts keypad_A+20,r24
+ 263               	.L8:
+ 114:Pushto.c      **** 		}
+ 115:Pushto.c      **** 		if(keypad_A.flags & KB_CAL)
+ 264               		.loc 1 115 0
+ 265 0036 8091 0000 		lds r24,keypad_A+20
+ 266 003a 85FF      		sbrs r24,5
+ 267 003c 00C0      		rjmp .L9
+ 116:Pushto.c      **** 		{
+ 117:Pushto.c      **** 			kalibracja(&encoder1,&encoder2,&telescope_A); // funkcja z pushto_lib
+ 268               		.loc 1 117 0
+ 269 003e 40E0      		ldi r20,lo8(telescope_A)
+ 270 0040 50E0      		ldi r21,hi8(telescope_A)
+ 271 0042 60E0      		ldi r22,lo8(encoder2)
+ 272 0044 70E0      		ldi r23,hi8(encoder2)
+ 273 0046 80E0      		ldi r24,lo8(encoder1)
+ 274 0048 90E0      		ldi r25,hi8(encoder1)
+ 275 004a 0E94 0000 		call kalibracja
+ 276               	.LVL5:
+ 118:Pushto.c      **** 			keypad_A.flags &= ~KB_CAL;
+ 277               		.loc 1 118 0
+ 278 004e 8091 0000 		lds r24,keypad_A+20
+ 279 0052 8F7D      		andi r24,lo8(-33)
+ 280 0054 8093 0000 		sts keypad_A+20,r24
+ 281               	.L9:
+ 119:Pushto.c      **** 		}
+ 120:Pushto.c      **** 		if(keypad_A.flags & KB_CLR)
+ 282               		.loc 1 120 0
+ 283 0058 8091 0000 		lds r24,keypad_A+20
+ 284 005c 84FF      		sbrs r24,4
+ 285 005e 00C0      		rjmp .L10
+ 121:Pushto.c      **** 		{
+ 122:Pushto.c      **** 			lcd_clr();
+ 286               		.loc 1 122 0
+ 287 0060 0E94 0000 		call lcd_clr
+ 288               	.LVL6:
+ 123:Pushto.c      **** 			keypad_A.flags &= ~KB_CLR;
+ 289               		.loc 1 123 0
+ 290 0064 8091 0000 		lds r24,keypad_A+20
+ 291 0068 8F7E      		andi r24,lo8(-17)
+ 292 006a 8093 0000 		sts keypad_A+20,r24
+ 293               	.L10:
+ 124:Pushto.c      **** 		}
+ 125:Pushto.c      **** 		if(telescope_A.update)
  294               		.loc 1 125 0
- 295 009a 80E0      		ldi r24,lo8(.LC0)
- 296 009c 90E0      		ldi r25,hi8(.LC0)
- 297 009e 00C0      		rjmp .L30
- 298               	.L28:
- 126:Pushto.c      **** 		else
- 127:Pushto.c      **** 		{
- 128:Pushto.c      **** 			if(telescope_A.obr_zad ==180) prints("costam");
- 299               		.loc 1 128 0
- 300 00a0 20E0      		ldi r18,0
- 301 00a2 30E0      		ldi r19,0
- 302 00a4 44E3      		ldi r20,lo8(52)
- 303 00a6 53E4      		ldi r21,lo8(67)
- 304 00a8 C701      		movw r24,r14
- 305 00aa B601      		movw r22,r12
- 306 00ac 0E94 0000 		call __eqsf2
- 307               	.LVL9:
- 308 00b0 8111      		cpse r24,__zero_reg__
- 309 00b2 00C0      		rjmp .L29
- 310               		.loc 1 128 0 is_stmt 0 discriminator 1
- 311 00b4 80E0      		ldi r24,lo8(.LC1)
- 312 00b6 90E0      		ldi r25,hi8(.LC1)
- 313 00b8 00C0      		rjmp .L30
- 314               	.L29:
- 129:Pushto.c      **** 			else
- 130:Pushto.c      **** 			prints("poszlo w buraki");
- 315               		.loc 1 130 0 is_stmt 1
- 316 00ba 80E0      		ldi r24,lo8(.LC2)
- 317 00bc 90E0      		ldi r25,hi8(.LC2)
- 318               	.L30:
- 319 00be 0E94 0000 		call prints
- 320               	.LVL10:
- 131:Pushto.c      **** 		}
- 132:Pushto.c      **** 		//integerToLcd(telescope_A.obr_zad);
- 133:Pushto.c      **** 		//gotoXy(0,1);
- 134:Pushto.c      **** 		//sprintf(buf,"%f",telescope_A.obr_zad);
- 135:Pushto.c      **** 		//integerToLcd(telescope_A.obr_zad);
- 136:Pushto.c      **** 
- 137:Pushto.c      **** 		if(keypad_A.i > 14)
- 321               		.loc 1 137 0
- 322 00c2 8091 0000 		lds r24,keypad_A+18
- 323 00c6 9091 0000 		lds r25,keypad_A+18+1
- 324 00ca 0F97      		sbiw r24,15
- 325 00cc 04F4      		brge .+2
- 326 00ce 00C0      		rjmp .L14
- 138:Pushto.c      **** 			keypad_A.i=0;
- 327               		.loc 1 138 0
- 328 00d0 1092 0000 		sts keypad_A+18+1,__zero_reg__
- 329 00d4 1092 0000 		sts keypad_A+18,__zero_reg__
- 330 00d8 00C0      		rjmp .L14
- 331               		.cfi_endproc
- 332               	.LFE11:
- 334               		.comm	telescope_A,18,1
- 335               		.comm	encoder2,4,1
- 336               		.comm	encoder1,4,1
- 337               		.comm	keypad_A,21,1
- 338               		.text
- 339               	.Letext0:
- 340               		.file 2 "/usr/lib/avr/include/stdint.h"
- 341               		.file 3 "keypad.h"
- 342               		.file 4 "encoder.h"
- 343               		.file 5 "pushto_lib.h"
- 344               		.file 6 "lcd.h"
+ 295 006e 8091 0000 		lds r24,telescope_A+2
+ 296 0072 9091 0000 		lds r25,telescope_A+2+1
+ 297 0076 892B      		or r24,r25
+ 298 0078 01F0      		breq .L11
+ 126:Pushto.c      **** 		{
+ 127:Pushto.c      **** 			obliczenie_nastaw(&telescope_A); //funkcja na obliczenie nastaw, co 10sek (patrz ISR(TIMER1_COMP
+ 299               		.loc 1 127 0
+ 300 007a 80E0      		ldi r24,lo8(telescope_A)
+ 301 007c 90E0      		ldi r25,hi8(telescope_A)
+ 302 007e 0E94 0000 		call obliczenie_nastaw
+ 303               	.LVL7:
+ 304               	.L11:
+ 128:Pushto.c      **** 		}
+ 129:Pushto.c      **** 
+ 130:Pushto.c      **** 		
+ 131:Pushto.c      **** 		//sprintf(buf,"%f",a);
+ 132:Pushto.c      **** 		//prints(buf);
+ 133:Pushto.c      **** 		//integerToLcd(telescope_A.obr_zad);
+ 134:Pushto.c      **** 		//gotoXy(0,1);
+ 135:Pushto.c      **** 		//sprintf(buf,"%f",telescope_A.obr_zad);
+ 136:Pushto.c      **** 		//integerToLcd(telescope_A.obr_zad);
+ 137:Pushto.c      **** 
+ 138:Pushto.c      **** 		if(keypad_A.i > 14)
+ 305               		.loc 1 138 0
+ 306 0082 8091 0000 		lds r24,keypad_A+18
+ 307 0086 9091 0000 		lds r25,keypad_A+18+1
+ 308 008a 0F97      		sbiw r24,15
+ 309 008c 04F4      		brge .+2
+ 310 008e 00C0      		rjmp .L12
+ 139:Pushto.c      **** 			keypad_A.i=0;
+ 311               		.loc 1 139 0
+ 312 0090 1092 0000 		sts keypad_A+18+1,__zero_reg__
+ 313 0094 1092 0000 		sts keypad_A+18,__zero_reg__
+ 314 0098 00C0      		rjmp .L12
+ 315               		.cfi_endproc
+ 316               	.LFE11:
+ 318               		.comm	telescope_A,24,1
+ 319               		.comm	encoder2,4,1
+ 320               		.comm	encoder1,4,1
+ 321               		.comm	keypad_A,21,1
+ 322               		.text
+ 323               	.Letext0:
+ 324               		.file 2 "/usr/lib/avr/include/stdint.h"
+ 325               		.file 3 "keypad.h"
+ 326               		.file 4 "encoder.h"
+ 327               		.file 5 "pushto_lib.h"
+ 328               		.file 6 "lcd.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Pushto.c
-     /tmp/ccmTWLPS.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccmTWLPS.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccmTWLPS.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccmTWLPS.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccmTWLPS.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccmTWLPS.s:12     .text:0000000000000000 system_init
+     /tmp/ccOArmqT.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccOArmqT.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccOArmqT.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccOArmqT.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccOArmqT.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccOArmqT.s:12     .text:0000000000000000 system_init
                             *COM*:0000000000000015 keypad_A
-     /tmp/ccmTWLPS.s:73     .text:000000000000003c __vector_6
-                            *COM*:0000000000000012 telescope_A
-     /tmp/ccmTWLPS.s:132    .text:000000000000006e __vector_1
-     /tmp/ccmTWLPS.s:163    .text:0000000000000082 __vector_2
-     /tmp/ccmTWLPS.s:203    .text.startup:0000000000000000 main
+                            *COM*:0000000000000018 telescope_A
+     /tmp/ccOArmqT.s:76     .text:0000000000000044 __vector_6
+     /tmp/ccOArmqT.s:160    .text:000000000000009e __vector_1
+     /tmp/ccOArmqT.s:191    .text:00000000000000b2 __vector_2
+     /tmp/ccOArmqT.s:223    .text.startup:0000000000000000 main
                             *COM*:0000000000000004 encoder2
                             *COM*:0000000000000004 encoder1
 
 UNDEFINED SYMBOLS
-__eqsf2
+__divmodhi4
 lcdInit
 keypad
 keypad_proc
 nowy_cel
 kalibracja
 lcd_clr
-gotoXy
-prints
-__do_copy_data
+obliczenie_nastaw
 __do_clear_bss

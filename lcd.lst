@@ -15,7 +15,7 @@
    2:lcd.c         **** #include "lcd.h"
    3:lcd.c         **** #include <util/delay.h>
    4:lcd.c         **** 
-   5:lcd.c         **** void lcdcmd(unsigned char Data)
+   5:lcd.c         **** void lcdcmd(unsigned char Dane)
    6:lcd.c         **** {
   15               		.loc 1 6 0
   16               		.cfi_startproc
@@ -25,7 +25,7 @@
   20               	/* stack size = 0 */
   21               	.L__stack_usage = 0
    7:lcd.c         **** 
-   8:lcd.c         **** LCD_PORT &= ~RS; //because sending command
+   8:lcd.c         **** LCD_PORT &= ~RS; //wysyłanie polecenia
   22               		.loc 1 8 0
   23 0000 D898      		cbi 0x1b,0
    9:lcd.c         **** LCD_PORT  &=~EN;
@@ -40,7 +40,7 @@
   30 0008 9F70      		andi r25,lo8(15)
   31 000a 9BBB      		out 0x1b,r25
   12:lcd.c         **** 
-  13:lcd.c         **** LCD_PORT |= ((Data ) & 0xf0);
+  13:lcd.c         **** LCD_PORT |= ((Dane ) & 0xf0);
   32               		.loc 1 13 0
   33 000c 9BB3      		in r25,0x1b
   34 000e 282F      		mov r18,r24
@@ -240,7 +240,7 @@
   59 002a 9F70      		andi r25,lo8(15)
   60 002c 9BBB      		out 0x1b,r25
   20:lcd.c         **** 
-  21:lcd.c         **** LCD_PORT  |= ((Data<<4) &  0xf0);
+  21:lcd.c         **** LCD_PORT  |= ((Dane<<4) &  0xf0);
   61               		.loc 1 21 0
   62 002e 2BB3      		in r18,0x1b
   63 0030 F0E1      		ldi r31,lo8(16)
@@ -287,7 +287,7 @@
   98               	/* frame size = 0 */
   99               	/* stack size = 0 */
  100               	.L__stack_usage = 0
-  30:lcd.c         **** LCD_PORT |=RS;  //because sending data
+  30:lcd.c         **** LCD_PORT |=RS;  //wysylanie danych
  101               		.loc 1 30 0
  102 004e D89A      		sbi 0x1b,0
   31:lcd.c         **** LCD_PORT &=~RW;
@@ -854,18 +854,18 @@
  571               		.file 3 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lcd.c
-     /tmp/ccD9irlB.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccD9irlB.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccD9irlB.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccD9irlB.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccD9irlB.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccD9irlB.s:12     .text:0000000000000000 lcdcmd
-     /tmp/ccD9irlB.s:92     .text:000000000000004e lcdData
-     /tmp/ccD9irlB.s:170    .text:000000000000009c lcdInit
-     /tmp/ccD9irlB.s:337    .text:000000000000014a prints
-     /tmp/ccD9irlB.s:379    .text:0000000000000162 gotoXy
-     /tmp/ccD9irlB.s:413    .text:0000000000000172 integerToLcd
-     /tmp/ccD9irlB.s:528    .text:00000000000001f8 lcd_clr
+     /tmp/ccNtuoo3.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccNtuoo3.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccNtuoo3.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccNtuoo3.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccNtuoo3.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccNtuoo3.s:12     .text:0000000000000000 lcdcmd
+     /tmp/ccNtuoo3.s:92     .text:000000000000004e lcdData
+     /tmp/ccNtuoo3.s:170    .text:000000000000009c lcdInit
+     /tmp/ccNtuoo3.s:337    .text:000000000000014a prints
+     /tmp/ccNtuoo3.s:379    .text:0000000000000162 gotoXy
+     /tmp/ccNtuoo3.s:413    .text:0000000000000172 integerToLcd
+     /tmp/ccNtuoo3.s:528    .text:00000000000001f8 lcd_clr
 
 UNDEFINED SYMBOLS
 __divmodhi4

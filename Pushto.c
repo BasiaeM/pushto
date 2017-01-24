@@ -35,7 +35,7 @@ void system_init (void)
 	keypad_A.flags='\0';
 	keypad_A.last_result = 0xFF;
 
-	telescope_A.update=false; //flaga aktualizacja nastaw
+	telescope_A.update=0; //flaga aktualizacja nastaw
 
 	//############# Timer1 16bit config ####################
 	TCCR1A |= 0;   // not required since WGM11:0, both are zero (0)
@@ -58,7 +58,7 @@ ISR(TIMER1_COMPA_vect) //obsluga przerwania dla timera
 {
 	telescope_A.time++; //czas od kalibracji w sekundachs
 	if(telescope_A.time%10==0)
-		telescope_A.update=true;
+		telescope_A.update=1;
 }
 
 ISR(INT0_vect) //przerwanie dla INT0 dla encodera1

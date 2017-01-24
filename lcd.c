@@ -2,15 +2,15 @@
 #include "lcd.h"
 #include <util/delay.h>
 
-void lcdcmd(unsigned char Data)
+void lcdcmd(unsigned char Dane)
 {
 
-LCD_PORT &= ~RS; //because sending command
+LCD_PORT &= ~RS; //wysyłanie polecenia
 LCD_PORT  &=~EN;
 LCD_PORT &=~RW;
 LCD_PORT &= 0x0f;
 
-LCD_PORT |= ((Data ) & 0xf0);
+LCD_PORT |= ((Dane ) & 0xf0);
 LCD_PORT &=~RW;
 LCD_PORT  |=EN;
 _delay_ms(2);
@@ -18,7 +18,7 @@ LCD_PORT  &=~EN;
 
 LCD_PORT &= 0x0f;
 
-LCD_PORT  |= ((Data<<4) &  0xf0);
+LCD_PORT  |= ((Dane<<4) &  0xf0);
 LCD_PORT  |=EN;
 _delay_ms(2);
 LCD_PORT  &=~EN;
@@ -27,7 +27,7 @@ LCD_PORT  &=~EN;
 }
 void lcdData(unsigned char l)
 {
-LCD_PORT |=RS;  //because sending data
+LCD_PORT |=RS;  //wysylanie danych
 LCD_PORT &=~RW;
 LCD_PORT  &=~EN;
 LCD_PORT &= 0x0f;
